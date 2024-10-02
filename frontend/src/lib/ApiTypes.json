@@ -1,0 +1,58 @@
+{
+  "$defs": {
+    "HelloWorldResponse": {
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "message"
+      ],
+      "title": "HelloWorldResponse",
+      "type": "object"
+    },
+    "TranscriptionRequest": {
+      "properties": {
+        "transcription": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "transcription"
+      ],
+      "title": "TranscriptionRequest",
+      "type": "object"
+    },
+    "TranscriptionResponse": {
+      "properties": {
+        "transcription": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "transcription"
+      ],
+      "title": "TranscriptionResponse",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "helloWorldResponse": {
+      "$ref": "#/$defs/HelloWorldResponse"
+    },
+    "transcriptionRequest": {
+      "$ref": "#/$defs/TranscriptionRequest"
+    },
+    "transcriptionResponse": {
+      "$ref": "#/$defs/TranscriptionResponse"
+    }
+  },
+  "required": [
+    "helloWorldResponse",
+    "transcriptionRequest",
+    "transcriptionResponse"
+  ],
+  "title": "ApiTypes",
+  "type": "object"
+}

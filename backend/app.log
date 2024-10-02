@@ -1,0 +1,668 @@
+2024-09-29 16:04:25,902:WARNING:Running in development mode - allowing CORS for all origins
+2024-09-29 16:05:06,504:WARNING:Running in development mode - allowing CORS for all origins
+2024-09-29 16:05:10,969:WARNING:Running in development mode - allowing CORS for all origins
+2024-09-29 16:05:21,960:WARNING:Running in development mode - allowing CORS for all origins
+2024-09-29 16:05:38,241:WARNING:Running in development mode - allowing CORS for all origins
+2024-09-29 16:05:39,873:WARNING:Running in development mode - allowing CORS for all origins
+2024-09-29 16:05:39,938:INFO:1 change detected
+2024-09-29 16:05:51,871:INFO:Received file: Brent2.mp3
+2024-09-29 16:05:51,970:INFO:2 changes detected
+2024-09-29 16:06:01,521:INFO:Audio compressed successfully.
+2024-09-29 16:06:01,521:INFO:Total audio duration: 71.80 minutes
+2024-09-29 16:06:01,521:INFO:Calculated chunk duration: 1.00 minutes
+2024-09-29 16:06:01,537:INFO:Total number of chunks: 79
+2024-09-29 16:06:01,538:ERROR:Transcription failed for chunk 1: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,538:ERROR:Transcription failed for chunk 2: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,538:ERROR:Transcription failed for chunk 3: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,538:ERROR:Transcription failed for chunk 4: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,539:ERROR:Transcription failed for chunk 5: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,539:ERROR:Transcription failed for chunk 6: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,539:ERROR:Transcription failed for chunk 7: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,539:ERROR:Transcription failed for chunk 8: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,539:ERROR:Transcription failed for chunk 9: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,540:ERROR:Transcription failed for chunk 10: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,540:ERROR:Transcription failed for chunk 11: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,540:ERROR:Transcription failed for chunk 12: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,540:ERROR:Transcription failed for chunk 13: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,540:ERROR:Transcription failed for chunk 14: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,541:ERROR:Transcription failed for chunk 15: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,541:ERROR:Transcription failed for chunk 16: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,541:ERROR:Transcription failed for chunk 17: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,541:ERROR:Transcription failed for chunk 18: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,541:ERROR:Transcription failed for chunk 19: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,542:ERROR:Transcription failed for chunk 20: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,542:ERROR:Transcription failed for chunk 21: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,542:ERROR:Transcription failed for chunk 22: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,542:ERROR:Transcription failed for chunk 23: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,543:ERROR:Transcription failed for chunk 24: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,543:ERROR:Transcription failed for chunk 25: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,543:ERROR:Transcription failed for chunk 26: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,543:ERROR:Transcription failed for chunk 27: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,544:ERROR:Transcription failed for chunk 28: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,544:ERROR:Transcription failed for chunk 29: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,544:ERROR:Transcription failed for chunk 30: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,544:ERROR:Transcription failed for chunk 31: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,544:ERROR:Transcription failed for chunk 32: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,545:ERROR:Transcription failed for chunk 33: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,545:ERROR:Transcription failed for chunk 34: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,545:ERROR:Transcription failed for chunk 35: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,545:ERROR:Transcription failed for chunk 36: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,546:ERROR:Transcription failed for chunk 37: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,546:ERROR:Transcription failed for chunk 38: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,546:ERROR:Transcription failed for chunk 39: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,546:ERROR:Transcription failed for chunk 40: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,547:ERROR:Transcription failed for chunk 41: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,547:ERROR:Transcription failed for chunk 42: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,547:ERROR:Transcription failed for chunk 43: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,547:ERROR:Transcription failed for chunk 44: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,547:ERROR:Transcription failed for chunk 45: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,548:ERROR:Transcription failed for chunk 46: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,548:ERROR:Transcription failed for chunk 47: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,548:ERROR:Transcription failed for chunk 48: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,548:ERROR:Transcription failed for chunk 49: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,549:ERROR:Transcription failed for chunk 50: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,549:ERROR:Transcription failed for chunk 51: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,549:ERROR:Transcription failed for chunk 52: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,549:ERROR:Transcription failed for chunk 53: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,550:ERROR:Transcription failed for chunk 54: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,550:ERROR:Transcription failed for chunk 55: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,550:ERROR:Transcription failed for chunk 56: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,550:ERROR:Transcription failed for chunk 57: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,550:ERROR:Transcription failed for chunk 58: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,551:ERROR:Transcription failed for chunk 59: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,551:ERROR:Transcription failed for chunk 60: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,551:ERROR:Transcription failed for chunk 61: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,551:ERROR:Transcription failed for chunk 62: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,552:ERROR:Transcription failed for chunk 63: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,552:ERROR:Transcription failed for chunk 64: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,552:ERROR:Transcription failed for chunk 65: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,552:ERROR:Transcription failed for chunk 66: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,552:ERROR:Transcription failed for chunk 67: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,553:ERROR:Transcription failed for chunk 68: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,553:ERROR:Transcription failed for chunk 69: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,553:ERROR:Transcription failed for chunk 70: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,553:ERROR:Transcription failed for chunk 71: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,554:ERROR:Transcription failed for chunk 72: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,554:ERROR:Transcription failed for chunk 73: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,554:ERROR:Transcription failed for chunk 74: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,554:ERROR:Transcription failed for chunk 75: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,554:ERROR:Transcription failed for chunk 76: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,555:ERROR:Transcription failed for chunk 77: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,555:ERROR:Transcription failed for chunk 78: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,555:ERROR:Transcription failed for chunk 79: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:01,555:ERROR:Error during transcription process: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:11,940:INFO:Received file: Brent2.mp3
+2024-09-29 16:06:12,012:INFO:2 changes detected
+2024-09-29 16:06:21,546:INFO:Audio compressed successfully.
+2024-09-29 16:06:21,547:INFO:Total audio duration: 71.80 minutes
+2024-09-29 16:06:21,547:INFO:Calculated chunk duration: 1.00 minutes
+2024-09-29 16:06:21,561:INFO:Total number of chunks: 79
+2024-09-29 16:06:21,562:ERROR:Transcription failed for chunk 1: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,563:ERROR:Transcription failed for chunk 2: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,563:ERROR:Transcription failed for chunk 3: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,563:ERROR:Transcription failed for chunk 4: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,564:ERROR:Transcription failed for chunk 5: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,564:ERROR:Transcription failed for chunk 6: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,564:ERROR:Transcription failed for chunk 7: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,565:ERROR:Transcription failed for chunk 8: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,565:ERROR:Transcription failed for chunk 9: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,565:ERROR:Transcription failed for chunk 10: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,566:ERROR:Transcription failed for chunk 11: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,566:ERROR:Transcription failed for chunk 12: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,567:ERROR:Transcription failed for chunk 13: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,567:ERROR:Transcription failed for chunk 14: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,567:ERROR:Transcription failed for chunk 15: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,568:ERROR:Transcription failed for chunk 16: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,568:ERROR:Transcription failed for chunk 17: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,569:ERROR:Transcription failed for chunk 18: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,569:ERROR:Transcription failed for chunk 19: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,569:ERROR:Transcription failed for chunk 20: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,570:ERROR:Transcription failed for chunk 21: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,570:ERROR:Transcription failed for chunk 22: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,570:ERROR:Transcription failed for chunk 23: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,571:ERROR:Transcription failed for chunk 24: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,571:ERROR:Transcription failed for chunk 25: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,571:ERROR:Transcription failed for chunk 26: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,572:ERROR:Transcription failed for chunk 27: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,572:ERROR:Transcription failed for chunk 28: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,572:ERROR:Transcription failed for chunk 29: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,573:ERROR:Transcription failed for chunk 30: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,573:ERROR:Transcription failed for chunk 31: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,574:ERROR:Transcription failed for chunk 32: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,574:ERROR:Transcription failed for chunk 33: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,574:ERROR:Transcription failed for chunk 34: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,575:ERROR:Transcription failed for chunk 35: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,575:ERROR:Transcription failed for chunk 36: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,576:ERROR:Transcription failed for chunk 37: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,576:ERROR:Transcription failed for chunk 38: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,576:ERROR:Transcription failed for chunk 39: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,577:ERROR:Transcription failed for chunk 40: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,577:ERROR:Transcription failed for chunk 41: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,578:ERROR:Transcription failed for chunk 42: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,578:ERROR:Transcription failed for chunk 43: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,578:ERROR:Transcription failed for chunk 44: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,579:ERROR:Transcription failed for chunk 45: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,579:ERROR:Transcription failed for chunk 46: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,580:ERROR:Transcription failed for chunk 47: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,580:ERROR:Transcription failed for chunk 48: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,580:ERROR:Transcription failed for chunk 49: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,581:ERROR:Transcription failed for chunk 50: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,582:ERROR:Transcription failed for chunk 51: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,582:ERROR:Transcription failed for chunk 52: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,583:ERROR:Transcription failed for chunk 53: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,583:ERROR:Transcription failed for chunk 54: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,583:ERROR:Transcription failed for chunk 55: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,583:ERROR:Transcription failed for chunk 56: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,584:ERROR:Transcription failed for chunk 57: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,584:ERROR:Transcription failed for chunk 58: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,584:ERROR:Transcription failed for chunk 59: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,585:ERROR:Transcription failed for chunk 60: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,585:ERROR:Transcription failed for chunk 61: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,585:ERROR:Transcription failed for chunk 62: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,586:ERROR:Transcription failed for chunk 63: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,586:ERROR:Transcription failed for chunk 64: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,586:ERROR:Transcription failed for chunk 65: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,586:ERROR:Transcription failed for chunk 66: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,586:ERROR:Transcription failed for chunk 67: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,587:ERROR:Transcription failed for chunk 68: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,587:ERROR:Transcription failed for chunk 69: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,587:ERROR:Transcription failed for chunk 70: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,587:ERROR:Transcription failed for chunk 71: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,587:ERROR:Transcription failed for chunk 72: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,588:ERROR:Transcription failed for chunk 73: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,588:ERROR:Transcription failed for chunk 74: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,588:ERROR:Transcription failed for chunk 75: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,588:ERROR:Transcription failed for chunk 76: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,588:ERROR:Transcription failed for chunk 77: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,589:ERROR:Transcription failed for chunk 78: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,589:ERROR:Transcription failed for chunk 79: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:06:21,589:ERROR:Error during transcription process: expected np.ndarray (got _io.BytesIO)
+2024-09-29 16:12:39,229:INFO:1 change detected
+2024-09-29 16:12:39,882:INFO:4 changes detected
+2024-09-29 16:12:44,709:INFO:1 change detected
+2024-09-29 16:13:05,464:INFO:1 change detected
+2024-09-29 16:13:05,896:INFO:3 changes detected
+2024-09-29 16:13:19,790:INFO:1 change detected
+2024-09-29 16:13:20,166:INFO:3 changes detected
+2024-09-29 16:13:32,470:INFO:1 change detected
+2024-09-29 16:15:40,341:INFO:1 change detected
+2024-09-29 16:16:01,305:INFO:1 change detected
+2024-09-29 16:16:02,147:INFO:1 change detected
+2024-09-29 16:16:18,814:INFO:1 change detected
+2024-09-29 16:16:19,236:INFO:3 changes detected
+2024-09-29 16:17:28,683:WARNING:Running in development mode - allowing CORS for all origins
+2024-09-29 16:17:30,359:WARNING:Running in development mode - allowing CORS for all origins
+2024-09-29 16:17:30,430:INFO:1 change detected
+2024-09-29 16:17:38,993:INFO:Received file: Brent2.mp3
+2024-09-29 16:17:39,102:INFO:2 changes detected
+2024-09-29 16:17:48,467:INFO:Audio compressed successfully.
+2024-09-29 16:17:48,467:INFO:Total audio duration: 71.80 minutes
+2024-09-29 16:17:48,467:INFO:Calculated chunk duration: 1.00 minutes
+2024-09-29 16:17:48,482:INFO:Total number of chunks: 79
+2024-09-29 16:17:49,034:ERROR:Transcription failed for chunk 1: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:49,041:ERROR:Error during transcription process: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:49,057:ERROR:Transcription failed for chunk 4: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:49,103:ERROR:Transcription failed for chunk 3: Expected size for first two dimensions of batch2 tensor to be: [6, 119] but got: [6, 120].
+2024-09-29 16:17:49,107:ERROR:Transcription failed for chunk 2: Expected size for first two dimensions of batch2 tensor to be: [6, 120] but got: [6, 119].
+2024-09-29 16:17:49,378:ERROR:Transcription failed for chunk 6: Expected size for first two dimensions of batch2 tensor to be: [6, 150] but got: [6, 236].
+2024-09-29 16:17:49,384:ERROR:Transcription failed for chunk 8: Expected size for first two dimensions of batch2 tensor to be: [6, 300] but got: [6, 290].
+2024-09-29 16:17:49,389:ERROR:Transcription failed for chunk 7: Expected size for first two dimensions of batch2 tensor to be: [6, 311] but got: [6, 301].
+2024-09-29 16:17:49,665:ERROR:Transcription failed for chunk 9: Expected size for first two dimensions of batch2 tensor to be: [6, 7] but got: [6, 6].
+2024-09-29 16:17:49,668:ERROR:Transcription failed for chunk 11: Expected size for first two dimensions of batch2 tensor to be: [6, 13] but got: [6, 16].
+2024-09-29 16:17:49,845:ERROR:Transcription failed for chunk 5: Expected size for first two dimensions of batch2 tensor to be: [6, 261] but got: [6, 262].
+2024-09-29 16:17:49,864:ERROR:Transcription failed for chunk 10: Expected size for first two dimensions of batch2 tensor to be: [6, 24] but got: [6, 25].
+2024-09-29 16:17:49,874:ERROR:Transcription failed for chunk 12: Expected size for first two dimensions of batch2 tensor to be: [6, 25] but got: [6, 26].
+2024-09-29 16:17:49,886:ERROR:Transcription failed for chunk 13: Expected size for first two dimensions of batch2 tensor to be: [6, 26] but got: [6, 27].
+2024-09-29 16:17:50,165:ERROR:Transcription failed for chunk 17: Expected size for first two dimensions of batch2 tensor to be: [6, 88] but got: [6, 143].
+2024-09-29 16:17:50,172:ERROR:Transcription failed for chunk 16: Expected size for first two dimensions of batch2 tensor to be: [6, 30] but got: [6, 42].
+2024-09-29 16:17:50,370:ERROR:Transcription failed for chunk 15: Expected size for first two dimensions of batch2 tensor to be: [6, 275] but got: [6, 276].
+2024-09-29 16:17:50,390:ERROR:Transcription failed for chunk 14: Expected size for first two dimensions of batch2 tensor to be: [6, 24] but got: [6, 25].
+2024-09-29 16:17:50,480:ERROR:Transcription failed for chunk 18: Expected size for first two dimensions of batch2 tensor to be: [6, 34] but got: [6, 35].
+2024-09-29 16:17:50,504:ERROR:Transcription failed for chunk 19: Expected size for first two dimensions of batch2 tensor to be: [6, 35] but got: [6, 36].
+2024-09-29 16:17:50,706:ERROR:Transcription failed for chunk 21: Expected size for first two dimensions of batch2 tensor to be: [6, 63] but got: [6, 52].
+2024-09-29 16:17:50,780:ERROR:Transcription failed for chunk 23: Expected size for first two dimensions of batch2 tensor to be: [6, 491] but got: [6, 623].
+2024-09-29 16:17:50,786:ERROR:Transcription failed for chunk 22: Expected size for first two dimensions of batch2 tensor to be: [6, 440] but got: [6, 124].
+2024-09-29 16:17:51,042:ERROR:Transcription failed for chunk 25: Expected size for first two dimensions of batch2 tensor to be: [6, 854] but got: [6, 587].
+2024-09-29 16:17:51,048:ERROR:Transcription failed for chunk 20: Expected size for first two dimensions of batch2 tensor to be: [6, 1160] but got: [6, 855].
+2024-09-29 16:17:51,061:ERROR:Transcription failed for chunk 26: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:51,069:ERROR:Transcription failed for chunk 24: Expected size for first two dimensions of batch2 tensor to be: [6, 307] but got: [6, 270].
+2024-09-29 16:17:51,399:ERROR:Transcription failed for chunk 29: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:17:51,475:ERROR:Transcription failed for chunk 30: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:51,510:ERROR:Transcription failed for chunk 27: Expected size for first two dimensions of batch2 tensor to be: [6, 204] but got: [6, 223].
+2024-09-29 16:17:51,688:ERROR:Transcription failed for chunk 32: Expected size for first two dimensions of batch2 tensor to be: [6, 305] but got: [6, 541].
+2024-09-29 16:17:51,711:ERROR:Transcription failed for chunk 31: Expected size for first two dimensions of batch2 tensor to be: [6, 341] but got: [6, 307].
+2024-09-29 16:17:51,960:ERROR:Transcription failed for chunk 34: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:17:52,039:ERROR:Transcription failed for chunk 35: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:52,045:ERROR:Transcription failed for chunk 33: Expected size for first two dimensions of batch2 tensor to be: [6, 455] but got: [6, 105].
+2024-09-29 16:17:52,229:ERROR:Transcription failed for chunk 36: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:52,279:ERROR:Transcription failed for chunk 37: Expected size for first two dimensions of batch2 tensor to be: [6, 455] but got: [6, 569].
+2024-09-29 16:17:52,287:ERROR:Transcription failed for chunk 28: Expected size for first two dimensions of batch2 tensor to be: [6, 344] but got: [6, 458].
+2024-09-29 16:17:52,292:ERROR:Transcription failed for chunk 38: Expected size for first two dimensions of batch2 tensor to be: [6, 566] but got: [6, 424].
+2024-09-29 16:17:52,550:ERROR:Transcription failed for chunk 39: Expected size for first two dimensions of batch2 tensor to be: [6, 9] but got: [6, 13].
+2024-09-29 16:17:52,560:ERROR:Transcription failed for chunk 41: Expected size for first two dimensions of batch2 tensor to be: [6, 19] but got: [6, 23].
+2024-09-29 16:17:52,569:ERROR:Transcription failed for chunk 40: Expected size for first two dimensions of batch2 tensor to be: [6, 11] but got: [6, 34].
+2024-09-29 16:17:52,570:ERROR:Transcription failed for chunk 42: Expected size for first two dimensions of batch2 tensor to be: [6, 12] but got: [6, 35].
+2024-09-29 16:17:52,840:ERROR:Transcription failed for chunk 44: Expected size for first two dimensions of batch2 tensor to be: [6, 14] but got: [6, 19].
+2024-09-29 16:17:52,847:ERROR:Transcription failed for chunk 45: Expected size for first two dimensions of batch2 tensor to be: [6, 66] but got: [6, 43].
+2024-09-29 16:17:52,847:ERROR:Transcription failed for chunk 46: Expected size for first two dimensions of batch2 tensor to be: [6, 19] but got: [6, 24].
+2024-09-29 16:17:53,100:ERROR:Transcription failed for chunk 47: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:17:53,145:ERROR:Transcription failed for chunk 49: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:53,333:ERROR:Transcription failed for chunk 50: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:53,405:ERROR:Transcription failed for chunk 51: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:53,410:ERROR:Transcription failed for chunk 48: Expected size for first two dimensions of batch2 tensor to be: [6, 1312] but got: [6, 329].
+2024-09-29 16:17:53,655:ERROR:Transcription failed for chunk 54: Expected size for first two dimensions of batch2 tensor to be: [6, 4] but got: [6, 5].
+2024-09-29 16:17:53,678:ERROR:Transcription failed for chunk 53: Expected size for first two dimensions of batch2 tensor to be: [6, 3] but got: [6, 4].
+2024-09-29 16:17:53,909:ERROR:Transcription failed for chunk 43: Expected size for first two dimensions of batch2 tensor to be: [6, 284] but got: [6, 394].
+2024-09-29 16:17:53,917:ERROR:Transcription failed for chunk 56: Expected size for first two dimensions of batch2 tensor to be: [6, 445] but got: [6, 530].
+2024-09-29 16:17:53,922:ERROR:Transcription failed for chunk 55: Expected size for first two dimensions of batch2 tensor to be: [6, 607] but got: [6, 667].
+2024-09-29 16:17:53,929:ERROR:Transcription failed for chunk 52: Expected size for first two dimensions of batch2 tensor to be: [6, 163] but got: [6, 138].
+2024-09-29 16:17:54,218:ERROR:Transcription failed for chunk 60: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:17:54,305:ERROR:Transcription failed for chunk 59: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:54,440:ERROR:Transcription failed for chunk 61: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:54,447:ERROR:Transcription failed for chunk 57: Expected size for first two dimensions of batch2 tensor to be: [6, 1414] but got: [6, 1440].
+2024-09-29 16:17:54,726:ERROR:Transcription failed for chunk 64: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:54,737:ERROR:Transcription failed for chunk 58: Expected size for first two dimensions of batch2 tensor to be: [6, 309] but got: [6, 308].
+2024-09-29 16:17:54,743:ERROR:Transcription failed for chunk 63: Expected size for first two dimensions of batch2 tensor to be: [6, 308] but got: [6, 309].
+2024-09-29 16:17:54,999:ERROR:Transcription failed for chunk 66: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:17:55,086:ERROR:Transcription failed for chunk 67: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:55,111:ERROR:Transcription failed for chunk 62: Expected size for first two dimensions of batch2 tensor to be: [6, 118] but got: [6, 117].
+2024-09-29 16:17:55,115:ERROR:Transcription failed for chunk 65: Expected size for first two dimensions of batch2 tensor to be: [6, 117] but got: [6, 118].
+2024-09-29 16:17:55,370:ERROR:Transcription failed for chunk 70: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:17:55,466:ERROR:Transcription failed for chunk 71: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:55,473:ERROR:Transcription failed for chunk 69: Expected size for first two dimensions of batch2 tensor to be: [6, 480] but got: [6, 99].
+2024-09-29 16:17:55,680:ERROR:Transcription failed for chunk 73: Expected size for first two dimensions of batch2 tensor to be: [6, 547] but got: [6, 576].
+2024-09-29 16:17:55,686:ERROR:Transcription failed for chunk 72: Expected size for first two dimensions of batch2 tensor to be: [6, 142] but got: [6, 141].
+2024-09-29 16:17:55,686:ERROR:Transcription failed for chunk 68: Expected size for first two dimensions of batch2 tensor to be: [6, 425] but got: [6, 309].
+2024-09-29 16:17:55,693:ERROR:Transcription failed for chunk 74: Expected size for first two dimensions of batch2 tensor to be: [6, 426] but got: [6, 310].
+2024-09-29 16:17:55,980:ERROR:Transcription failed for chunk 75: Expected size for first two dimensions of batch2 tensor to be: [6, 319] but got: [6, 236].
+2024-09-29 16:17:56,032:ERROR:Transcription failed for chunk 78: Expected size for first two dimensions of batch2 tensor to be: [6, 454] but got: [6, 544].
+2024-09-29 16:17:56,043:ERROR:Transcription failed for chunk 77: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:17:56,164:ERROR:Transcription failed for chunk 76: Expected size for first two dimensions of batch2 tensor to be: [6, 234] but got: [6, 235].
+2024-09-29 16:17:56,176:ERROR:Transcription failed for chunk 79: Expected size for first two dimensions of batch2 tensor to be: [6, 235] but got: [6, 236].
+2024-09-29 16:20:19,410:INFO:1 change detected
+2024-09-29 16:20:19,946:INFO:1 change detected
+2024-09-29 16:21:56,729:INFO:1 change detected
+2024-09-29 16:21:57,161:INFO:3 changes detected
+2024-09-29 16:21:58,670:WARNING:Running in development mode - allowing CORS for all origins
+2024-09-29 16:21:58,766:INFO:1 change detected
+2024-09-29 16:22:06,426:INFO:Received file: Brent2.mp3
+2024-09-29 16:22:06,503:INFO:2 changes detected
+2024-09-29 16:22:15,901:INFO:Audio compressed successfully.
+2024-09-29 16:22:15,901:INFO:Total audio duration: 71.80 minutes
+2024-09-29 16:22:15,901:INFO:Calculated chunk duration: 1.00 minutes
+2024-09-29 16:22:15,916:INFO:Total number of chunks: 79
+2024-09-29 16:22:16,446:ERROR:Transcription failed for chunk 1: Expected size for first two dimensions of batch2 tensor to be: [6, 165] but got: [6, 117].
+2024-09-29 16:22:16,452:ERROR:Error during transcription process: Expected size for first two dimensions of batch2 tensor to be: [6, 165] but got: [6, 117].
+2024-09-29 16:22:16,452:ERROR:Transcription failed for chunk 3: Expected size for first two dimensions of batch2 tensor to be: [6, 90] but got: [6, 192].
+2024-09-29 16:22:16,458:ERROR:Transcription failed for chunk 2: Expected size for first two dimensions of batch2 tensor to be: [6, 173] but got: [6, 200].
+2024-09-29 16:22:16,711:ERROR:Transcription failed for chunk 6: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:22:16,831:ERROR:Transcription failed for chunk 5: Expected size for first two dimensions of batch2 tensor to be: [6, 90] but got: [6, 167].
+2024-09-29 16:22:16,841:ERROR:Transcription failed for chunk 4: Expected size for first two dimensions of batch2 tensor to be: [6, 181] but got: [6, 258].
+2024-09-29 16:22:16,950:ERROR:Transcription failed for chunk 8: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:22:17,104:ERROR:Transcription failed for chunk 7: Expected size for first two dimensions of batch2 tensor to be: [6, 415] but got: [6, 414].
+2024-09-29 16:22:17,109:ERROR:Transcription failed for chunk 10: Expected size for first two dimensions of batch2 tensor to be: [6, 414] but got: [6, 748].
+2024-09-29 16:22:17,125:ERROR:Transcription failed for chunk 9: Expected size for first two dimensions of batch2 tensor to be: [6, 251] but got: [6, 335].
+2024-09-29 16:22:17,368:ERROR:Transcription failed for chunk 11: Expected size for first two dimensions of batch2 tensor to be: [6, 216] but got: [6, 217].
+2024-09-29 16:22:17,376:ERROR:Transcription failed for chunk 12: Expected size for first two dimensions of batch2 tensor to be: [6, 301] but got: [6, 303].
+2024-09-29 16:22:17,386:ERROR:Transcription failed for chunk 14: Expected size for first two dimensions of batch2 tensor to be: [6, 302] but got: [6, 304].
+2024-09-29 16:22:17,396:ERROR:Transcription failed for chunk 13: Expected size for first two dimensions of batch2 tensor to be: [6, 303] but got: [6, 305].
+2024-09-29 16:22:17,712:ERROR:Transcription failed for chunk 16: Expected size for first two dimensions of batch2 tensor to be: [6, 178] but got: [6, 296].
+2024-09-29 16:22:17,730:ERROR:Transcription failed for chunk 17: Expected size for first two dimensions of batch2 tensor to be: [6, 574] but got: [6, 573].
+2024-09-29 16:22:17,748:ERROR:Transcription failed for chunk 15: Expected size for first two dimensions of batch2 tensor to be: [6, 897] but got: [6, 647].
+2024-09-29 16:22:17,753:ERROR:Transcription failed for chunk 18: Expected size for first two dimensions of batch2 tensor to be: [6, 417] but got: [6, 357].
+2024-09-29 16:22:18,061:ERROR:Transcription failed for chunk 22: Expected size for first two dimensions of batch2 tensor to be: [6, 62] but got: [6, 61].
+2024-09-29 16:22:18,066:ERROR:Transcription failed for chunk 20: Expected size for first two dimensions of batch2 tensor to be: [6, 134] but got: [6, 143].
+2024-09-29 16:22:18,066:ERROR:Transcription failed for chunk 21: Expected size for first two dimensions of batch2 tensor to be: [6, 195] but got: [6, 137].
+2024-09-29 16:22:18,327:ERROR:Transcription failed for chunk 19: Expected size for first two dimensions of batch2 tensor to be: [6, 221] but got: [6, 191].
+2024-09-29 16:22:18,331:ERROR:Transcription failed for chunk 23: Expected size for first two dimensions of batch2 tensor to be: [6, 613] but got: [6, 493].
+2024-09-29 16:22:18,331:ERROR:Transcription failed for chunk 25: Expected size for first two dimensions of batch2 tensor to be: [6, 412] but got: [6, 523].
+2024-09-29 16:22:18,341:ERROR:Transcription failed for chunk 24: Expected size for first two dimensions of batch2 tensor to be: [6, 393] but got: [6, 333].
+2024-09-29 16:22:18,621:ERROR:Transcription failed for chunk 27: Expected size for first two dimensions of batch2 tensor to be: [6, 24] but got: [6, 30].
+2024-09-29 16:22:18,630:ERROR:Transcription failed for chunk 29: Expected size for first two dimensions of batch2 tensor to be: [6, 18] but got: [6, 25].
+2024-09-29 16:22:18,638:ERROR:Transcription failed for chunk 26: Expected size for first two dimensions of batch2 tensor to be: [6, 33] but got: [6, 42].
+2024-09-29 16:22:18,642:ERROR:Transcription failed for chunk 28: Expected size for first two dimensions of batch2 tensor to be: [6, 25] but got: [6, 33].
+2024-09-29 16:22:18,971:ERROR:Transcription failed for chunk 30: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:22:18,978:ERROR:Transcription failed for chunk 32: Expected size for first two dimensions of batch2 tensor to be: [6, 219] but got: [6, 233].
+2024-09-29 16:22:18,978:ERROR:Transcription failed for chunk 31: Expected size for first two dimensions of batch2 tensor to be: [6, 65] but got: [6, 59].
+2024-09-29 16:22:18,989:ERROR:Transcription failed for chunk 33: Expected size for first two dimensions of batch2 tensor to be: [6, 220] but got: [6, 234].
+2024-09-29 16:22:19,337:ERROR:Transcription failed for chunk 37: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:22:19,346:ERROR:Transcription failed for chunk 36: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:22:19,353:ERROR:Transcription failed for chunk 35: Expected size for first two dimensions of batch2 tensor to be: [6, 114] but got: [6, 100].
+2024-09-29 16:22:19,651:ERROR:Transcription failed for chunk 39: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:22:19,698:ERROR:Transcription failed for chunk 38: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:22:19,713:ERROR:Transcription failed for chunk 40: Expected size for first two dimensions of batch2 tensor to be: [6, 130] but got: [6, 147].
+2024-09-29 16:22:19,731:ERROR:Transcription failed for chunk 34: Expected size for first two dimensions of batch2 tensor to be: [6, 17] but got: [6, 18].
+2024-09-29 16:22:19,964:ERROR:Transcription failed for chunk 41: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:22:20,042:ERROR:Transcription failed for chunk 42: Expected size for first two dimensions of batch2 tensor to be: [6, 45] but got: [6, 31].
+2024-09-29 16:22:20,066:ERROR:Transcription failed for chunk 44: Expected size for first two dimensions of batch2 tensor to be: [6, 67] but got: [6, 54].
+2024-09-29 16:22:20,073:ERROR:Transcription failed for chunk 43: Expected size for first two dimensions of batch2 tensor to be: [6, 23] but got: [6, 24].
+2024-09-29 16:22:20,332:ERROR:Transcription failed for chunk 45: Expected size for first two dimensions of batch2 tensor to be: [6, 38] but got: [6, 65].
+2024-09-29 16:22:20,343:ERROR:Transcription failed for chunk 48: Expected size for first two dimensions of batch2 tensor to be: [6, 77] but got: [6, 104].
+2024-09-29 16:22:20,356:ERROR:Transcription failed for chunk 46: Expected size for first two dimensions of batch2 tensor to be: [6, 117] but got: [6, 144].
+2024-09-29 16:22:20,361:ERROR:Transcription failed for chunk 47: Expected size for first two dimensions of batch2 tensor to be: [6, 158] but got: [6, 145].
+2024-09-29 16:22:20,600:ERROR:Transcription failed for chunk 50: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:22:20,665:ERROR:Transcription failed for chunk 51: Expected size for first two dimensions of batch2 tensor to be: [6, 243] but got: [6, 242].
+2024-09-29 16:22:20,686:ERROR:Transcription failed for chunk 49: Expected size for first two dimensions of batch2 tensor to be: [6, 244] but got: [6, 255].
+2024-09-29 16:22:20,703:ERROR:Transcription failed for chunk 52: Expected size for first two dimensions of batch2 tensor to be: [6, 245] but got: [6, 256].
+2024-09-29 16:22:20,966:ERROR:Transcription failed for chunk 56: Expected size for first two dimensions of batch2 tensor to be: [6, 334] but got: [6, 150].
+2024-09-29 16:22:20,971:ERROR:Transcription failed for chunk 55: Expected size for first two dimensions of batch2 tensor to be: [6, 140] but got: [6, 290].
+2024-09-29 16:22:20,976:ERROR:Transcription failed for chunk 53: Expected size for first two dimensions of batch2 tensor to be: [6, 77] but got: [6, 65].
+2024-09-29 16:22:20,976:ERROR:Transcription failed for chunk 54: Expected size for first two dimensions of batch2 tensor to be: [6, 65] but got: [6, 76].
+2024-09-29 16:22:21,270:ERROR:Transcription failed for chunk 58: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:22:21,303:ERROR:Transcription failed for chunk 60: Expected size for first two dimensions of batch2 tensor to be: [6, 345] but got: [6, 280].
+2024-09-29 16:22:21,330:ERROR:Transcription failed for chunk 59: Expected size for first two dimensions of batch2 tensor to be: [6, 423] but got: [6, 358].
+2024-09-29 16:22:21,337:ERROR:Transcription failed for chunk 57: Expected size for first two dimensions of batch2 tensor to be: [6, 502] but got: [6, 437].
+2024-09-29 16:22:21,668:ERROR:Transcription failed for chunk 62: Expected size for first two dimensions of batch2 tensor to be: [6, 687] but got: [6, 462].
+2024-09-29 16:22:21,674:ERROR:Transcription failed for chunk 63: Expected size for first two dimensions of batch2 tensor to be: [6, 393] but got: [6, 381].
+2024-09-29 16:22:21,674:ERROR:Transcription failed for chunk 61: Expected size for first two dimensions of batch2 tensor to be: [6, 381] but got: [6, 393].
+2024-09-29 16:22:21,685:ERROR:Transcription failed for chunk 64: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:22:22,031:ERROR:Transcription failed for chunk 68: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:22:22,051:ERROR:Transcription failed for chunk 67: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:22:22,172:ERROR:Transcription failed for chunk 65: Expected size for first two dimensions of batch2 tensor to be: [6, 226] but got: [6, 247].
+2024-09-29 16:22:22,325:ERROR:Transcription failed for chunk 69: Expected size for first two dimensions of batch2 tensor to be: [6, 1218] but got: [6, 1253].
+2024-09-29 16:22:22,332:ERROR:Transcription failed for chunk 70: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:22:22,338:ERROR:Transcription failed for chunk 66: Expected size for first two dimensions of batch2 tensor to be: [6, 35] but got: [6, 36].
+2024-09-29 16:22:22,599:ERROR:Transcription failed for chunk 73: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:22:22,605:ERROR:Transcription failed for chunk 72: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:22:22,624:ERROR:Transcription failed for chunk 74: Expected size for first two dimensions of batch2 tensor to be: [6, 39] but got: [6, 40].
+2024-09-29 16:22:22,662:ERROR:Transcription failed for chunk 71: Expected size for first two dimensions of batch2 tensor to be: [6, 10] but got: [6, 11].
+2024-09-29 16:22:23,017:ERROR:Transcription failed for chunk 75: Expected size for first two dimensions of batch2 tensor to be: [6, 245] but got: [6, 427].
+2024-09-29 16:22:23,036:ERROR:Transcription failed for chunk 78: Expected size for first two dimensions of batch2 tensor to be: [6, 565] but got: [6, 736].
+2024-09-29 16:22:23,048:ERROR:Transcription failed for chunk 76: Expected size for first two dimensions of batch2 tensor to be: [6, 973] but got: [6, 961].
+2024-09-29 16:22:23,062:ERROR:Transcription failed for chunk 77: Expected size for first two dimensions of batch2 tensor to be: [6, 497] but got: [6, 397].
+2024-09-29 16:22:23,242:INFO:Transcription successful for chunk 79
+2024-09-29 16:22:53,254:INFO:1 change detected
+2024-09-29 16:22:53,858:INFO:1 change detected
+2024-09-29 16:22:59,643:INFO:1 change detected
+2024-09-29 16:23:16,293:INFO:1 change detected
+2024-09-29 16:23:30,389:INFO:1 change detected
+2024-09-29 16:23:45,584:INFO:1 change detected
+2024-09-29 16:23:48,256:INFO:1 change detected
+2024-09-29 16:24:09,007:INFO:1 change detected
+2024-09-29 16:24:25,558:INFO:1 change detected
+2024-09-29 16:24:26,041:INFO:3 changes detected
+2024-09-29 16:24:27,530:INFO:Whisper model loaded successfully.
+2024-09-29 16:24:27,535:WARNING:Running in development mode - allowing CORS for all origins
+2024-09-29 16:24:27,641:INFO:1 change detected
+2024-09-29 16:24:30,043:INFO:1 change detected
+2024-09-29 16:24:30,622:INFO:3 changes detected
+2024-09-29 16:24:32,179:INFO:Whisper model loaded successfully.
+2024-09-29 16:24:32,184:WARNING:Running in development mode - allowing CORS for all origins
+2024-09-29 16:24:32,276:INFO:1 change detected
+2024-09-29 16:24:37,385:INFO:Received file: Brent2.mp3
+2024-09-29 16:24:37,385:INFO:Temporary directory 'temp' cleared.
+2024-09-29 16:24:37,386:INFO:Temporary directory 'temp' created.
+2024-09-29 16:24:37,493:INFO:2 changes detected
+2024-09-29 16:24:42,822:INFO:Audio file 'Brent2.mp3' loaded successfully.
+2024-09-29 16:24:46,800:INFO:Audio compressed to mono and 16kHz successfully.
+2024-09-29 16:24:46,800:INFO:Total audio duration: 71.80 minutes
+2024-09-29 16:24:46,800:INFO:Calculated chunk duration: 1.00 minutes
+2024-09-29 16:24:46,813:INFO:Total number of chunks: 79
+2024-09-29 16:24:46,817:INFO:Chunk 1: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:46,818:INFO:Chunk 1: Converted audio data to float32.
+2024-09-29 16:24:46,823:INFO:Chunk 2: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:46,824:INFO:Chunk 2: Converted audio data to float32.
+2024-09-29 16:24:46,830:INFO:Chunk 3: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:46,831:INFO:Chunk 3: Converted audio data to float32.
+2024-09-29 16:24:46,932:INFO:Chunk 4: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:46,945:INFO:Chunk 4: Converted audio data to float32.
+2024-09-29 16:24:47,313:ERROR:Transcription failed for chunk 1: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:47,319:INFO:Chunk 5: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:47,319:INFO:Chunk 5: Converted audio data to float32.
+2024-09-29 16:24:47,319:ERROR:Transcription failed for chunk 4: Expected size for first two dimensions of batch2 tensor to be: [6, 25] but got: [6, 11].
+2024-09-29 16:24:47,319:ERROR:Transcription failed for chunk 3: Expected size for first two dimensions of batch2 tensor to be: [6, 10] but got: [6, 21].
+2024-09-29 16:24:47,320:ERROR:Transcription failed for chunk 2: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:47,324:INFO:Chunk 6: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:47,325:INFO:Chunk 6: Converted audio data to float32.
+2024-09-29 16:24:47,328:INFO:Chunk 7: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:47,328:INFO:Chunk 7: Converted audio data to float32.
+2024-09-29 16:24:47,332:INFO:Chunk 8: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:47,332:INFO:Chunk 8: Converted audio data to float32.
+2024-09-29 16:24:47,575:ERROR:Transcription failed for chunk 5: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:24:47,579:INFO:Chunk 9: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:47,579:INFO:Chunk 9: Converted audio data to float32.
+2024-09-29 16:24:47,603:ERROR:Transcription failed for chunk 6: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:47,607:INFO:Chunk 10: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:47,608:INFO:Chunk 10: Converted audio data to float32.
+2024-09-29 16:24:47,674:ERROR:Transcription failed for chunk 7: Expected size for first two dimensions of batch2 tensor to be: [6, 63] but got: [6, 51].
+2024-09-29 16:24:47,679:INFO:Chunk 11: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:47,679:INFO:Chunk 11: Converted audio data to float32.
+2024-09-29 16:24:47,811:ERROR:Transcription failed for chunk 8: Expected size for first two dimensions of batch2 tensor to be: [6, 94] but got: [6, 95].
+2024-09-29 16:24:47,815:INFO:Chunk 12: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:47,816:INFO:Chunk 12: Converted audio data to float32.
+2024-09-29 16:24:47,847:ERROR:Transcription failed for chunk 9: Expected size for first two dimensions of batch2 tensor to be: [6, 95] but got: [6, 96].
+2024-09-29 16:24:47,851:INFO:Chunk 13: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:47,853:INFO:Chunk 13: Converted audio data to float32.
+2024-09-29 16:24:47,853:ERROR:Transcription failed for chunk 10: Expected size for first two dimensions of batch2 tensor to be: [6, 96] but got: [6, 97].
+2024-09-29 16:24:47,857:INFO:Chunk 14: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:47,858:INFO:Chunk 14: Converted audio data to float32.
+2024-09-29 16:24:48,173:ERROR:Transcription failed for chunk 14: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:48,180:INFO:Chunk 15: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:48,181:INFO:Chunk 15: Converted audio data to float32.
+2024-09-29 16:24:48,184:ERROR:Transcription failed for chunk 13: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:48,189:INFO:Chunk 16: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:48,190:INFO:Chunk 16: Converted audio data to float32.
+2024-09-29 16:24:48,201:ERROR:Transcription failed for chunk 11: Expected size for first two dimensions of batch2 tensor to be: [6, 196] but got: [6, 178].
+2024-09-29 16:24:48,206:INFO:Chunk 17: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:48,207:INFO:Chunk 17: Converted audio data to float32.
+2024-09-29 16:24:48,207:ERROR:Transcription failed for chunk 12: Expected size for first two dimensions of batch2 tensor to be: [6, 197] but got: [6, 179].
+2024-09-29 16:24:48,212:INFO:Chunk 18: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:48,212:INFO:Chunk 18: Converted audio data to float32.
+2024-09-29 16:24:48,522:ERROR:Transcription failed for chunk 18: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:48,531:INFO:Chunk 19: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:48,532:INFO:Chunk 19: Converted audio data to float32.
+2024-09-29 16:24:48,544:ERROR:Transcription failed for chunk 17: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:48,548:INFO:Chunk 20: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:48,549:INFO:Chunk 20: Converted audio data to float32.
+2024-09-29 16:24:48,549:ERROR:Transcription failed for chunk 15: Expected size for first two dimensions of batch2 tensor to be: [6, 665] but got: [6, 119].
+2024-09-29 16:24:48,554:INFO:Chunk 21: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:48,555:INFO:Chunk 21: Converted audio data to float32.
+2024-09-29 16:24:48,813:ERROR:Transcription failed for chunk 21: Expected size for first two dimensions of batch2 tensor to be: [6, 14] but got: [6, 23].
+2024-09-29 16:24:48,817:INFO:Chunk 22: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:48,818:INFO:Chunk 22: Converted audio data to float32.
+2024-09-29 16:24:48,923:ERROR:Transcription failed for chunk 19: Expected size for first two dimensions of batch2 tensor to be: [6, 441] but got: [6, 440].
+2024-09-29 16:24:48,927:INFO:Chunk 23: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:48,928:INFO:Chunk 23: Converted audio data to float32.
+2024-09-29 16:24:48,928:ERROR:Transcription failed for chunk 20: Expected size for first two dimensions of batch2 tensor to be: [6, 644] but got: [6, 629].
+2024-09-29 16:24:48,934:INFO:Chunk 24: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:48,935:INFO:Chunk 24: Converted audio data to float32.
+2024-09-29 16:24:48,940:ERROR:Transcription failed for chunk 16: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:48,945:INFO:Chunk 25: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:48,946:INFO:Chunk 25: Converted audio data to float32.
+2024-09-29 16:24:49,245:ERROR:Transcription failed for chunk 24: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:24:49,251:INFO:Chunk 26: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:49,253:INFO:Chunk 26: Converted audio data to float32.
+2024-09-29 16:24:49,260:ERROR:Transcription failed for chunk 22: Expected size for first two dimensions of batch2 tensor to be: [6, 34] but got: [6, 45].
+2024-09-29 16:24:49,266:INFO:Chunk 27: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:49,268:INFO:Chunk 27: Converted audio data to float32.
+2024-09-29 16:24:49,390:ERROR:Transcription failed for chunk 25: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:49,395:INFO:Chunk 28: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:49,396:INFO:Chunk 28: Converted audio data to float32.
+2024-09-29 16:24:49,475:ERROR:Transcription failed for chunk 23: Expected size for first two dimensions of batch2 tensor to be: [6, 178] but got: [6, 177].
+2024-09-29 16:24:49,481:INFO:Chunk 29: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:49,481:INFO:Chunk 29: Converted audio data to float32.
+2024-09-29 16:24:49,482:ERROR:Transcription failed for chunk 27: Expected size for first two dimensions of batch2 tensor to be: [6, 355] but got: [6, 415].
+2024-09-29 16:24:49,487:INFO:Chunk 30: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:49,488:INFO:Chunk 30: Converted audio data to float32.
+2024-09-29 16:24:49,496:ERROR:Transcription failed for chunk 26: Expected size for first two dimensions of batch2 tensor to be: [6, 178] but got: [6, 239].
+2024-09-29 16:24:49,501:INFO:Chunk 31: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:49,502:INFO:Chunk 31: Converted audio data to float32.
+2024-09-29 16:24:49,791:ERROR:Transcription failed for chunk 29: Expected size for first two dimensions of batch2 tensor to be: [6, 496] but got: [6, 548].
+2024-09-29 16:24:49,796:INFO:Chunk 32: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:49,797:INFO:Chunk 32: Converted audio data to float32.
+2024-09-29 16:24:49,797:ERROR:Transcription failed for chunk 28: Expected size for first two dimensions of batch2 tensor to be: [6, 965] but got: [6, 902].
+2024-09-29 16:24:49,798:ERROR:Transcription failed for chunk 30: Expected size for first two dimensions of batch2 tensor to be: [6, 443] but got: [6, 434].
+2024-09-29 16:24:49,799:ERROR:Transcription failed for chunk 31: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:49,804:INFO:Chunk 33: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:49,805:INFO:Chunk 33: Converted audio data to float32.
+2024-09-29 16:24:49,809:INFO:Chunk 34: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:49,810:INFO:Chunk 34: Converted audio data to float32.
+2024-09-29 16:24:49,814:INFO:Chunk 35: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:49,814:INFO:Chunk 35: Converted audio data to float32.
+2024-09-29 16:24:50,096:ERROR:Transcription failed for chunk 34: Expected size for first two dimensions of batch2 tensor to be: [6, 9] but got: [6, 14].
+2024-09-29 16:24:50,102:INFO:Chunk 36: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:50,103:INFO:Chunk 36: Converted audio data to float32.
+2024-09-29 16:24:50,167:ERROR:Transcription failed for chunk 35: Expected size for first two dimensions of batch2 tensor to be: [6, 191] but got: [6, 190].
+2024-09-29 16:24:50,172:INFO:Chunk 37: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:50,173:INFO:Chunk 37: Converted audio data to float32.
+2024-09-29 16:24:50,174:ERROR:Transcription failed for chunk 33: Expected size for first two dimensions of batch2 tensor to be: [6, 180] but got: [6, 190].
+2024-09-29 16:24:50,178:INFO:Chunk 38: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:50,179:INFO:Chunk 38: Converted audio data to float32.
+2024-09-29 16:24:50,180:ERROR:Transcription failed for chunk 32: Expected size for first two dimensions of batch2 tensor to be: [6, 12] but got: [6, 11].
+2024-09-29 16:24:50,184:INFO:Chunk 39: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:50,185:INFO:Chunk 39: Converted audio data to float32.
+2024-09-29 16:24:50,438:ERROR:Transcription failed for chunk 38: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:24:50,443:INFO:Chunk 40: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:50,444:INFO:Chunk 40: Converted audio data to float32.
+2024-09-29 16:24:50,444:ERROR:Transcription failed for chunk 36: Expected size for first two dimensions of batch2 tensor to be: [6, 22] but got: [6, 12].
+2024-09-29 16:24:50,449:INFO:Chunk 41: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:50,450:INFO:Chunk 41: Converted audio data to float32.
+2024-09-29 16:24:50,667:ERROR:Transcription failed for chunk 40: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:50,674:INFO:Chunk 42: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:50,675:INFO:Chunk 42: Converted audio data to float32.
+2024-09-29 16:24:50,675:ERROR:Transcription failed for chunk 39: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:50,679:INFO:Chunk 43: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:50,679:INFO:Chunk 43: Converted audio data to float32.
+2024-09-29 16:24:50,679:ERROR:Transcription failed for chunk 37: Expected size for first two dimensions of batch2 tensor to be: [6, 570] but got: [6, 537].
+2024-09-29 16:24:50,680:ERROR:Transcription failed for chunk 41: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:50,686:INFO:Chunk 44: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:50,686:INFO:Chunk 44: Converted audio data to float32.
+2024-09-29 16:24:50,690:INFO:Chunk 45: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:50,691:INFO:Chunk 45: Converted audio data to float32.
+2024-09-29 16:24:50,953:ERROR:Transcription failed for chunk 45: Expected size for first two dimensions of batch2 tensor to be: [6, 5] but got: [6, 7].
+2024-09-29 16:24:50,961:INFO:Chunk 46: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:50,962:INFO:Chunk 46: Converted audio data to float32.
+2024-09-29 16:24:50,962:ERROR:Transcription failed for chunk 43: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:24:50,969:INFO:Chunk 47: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:50,971:INFO:Chunk 47: Converted audio data to float32.
+2024-09-29 16:24:51,200:ERROR:Transcription failed for chunk 44: Expected size for first two dimensions of batch2 tensor to be: [6, 599] but got: [6, 575].
+2024-09-29 16:24:51,205:INFO:Chunk 48: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:51,205:INFO:Chunk 48: Converted audio data to float32.
+2024-09-29 16:24:51,206:ERROR:Transcription failed for chunk 42: Expected size for first two dimensions of batch2 tensor to be: [6, 574] but got: [6, 900].
+2024-09-29 16:24:51,211:INFO:Chunk 49: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:51,212:INFO:Chunk 49: Converted audio data to float32.
+2024-09-29 16:24:51,212:ERROR:Transcription failed for chunk 47: Expected size for first two dimensions of batch2 tensor to be: [6, 600] but got: [6, 901].
+2024-09-29 16:24:51,218:INFO:Chunk 50: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:51,219:INFO:Chunk 50: Converted audio data to float32.
+2024-09-29 16:24:51,219:ERROR:Transcription failed for chunk 46: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:51,223:INFO:Chunk 51: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:51,224:INFO:Chunk 51: Converted audio data to float32.
+2024-09-29 16:24:51,507:ERROR:Transcription failed for chunk 49: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:24:51,511:INFO:Chunk 52: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:51,512:INFO:Chunk 52: Converted audio data to float32.
+2024-09-29 16:24:51,577:ERROR:Transcription failed for chunk 50: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:51,586:INFO:Chunk 53: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:51,588:INFO:Chunk 53: Converted audio data to float32.
+2024-09-29 16:24:51,599:ERROR:Transcription failed for chunk 51: Expected size for first two dimensions of batch2 tensor to be: [6, 38] but got: [6, 40].
+2024-09-29 16:24:51,607:INFO:Chunk 54: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:51,608:INFO:Chunk 54: Converted audio data to float32.
+2024-09-29 16:24:51,608:ERROR:Transcription failed for chunk 48: Expected size for first two dimensions of batch2 tensor to be: [6, 8] but got: [6, 9].
+2024-09-29 16:24:51,613:INFO:Chunk 55: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:51,614:INFO:Chunk 55: Converted audio data to float32.
+2024-09-29 16:24:51,862:ERROR:Transcription failed for chunk 54: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:24:51,867:INFO:Chunk 56: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:51,868:INFO:Chunk 56: Converted audio data to float32.
+2024-09-29 16:24:51,875:ERROR:Transcription failed for chunk 55: Expected size for first two dimensions of batch2 tensor to be: [6, 15] but got: [6, 24].
+2024-09-29 16:24:51,880:INFO:Chunk 57: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:51,881:INFO:Chunk 57: Converted audio data to float32.
+2024-09-29 16:24:51,983:ERROR:Transcription failed for chunk 52: Expected size for first two dimensions of batch2 tensor to be: [6, 148] but got: [6, 147].
+2024-09-29 16:24:51,989:INFO:Chunk 58: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:51,990:INFO:Chunk 58: Converted audio data to float32.
+2024-09-29 16:24:51,991:ERROR:Transcription failed for chunk 53: Expected size for first two dimensions of batch2 tensor to be: [6, 147] but got: [6, 148].
+2024-09-29 16:24:51,996:INFO:Chunk 59: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:51,997:INFO:Chunk 59: Converted audio data to float32.
+2024-09-29 16:24:52,297:ERROR:Transcription failed for chunk 59: Expected size for first two dimensions of batch2 tensor to be: [6, 232] but got: [6, 374].
+2024-09-29 16:24:52,303:INFO:Chunk 60: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:52,304:INFO:Chunk 60: Converted audio data to float32.
+2024-09-29 16:24:52,336:ERROR:Transcription failed for chunk 58: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:52,341:INFO:Chunk 61: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:52,342:INFO:Chunk 61: Converted audio data to float32.
+2024-09-29 16:24:52,342:ERROR:Transcription failed for chunk 56: Expected size for first two dimensions of batch2 tensor to be: [6, 1098] but got: [6, 187].
+2024-09-29 16:24:52,349:INFO:Chunk 62: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:52,350:INFO:Chunk 62: Converted audio data to float32.
+2024-09-29 16:24:52,561:ERROR:Transcription failed for chunk 61: Expected size for first two dimensions of batch2 tensor to be: [6, 853] but got: [6, 570].
+2024-09-29 16:24:52,568:INFO:Chunk 63: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:52,568:INFO:Chunk 63: Converted audio data to float32.
+2024-09-29 16:24:52,569:ERROR:Transcription failed for chunk 60: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:52,569:ERROR:Transcription failed for chunk 57: Expected size for first two dimensions of batch2 tensor to be: [6, 572] but got: [6, 715].
+2024-09-29 16:24:52,570:ERROR:Transcription failed for chunk 62: Expected size for first two dimensions of batch2 tensor to be: [6, 381] but got: [6, 128].
+2024-09-29 16:24:52,574:INFO:Chunk 64: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:52,576:INFO:Chunk 64: Converted audio data to float32.
+2024-09-29 16:24:52,579:INFO:Chunk 65: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:52,580:INFO:Chunk 65: Converted audio data to float32.
+2024-09-29 16:24:52,583:INFO:Chunk 66: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:52,584:INFO:Chunk 66: Converted audio data to float32.
+2024-09-29 16:24:52,855:ERROR:Transcription failed for chunk 66: Expected size for first two dimensions of batch2 tensor to be: [6, 19] but got: [6, 14].
+2024-09-29 16:24:52,862:INFO:Chunk 67: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:52,863:INFO:Chunk 67: Converted audio data to float32.
+2024-09-29 16:24:52,863:ERROR:Transcription failed for chunk 63: Expected size for first two dimensions of batch2 tensor to be: [6, 33] but got: [6, 42].
+2024-09-29 16:24:52,868:INFO:Chunk 68: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:52,869:INFO:Chunk 68: Converted audio data to float32.
+2024-09-29 16:24:52,869:ERROR:Transcription failed for chunk 65: Expected size for first two dimensions of batch2 tensor to be: [6, 4] but got: [6, 5].
+2024-09-29 16:24:52,873:INFO:Chunk 69: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:52,874:INFO:Chunk 69: Converted audio data to float32.
+2024-09-29 16:24:52,874:ERROR:Transcription failed for chunk 64: Expected size for first two dimensions of batch2 tensor to be: [6, 3] but got: [6, 4].
+2024-09-29 16:24:52,879:INFO:Chunk 70: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:52,880:INFO:Chunk 70: Converted audio data to float32.
+2024-09-29 16:24:53,149:ERROR:Transcription failed for chunk 68: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:24:53,154:INFO:Chunk 71: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:53,155:INFO:Chunk 71: Converted audio data to float32.
+2024-09-29 16:24:53,225:ERROR:Transcription failed for chunk 70: Expected size for first two dimensions of batch2 tensor to be: [6, 215] but got: [6, 227].
+2024-09-29 16:24:53,229:INFO:Chunk 72: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:53,230:INFO:Chunk 72: Converted audio data to float32.
+2024-09-29 16:24:53,230:ERROR:Transcription failed for chunk 67: Expected size for first two dimensions of batch2 tensor to be: [6, 227] but got: [6, 215].
+2024-09-29 16:24:53,235:INFO:Chunk 73: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:53,236:INFO:Chunk 73: Converted audio data to float32.
+2024-09-29 16:24:53,236:ERROR:Transcription failed for chunk 69: Expected size for first two dimensions of batch2 tensor to be: [6, 164] but got: [6, 40].
+2024-09-29 16:24:53,240:INFO:Chunk 74: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:53,241:INFO:Chunk 74: Converted audio data to float32.
+2024-09-29 16:24:53,512:ERROR:Transcription failed for chunk 74: Linear(in_features=384, out_features=384, bias=True)
+2024-09-29 16:24:53,520:INFO:Chunk 75: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:53,521:INFO:Chunk 75: Converted audio data to float32.
+2024-09-29 16:24:53,592:ERROR:Transcription failed for chunk 73: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:53,598:INFO:Chunk 76: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:53,600:INFO:Chunk 76: Converted audio data to float32.
+2024-09-29 16:24:53,947:ERROR:Transcription failed for chunk 71: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:53,955:INFO:Chunk 77: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:53,956:INFO:Chunk 77: Converted audio data to float32.
+2024-09-29 16:24:53,957:ERROR:Transcription failed for chunk 72: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:53,963:INFO:Chunk 78: Read audio data with sample rate 16000 and shape (960000,).
+2024-09-29 16:24:53,964:INFO:Chunk 78: Converted audio data to float32.
+2024-09-29 16:24:54,114:ERROR:Transcription failed for chunk 76: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:54,117:INFO:Chunk 79: Read audio data with sample rate 16000 and shape (288992,).
+2024-09-29 16:24:54,117:INFO:Chunk 79: Converted audio data to float32.
+2024-09-29 16:24:54,203:ERROR:Transcription failed for chunk 77: Expected size for first two dimensions of batch2 tensor to be: [6, 277] but got: [6, 241].
+2024-09-29 16:24:54,215:ERROR:Transcription failed for chunk 78: Expected size for first two dimensions of batch2 tensor to be: [6, 315] but got: [6, 279].
+2024-09-29 16:24:54,351:ERROR:Transcription failed for chunk 75: Expected size for first two dimensions of batch2 tensor to be: [6, 432] but got: [6, 381].
+2024-09-29 16:24:54,356:ERROR:Transcription failed for chunk 79: cannot reshape tensor of 0 elements into shape [1, 0, 6, -1] because the unspecified dimension size -1 can be any value and is ambiguous
+2024-09-29 16:24:54,359:ERROR:All transcription chunks resulted in empty transcriptions.
+2024-09-29 16:24:54,359:ERROR:Failed to save transcription to file: 500: Transcription failed. No valid audio data found.
+2024-09-29 16:25:08,887:INFO:6 changes detected
+2024-09-29 16:25:09,523:INFO:4 changes detected
+2024-09-29 16:28:00,125:INFO:1 change detected
+2024-09-29 16:28:00,679:INFO:3 changes detected
+2024-09-29 16:28:31,474:INFO:1 change detected
+2024-09-29 16:28:32,040:INFO:3 changes detected
+2024-09-29 16:30:24,377:INFO:1 change detected
+2024-09-29 16:30:24,749:INFO:3 changes detected
+2024-09-29 16:30:39,933:INFO:1 change detected
+2024-09-29 16:30:40,533:INFO:3 changes detected
+2024-09-29 16:31:02,016:INFO:1 change detected
+2024-09-29 16:31:02,391:INFO:3 changes detected
+2024-09-29 16:31:14,511:INFO:3 changes detected
+2024-09-29 16:31:23,164:INFO:7 changes detected
+2024-09-29 16:31:56,040:INFO:10 changes detected
+2024-09-29 16:34:12,962:INFO:1 change detected
+2024-09-29 16:34:13,705:INFO:3 changes detected
+2024-09-29 16:34:14,612:INFO:1 change detected
+2024-09-29 16:34:15,042:INFO:3 changes detected
+2024-09-29 16:34:27,050:INFO:3 changes detected
+2024-09-29 16:34:35,604:INFO:5 changes detected
+2024-09-29 16:35:20,040:INFO:1 change detected
+2024-09-29 16:35:20,646:INFO:3 changes detected
+2024-09-29 16:35:25,692:INFO:1 change detected
+2024-09-29 16:35:26,329:INFO:3 changes detected
+2024-09-29 16:35:33,397:INFO:3 changes detected
+2024-09-29 16:35:42,089:INFO:6 changes detected
+2024-09-29 16:35:42,451:INFO:4 changes detected
+2024-09-29 16:36:15,024:INFO:10 changes detected
