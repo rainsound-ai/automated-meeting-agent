@@ -4,6 +4,5 @@ storage
 .venv
 .ruff_cache
 transcription.txt
-sample_summary.txt
 backend/temp/
 ./temp
