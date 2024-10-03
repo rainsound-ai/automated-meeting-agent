@@ -10,8 +10,6 @@ fastapi = "^0.110.1"
 python-dotenv = "^1.0.1"
 pydantic = "^2.7.0"
 pre-commit = "^3.7.0"
-pydub = "^0.25.1"
-python-multipart = "^0.0.11"
 openai = "^1.50.2"
 
 [tool.poetry.dependencies.uvicorn]
