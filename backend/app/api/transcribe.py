@@ -32,7 +32,7 @@ def chunk_audio(input_file, output_dir, chunk_size_bytes=26214400):
     # Use ffmpeg to split the audio into chunks
     command = [
         'ffmpeg', '-i', input_file, '-f', 'segment', '-segment_time', str(chunk_duration_sec),
-        '-c', 'copy', output_pattern
+         '-c:a', 'libmp3lame', output_pattern
     ]
     
     subprocess.run(command, check=True)
