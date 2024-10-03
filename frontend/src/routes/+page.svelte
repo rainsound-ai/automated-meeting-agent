@@ -237,7 +237,13 @@
 			<label
 				class="flex flex-col items-center w-full py-8 bg-[#f2ede7] rounded-lg border border-gray-300 cursor-pointer hover:border-gray-400"
 			>
-				<input type="file" accept="audio/*" class="hidden" on:change={handleFileChange} />
+				<!-- <input type="file" accept="audio/*" class="hidden" on:change={handleFileChange} /> -->
+				<input
+					type="file"
+					accept="audio/*,.mp3,.wav,.m4a"
+					class="hidden"
+					on:change={handleFileChange}
+				/>
 				<span class="text-gray-600 text-lg">
 					{fileName ? `Uploaded: ${fileName}` : 'Click to select an audio file'}
 				</span>
