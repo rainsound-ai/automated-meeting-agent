@@ -22,6 +22,16 @@ def clear_temp_directory():
     os.makedirs(temp_dir, exist_ok=True)
     print("Temp directory cleared.")
 
+    # Function to extract audio from video using ffmpeg
+def extract_audio_from_video(video_path, audio_output_path):
+    command = [
+        'ffmpeg', '-i', video_path, '-vn',  # '-vn' disables video processing
+        '-acodec', 'mp3',  # Extract to mp3 audio
+        audio_output_path
+    ]
+    subprocess.run(command, check=True)
+    print(f"Audio extracted from video and saved to {audio_output_path}")
+
 # Function to chunk audio file using ffmpeg
 def chunk_audio(input_file, output_dir, chunk_size_bytes=26214400):
     print(f"Chunking audio file: {input_file}")
@@ -62,9 +72,6 @@ def transcribe_then_delete_chunk(chunk_path, idx):
 async def transcribe(file: UploadFile = File(...)):
     clear_temp_directory()
 
-    if not file.content_type.startswith("audio/"):
-        raise HTTPException(status_code=400, detail="Invalid file type. Please upload an audio file.")
-
     try:
         file_extension = os.path.splitext(file.filename)[1]
         temp_filename = f"{uuid.uuid4()}{file_extension}"
@@ -76,6 +83,15 @@ async def transcribe(file: UploadFile = File(...)):
             while content := await file.read(1024 * 1024):  # Read in 1MB chunks
                 buffer.write(content)
         print(f"File {file.filename} saved to {temp_path}.")
+
+        # Check if the file is a video
+        if file.content_type.startswith("video/"):
+            print("File is a video. Extracting audio...")
+            audio_output_path = os.path.join(temp_dir, f"audio_{uuid.uuid4()}.mp3")
+            extract_audio_from_video(temp_path, audio_output_path)
+            os.remove(temp_path)  # Remove the original video file
+            temp_path = audio_output_path  # Replace with the extracted audio file
+
 
         # Chunk the audio using ffmpeg
         chunk_audio(temp_path, temp_dir)
