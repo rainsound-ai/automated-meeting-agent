@@ -206,9 +206,12 @@
 </script>
 
 <div class="min-h-screen bg-[#faf7f4] flex flex-col items-center justify-center p-10">
-	<!-- Header with buttons -->
-	<div class="w-full max-w-6xl flex justify-between items-center mb-6">
-		<!-- Transcribe Button (Top-Left) -->
+	<!-- Meeting Summarization Title -->
+	<h1 class="text-3xl font-light text-gray-800 text-center mb-4">Meeting Agent</h1>
+
+	<!-- Mobile Layout (Buttons side by side) -->
+	<div class="flex flex-row gap-4 justify-center md:hidden">
+		<!-- Transcribe Button -->
 		<button
 			id="transcribe-btn"
 			class="bg-gray-800 text-white py-3 px-6 rounded-md hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 transition"
@@ -218,10 +221,7 @@
 			Transcribe
 		</button>
 
-		<!-- Meeting Summarization Title -->
-		<h1 class="text-3xl font-light text-gray-800 text-center">Meeting Agent</h1>
-
-		<!-- Summarize Button (Top-Right) -->
+		<!-- Summarize Button -->
 		<button
 			id="summarize-btn"
 			class="bg-gray-800 text-white py-3 px-6 rounded-md hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 transition"
@@ -230,9 +230,32 @@
 			Summarize
 		</button>
 	</div>
+
+	<!-- Desktop Layout (Buttons on opposite sides of the title) -->
+	<div class="hidden md:flex flex-row justify-between w-full max-w-6xl">
+		<!-- Transcribe Button -->
+		<button
+			id="transcribe-btn"
+			class="bg-gray-800 text-white py-3 px-6 rounded-md hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 transition"
+			on:click={transcribeAudio}
+			disabled={!file || isLoadingTranscription}
+		>
+			Transcribe
+		</button>
+
+		<!-- Summarize Button -->
+		<button
+			id="summarize-btn"
+			class="bg-gray-800 text-white py-3 px-6 rounded-md hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 transition"
+			on:click={summarizeTranscription}
+		>
+			Summarize
+		</button>
+	</div>
+
 	<!-- File input -->
 	<!-- File input wrapped in the same container as text areas -->
-	<div class="w-full max-w-6xl">
+	<div class="w-full pt-8 max-w-6xl">
 		<div class="flex justify-center w-full">
 			<label
 				class="flex flex-col items-center w-full py-8 bg-[#f2ede7] rounded-lg border border-gray-300 cursor-pointer hover:border-gray-400"
