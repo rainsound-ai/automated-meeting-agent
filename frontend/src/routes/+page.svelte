@@ -2,6 +2,7 @@
 	import * as Urls from '../lib/Urls.shared';
 	import type { TranscriptionRequest, TranscriptionResponse } from '../lib/ApiTypes';
 	import '../app.css';
+	import { onMount } from 'svelte';
 
 	// Declare variable types
 	let file: File | null = null;
@@ -203,6 +204,28 @@
 			}, 2000);
 		});
 	};
+
+	const updateNotion = async () => {
+		try {
+			const response = await fetch(`${Urls.apiRoot()}/update_notion_with_transcript_and_summary`, {
+				method: 'POST'
+			});
+
+			if (!response.ok) {
+				const errorData = await response.json();
+				throw new Error(errorData.detail || 'An error occurred during transcription.');
+			}
+
+			const data: TranscriptionResponse = await response.json();
+			console.log(data);
+		} catch (err) {
+			error = (err as Error).message;
+		}
+	};
+
+	onMount(() => {
+		updateNotion();
+	});
 </script>
 
 <div class="min-h-screen bg-[#faf7f4] flex flex-col items-center justify-center p-10">
