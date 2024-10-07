@@ -1,9 +1,9 @@
-import os
 from fastapi import APIRouter, HTTPException, UploadFile
 import requests
 from io import BytesIO
-from starlette.datastructures import UploadFile  # Import UploadFile to mimic actual file
-from .transcribe import transcribe  # Assuming transcribe is defined here
+from .transcribe import transcribe
+from .summarize import summarize_transcription  
+from app.models import TranscriptionRequest
 
 api_router = APIRouter()
 
@@ -11,9 +11,10 @@ api_router = APIRouter()
 async def update_notion_with_transcript_and_summary():
     try:
         print("Received request for updating notion with transcript and summary.")
-        transcription = await get_file_from_jumpshare_link("https://jmp.sh/Xq0CiuDe")
+        transcription, summary = await get_file_from_jumpshare_link("https://jmp.sh/Xq0CiuDe")
         print(f"Transcription: {transcription}")
-        return {"message": "Success", "transcription": transcription}
+        print(f"Summary: {summary}")
+        return {"message": "Success"}
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Error updating notion with transcript and summary.")
@@ -47,8 +48,9 @@ async def get_file_from_jumpshare_link(jumpshare_link):
             upload_file = UploadFile(file=video_content, filename="video.mp4")
 
             # Now, call the transcribe function with the UploadFile object
-            transcription = await transcribe(upload_file)
-            return transcription
+            transcription, summary = await transcribe_and_summarize(upload_file)
+            return transcription, summary
+            
         else:
             print(f"Failed to download video. Status code: {video_response.status_code}")
             raise HTTPException(status_code=video_response.status_code, detail="Failed to download video")
@@ -56,3 +58,19 @@ async def get_file_from_jumpshare_link(jumpshare_link):
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Error processing Jumpshare link.")
+
+async def transcribe_and_summarize(file: UploadFile):
+    # Transcribe the audio
+    transcription_response = await transcribe(file)
+    
+    # Get the transcription from the response dictionary
+    transcription = transcription_response.get('transcription')
+    print("before passing to summarize_transcription", transcription)
+
+    # Create a TranscriptionRequest object to pass to summarize_transcription
+    request = TranscriptionRequest(transcription=transcription)
+    
+    # Call the summarization function with the request object
+    summary = await summarize_transcription(request)
+
+    return transcription, summary
