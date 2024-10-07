@@ -24,15 +24,25 @@ async def update_notion_with_transcript_and_summary():
 
         for meeting in meetings_to_summarize:
             page_id = meeting.get('id')
-            jumpshare_link = meeting.get('properties', {}).get('Jumpshare Link', {}).get('url')
+            # jumpshare_link = meeting.get('properties', {}).get('Jumpshare Link', {}).get('url')
 
-            # Get video and transcription/summary
-            jumpshare_video = await get_video_from_jumpshare_link(jumpshare_link)
-            transcription, summary = await get_transcription_and_summary_from_jumpshare_video(jumpshare_video)
+            # # Get video and transcription/summary
+            # jumpshare_video = await get_video_from_jumpshare_link(jumpshare_link)
+            # transcription, summary = await get_transcription_and_summary_from_jumpshare_video(jumpshare_video)
 
-            # Debugging output: Print transcription and summary after extraction
-            print("Transcription after extraction:", transcription)
-            print("Summary after extraction:", summary)
+            # # Debugging output: Print transcription and summary after extraction
+            # print("Transcription after extraction:", transcription)
+            # print("Summary after extraction:", summary)
+
+            # get the tranascription from trascription.txt
+
+            # Read transcription from transcription.txt
+            with open('transcription.txt', 'r') as file:
+                transcription = file.read()
+
+            # Read summary from sample_summary.txt
+            with open('sample_summary.txt', 'r') as file:
+                summary = file.read()
 
             # Ensure transcription and summary are strings before chunking
             if not isinstance(transcription, str):
