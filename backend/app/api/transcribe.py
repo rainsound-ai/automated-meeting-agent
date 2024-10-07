@@ -84,13 +84,13 @@ async def transcribe(file: UploadFile = File(...)):
                 buffer.write(content)
         print(f"File {file.filename} saved to {temp_path}.")
 
-        # Check if the file is a video
-        if file.content_type.startswith("video/"):
-            print("File is a video. Extracting audio...")
-            audio_output_path = os.path.join(temp_dir, f"audio_{uuid.uuid4()}.mp3")
-            extract_audio_from_video(temp_path, audio_output_path)
-            os.remove(temp_path)  # Remove the original video file
-            temp_path = audio_output_path  # Replace with the extracted audio file
+        # # Check if the file is a video
+        # if file.content_type.startswith("video/"):
+            # print("File is a video. Extracting audio...")
+        audio_output_path = os.path.join(temp_dir, f"audio_{uuid.uuid4()}.mp3")
+        extract_audio_from_video(temp_path, audio_output_path)
+        os.remove(temp_path)  # Remove the original video file
+        temp_path = audio_output_path  # Replace with the extracted audio file
 
 
         # Chunk the audio using ffmpeg
