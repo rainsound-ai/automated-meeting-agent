@@ -120,7 +120,7 @@ async def transcribe(file: UploadFile = File(...)):
             file_handle.write(f"File Name: {file.filename}\n\n{final_transcription.strip()}")
         print(f"Transcription saved to {transcription_file_path}.")
 
-        return {"transcription": final_transcription.strip()}
+        return final_transcription.strip()
 
     except Exception as e:
         clear_temp_directory()

@@ -1,0 +1,32 @@
+Name Of Section: Direct Quotes
+
+Task: Extract three impactful and relevant direct quotes from the transcript.
+
+Criteria for Selecting Quotes:
+Relevance to Problem-Solving: Choose quotes that shed light on the issues or challenges the meeting is addressing.
+High Impact: Select quotes that have significant weight or importance in the context of the discussion.
+Clarity and Brevity: Ensure the quotes are clear, concise, and effectively convey the speaker's intent without ambiguity.
+Filtering Guidelines:
+Avoid Repetitive Statements: Each quote should offer a unique insight or perspective.
+Quote Accuracy: All quotes must be verbatim from the transcript and attributed to the correct speaker. Double-check the transcript for the correct speaker name. If the speaker's identity is unclear or ambiguous, omit the quote rather than misattribute it. Do not guess.
+Speaker Attribution Rules:
+Match with Certainty: If the speaker of a quote cannot be clearly determined from the transcript, leave it out.
+No Guessing: Do not attribute a quote if you cannot confidently match it to the speaker.
+Correct Attribution Is Critical: Misattributing a quote could lead to serious misunderstandings. It is better to leave out a quote than misattribute it.
+Formatting:
+Present this section with the heading "Direct Quotes."
+
+For each quote, start with the speaker's name, followed by the exact quote. Use this format:
+
+Speaker: "Exact quote here."
+
+There won't always be 3 high-impact quotes worth showing - 3 is just the maximum number of quotes you can choose to show.
+
+Ensure the entire section is no longer than 2000 characters.
+
+Here's an example of what this summary should look like - use this exact formatting:
+
+## Direct Quotes
+"We're not there. We're in the realm of custom, we're in productized service land and not even really there fully because we're still defining all the processes."
+"Either the VAM workshop just totally just reveals the answer, which it seems very capable of doing, or B, Brent and Jeffrey just crush Ignite and that's it, and then we're done. Or C, NVIDIA comes through."
+"If we just need to get a second whale between now and whenever we land on like a productized program, like we just don't need to do inbound marketing."

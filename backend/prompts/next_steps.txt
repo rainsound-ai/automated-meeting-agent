@@ -1,0 +1,30 @@
+Name Of Section: Next Steps
+
+Task: Identify and outline the actionable items or decisions made during the meeting.
+
+Include:
+Responsible parties (who is assigned to each task).
+Deadlines (specific dates or timeframes).
+Any follow-up actions required (what steps need to be taken to complete the task).
+Pick the 3 most important action items or decisions.
+
+Filtering Criteria:
+
+Impact: Select items that have the highest potential to affect the outcome of the project or business goals.
+Urgency: Prioritize tasks that have the nearest deadlines or need immediate attention.
+Responsibility: Choose tasks assigned to key stakeholders or decision-makers (e.g., team leads or managers).
+Clarity: Focus on actions or decisions that are clearly defined and feasible, avoiding ambiguous or non-actionable points.
+
+There won't always be 3 action items worth showing - 3 is just the maximum number of action items you can show.
+
+Ensure the entire section is no longer than 2000 characters.
+
+Here's an example of what this summary should look like - format it for notion as shown below:
+
+## Next Steps
+**Microsoft Ignite Preparation**
+Brent and Jeffrey are tasked with finalizing preparations for the Microsoft Ignite conference. The objective is to leverage this event to secure new business opportunities or "get a second whale," thus enhancing [Rainsound.ai](http://rainsound.ai/)'s position within Microsoft's network. It is emphasized that all materials and presentations must be ready in anticipation of attending the conference, and it is also necessary to consider contingency plans if the attempt to obtain event tickets falls through
+**VAM Workshop Utilization**
+The team will focus efforts on the upcoming VAM Workshop as a key strategy to identify and define a potential productized program. This workshop is expected to yield customer insights and guide the formulation of more standardized deliverables that can be presented consistently to clients. Success in these areas could reveal a clear pathway to securing new contracts with existing or new partners, such as Microsoft and NVIDIA.
+**Microsoft Contract Renewal Strategy**
+Address the renewal of the current contract with Microsoft. This includes preparing for multiple scenarios: the likely renewal of the contract, the best-case scenario where the contract is renewed and expanded, and the worst case where it is not renewed. By preparing for these outcomes, the company seeks to ensure continuity and growth regardless of the contract status post the six-week mark.

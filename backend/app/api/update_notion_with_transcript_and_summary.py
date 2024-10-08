@@ -1,4 +1,5 @@
 from fastapi import APIRouter, HTTPException, UploadFile
+import traceback
 import requests
 from io import BytesIO
 from .transcribe import transcribe
@@ -8,9 +9,16 @@ from app.lib.Env import (
     notion_api_key,
     rainsound_meetings_database_url
 )
-from app.lib.notion import update_notion_page_properties, append_summary_to_notion, append_transcript_to_notion
-from app.lib.notion import chunk_text, split_summary
+from app.lib.notion import update_notion_page_properties, append_transcript_to_notion
+from app.lib.notion import chunk_text
+import os
+from app.lib.notion import (
+    append_intro_to_notion,
+    append_direct_quotes_to_notion,
+    append_next_steps_to_notion
+)
 
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 api_router = APIRouter()
 rainsound_meetings_database = f"https://api.notion.com/v1/databases/{rainsound_meetings_database_url}/query"
 
@@ -21,58 +29,72 @@ async def update_notion_with_transcript_and_summary():
         # Get meetings that need to be updated from Notion
         meetings_to_summarize = get_meetings_with_jumpshare_links_and_unsummarized()
         print(f"Meetings to summarize: {meetings_to_summarize}")
-
-        for meeting in meetings_to_summarize:
+        # Remove all but the first item in the array
+        first_meeting_to_summarize = meetings_to_summarize[:1]
+        print(f"Number of meetings to summarize: {len(first_meeting_to_summarize)}")
+        for meeting in first_meeting_to_summarize:
             page_id = meeting.get('id')
-            # jumpshare_link = meeting.get('properties', {}).get('Jumpshare Link', {}).get('url')
-
-            # # Get video and transcription/summary
-            # jumpshare_video = await get_video_from_jumpshare_link(jumpshare_link)
-            # transcription, summary = await get_transcription_and_summary_from_jumpshare_video(jumpshare_video)
-
-            # # Debugging output: Print transcription and summary after extraction
-            # print("Transcription after extraction:", transcription)
-            # print("Summary after extraction:", summary)
-
-            # get the tranascription from trascription.txt
 
             # Read transcription from transcription.txt
             with open('transcription.txt', 'r') as file:
                 transcription = file.read()
 
-            # Read summary from sample_summary.txt
-            with open('sample_summary.txt', 'r') as file:
-                summary = file.read()
+            prompt_boilerplate_path = os.path.join(BASE_DIR, 'prompts/prompt_boilerplate/context.txt')
 
-            # Ensure transcription and summary are strings before chunking
-            if not isinstance(transcription, str):
-                raise HTTPException(status_code=500, detail="Invalid transcription format")
+            with open(prompt_boilerplate_path, 'r') as f:
+                prompt_boilerplate = f.read() 
 
-            if not isinstance(summary, str):
-                raise HTTPException(status_code=500, detail="Invalid summary format")
-            
-            # Break up transcript and summary into chunks
-            transcription_chunks = chunk_text(transcription)
-            summary_chunks = split_summary(summary)
+            summary_chunks = []
+            prompts_files = ["intro.txt", "direct_quotes.txt", "next_steps.txt"]
+            for file_name in prompts_files:
+                file_path = os.path.join(BASE_DIR, 'prompts', file_name) 
+                with open(file_path, 'r') as f:
+                    prompt_content = f.read()
+                    full_prompt = prompt_boilerplate + prompt_content
+                    decomposed_summary = await summarize_transcription(transcription, full_prompt)
+                    summary_chunks.append({
+                        'filename': file_name,
+                        'summary': decomposed_summary
+                    })
 
-            # Loop over summary chunks and call the Notion function
-            for summary_chunk in summary_chunks:
-                await append_summary_to_notion(page_id, summary_chunk)
+                    section_mapping = {
+                        "intro.txt": append_intro_to_notion,
+                        "direct_quotes.txt": append_direct_quotes_to_notion,
+                        "next_steps.txt": append_next_steps_to_notion
+                    }
+                    append_function = section_mapping.get(file_name)
 
-            # Loop over transcription chunks and call the Notion function
-            for transcription_chunk in transcription_chunks:
-                await append_transcript_to_notion(page_id, transcription_chunk)
+                    if append_function:
+                        # Call the helper function to append the summary to Notion
+                        append_function(
+                            page_id=page_id,
+                            section_content=decomposed_summary,
+                            notion_api_key=notion_api_key
+                        )
+                    else:
+                        # Handle unexpected filenames if necessary
+                        raise ValueError(f"No append function defined for file: {file_name}")
 
-            # Update page properties
-            await update_notion_page_properties(page_id)
+            print(f"Summary chunks: {summary_chunks}")
+        # Break up transcript and summary into chunks
+        transcription_chunks = chunk_text(transcription)
+
+        return
+        # Loop over summary chunks and call the Notion function
+
+        # Loop over transcription chunks and call the Notion function
+        for transcription_chunk in transcription_chunks:
+            await append_transcript_to_notion(page_id, transcription_chunk)
+
+        # Update page properties
+        await update_notion_page_properties(page_id)
 
         return {"message": "Success"}
     
     except Exception as e:
         print(f"Error: {e}")
+        traceback.print_exc()  # Print the full traceback
         raise HTTPException(status_code=500, detail=f"Error updating Notion with transcript and summary: {e}")
-
-
 
 def get_meetings_with_jumpshare_links_and_unsummarized():
     try:
@@ -100,6 +122,7 @@ def get_meetings_with_jumpshare_links_and_unsummarized():
 
     except Exception as e:
         print(e)
+        traceback.print_exc()  # Print the full traceback
         raise HTTPException(status_code=500, detail="Error retrieving meetings from Notion.")
 
 
@@ -128,6 +151,7 @@ async def get_video_from_jumpshare_link(jumpshare_link):
 
     except Exception as e:
         print(e)
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail="Error processing Jumpshare link.")
 
 
