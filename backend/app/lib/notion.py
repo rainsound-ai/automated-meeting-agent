@@ -85,7 +85,7 @@ def parse_rich_text(text):
     
     # Regular expressions for different markdown-like patterns
     link_pattern = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
-    bold_pattern = re.compile(r'\*\*([^*]+)\*\*')
+    # bold_pattern = re.compile(r'\*\*([^*]+)\*\*')
     
     # Split the text into parts based on links
     parts = link_pattern.split(text)
@@ -207,7 +207,7 @@ def convert_content_to_blocks(content):
             blocks.append(block)
     return blocks
 
-def append_blocks_to_notion(page_id, blocks, notion_api_key):
+def append_blocks_to_notion(toggle_id, blocks, notion_api_key):
     """
     Appends a list of blocks to a Notion page.
     
@@ -216,7 +216,7 @@ def append_blocks_to_notion(page_id, blocks, notion_api_key):
     :param notion_api_key: Your Notion integration's API key.
     :return: Response from Notion API.
     """
-    blocks_url = f"{NOTION_API_BASE_URL}/blocks/{page_id}/children"
+    blocks_url = f"{NOTION_API_BASE_URL}/blocks/{toggle_id}/children"
     headers = get_headers(notion_api_key)
 
     data = {
@@ -230,7 +230,7 @@ def append_blocks_to_notion(page_id, blocks, notion_api_key):
 
     return response.json()
 
-def append_intro_to_notion(page_id, section_content, notion_api_key):
+def append_intro_to_notion(toggle_id, section_content, notion_api_key):
     """
     Appends the Intro section to a Notion page.
     
@@ -239,9 +239,9 @@ def append_intro_to_notion(page_id, section_content, notion_api_key):
     :param notion_api_key: Your Notion integration's API key.
     """
     blocks = convert_content_to_blocks(section_content)
-    append_blocks_to_notion(page_id, blocks, notion_api_key)
+    append_blocks_to_notion(toggle_id, blocks, notion_api_key)
 
-def append_direct_quotes_to_notion(page_id, section_content, notion_api_key):
+def append_direct_quotes_to_notion(toggle_id, section_content, notion_api_key):
     """
     Appends the Direct Quotes section to a Notion page.
     
@@ -251,9 +251,9 @@ def append_direct_quotes_to_notion(page_id, section_content, notion_api_key):
     """
     
     blocks = convert_content_to_blocks(section_content)
-    append_blocks_to_notion(page_id, blocks, notion_api_key)
+    append_blocks_to_notion(toggle_id, blocks, notion_api_key)
 
-def append_next_steps_to_notion(page_id, section_content, notion_api_key):
+def append_next_steps_to_notion(toggle_id, section_content, notion_api_key):
     """
     Appends the Next Steps section to a Notion page.
     
@@ -262,7 +262,7 @@ def append_next_steps_to_notion(page_id, section_content, notion_api_key):
     :param notion_api_key: Your Notion integration's API key.
     """
     blocks = convert_content_to_blocks(section_content)
-    append_blocks_to_notion(page_id, blocks, notion_api_key)
+    append_blocks_to_notion(toggle_id, blocks, notion_api_key)
 
 def chunk_text(text, max_length=1999):
     """
@@ -305,7 +305,7 @@ def update_notion_page_properties(page_id):
     if response.status_code != 200:
         raise HTTPException(status_code=500, detail=f"Failed to update page: {response.text}")
 
-def append_transcript_to_notion(page_id, transcription_chunk, notion_api_key):
+def append_transcript_to_notion(toggle_id, transcription_chunk, notion_api_key):
     """
     Appends a transcript chunk as a paragraph block to a Notion page.
     
@@ -322,4 +322,37 @@ def append_transcript_to_notion(page_id, transcription_chunk, notion_api_key):
             }
         }
     ]
-    append_blocks_to_notion(page_id, blocks, notion_api_key)
+    append_blocks_to_notion(toggle_id, blocks, notion_api_key)
+
+def create_toggle_block(page_id: str, title: str, color: str = "blue"):
+    toggle_block = {
+        "object": "block",
+        "type": "toggle",
+        "toggle": {
+            "rich_text": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": title
+                    },
+                    "annotations": {
+                        "bold": True,  # Bold to simulate H1
+                        "color": color
+                    }
+                }
+            ],
+        }
+    }
+
+    # Send request to Notion to create the toggle
+    notion_url = f"{NOTION_API_BASE_URL}/blocks/{page_id}/children"
+    headers = get_headers(notion_api_key)
+    response = requests.patch(notion_url, headers=headers, json={"children": [toggle_block]})
+    
+    if response.status_code == 200:
+        # Extract and return the toggle block ID from the response
+        toggle_id = response.json()['results'][0]['id']
+        print(f"Toggle block with title '{title}' created. ID: {toggle_id}")
+        return toggle_id
+    else:
+        raise Exception(f"Failed to create toggle block. Response: {response.content}")

@@ -9,13 +9,15 @@ from app.lib.Env import (
     notion_api_key,
     rainsound_meetings_database_url
 )
-from app.lib.notion import update_notion_page_properties, append_transcript_to_notion
-from app.lib.notion import chunk_text
 import os
 from app.lib.notion import (
+    chunk_text,
+    create_toggle_block, 
     append_intro_to_notion,
     append_direct_quotes_to_notion,
-    append_next_steps_to_notion
+    append_next_steps_to_notion,
+    update_notion_page_properties,
+    append_transcript_to_notion, 
 )
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
@@ -46,6 +48,7 @@ async def update_notion_with_transcript_and_summary():
 
             summary_chunks = []
             prompts_files = ["intro.txt", "direct_quotes.txt", "next_steps.txt"]
+            summary_toggle_id = create_toggle_block(page_id, "Summary", "green")
             for file_name in prompts_files:
                 file_path = os.path.join(BASE_DIR, 'prompts', file_name) 
                 with open(file_path, 'r') as f:
@@ -63,11 +66,12 @@ async def update_notion_with_transcript_and_summary():
                         "next_steps.txt": append_next_steps_to_notion
                     }
                     append_function = section_mapping.get(file_name)
-
+                    # FUNCTION TO CREATE TOGGLE HERE
+                    
                     if append_function:
                         # Call the helper function to append the summary to Notion
                         append_function(
-                            page_id=page_id,
+                            toggle_id=summary_toggle_id,
                             section_content=decomposed_summary,
                             notion_api_key=notion_api_key
                         )
@@ -79,12 +83,13 @@ async def update_notion_with_transcript_and_summary():
         # Break up transcript and summary into chunks
         transcription_chunks = chunk_text(transcription)
 
+        transcript_toggle_id = create_toggle_block(page_id, "Transcript", "orange")
+        for transcription_chunk in transcription_chunks:
+            append_transcript_to_notion(transcript_toggle_id, transcription_chunk, notion_api_key)
         return
         # Loop over summary chunks and call the Notion function
 
         # Loop over transcription chunks and call the Notion function
-        for transcription_chunk in transcription_chunks:
-            await append_transcript_to_notion(page_id, transcription_chunk)
 
         # Update page properties
         await update_notion_page_properties(page_id)
