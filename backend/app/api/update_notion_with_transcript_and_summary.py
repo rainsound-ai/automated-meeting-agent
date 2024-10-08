@@ -87,6 +87,10 @@ async def update_notion_with_transcript_and_summary():
             for transcription_chunk in transcription_chunks:
                 append_transcript_to_notion(transcript_toggle_id, transcription_chunk)
 
+            update_notion_page_properties(
+                page_id=page_id,
+            )
+
         return {"message": "Success"}
     
     except Exception as e:
