@@ -73,26 +73,19 @@ async def update_notion_with_transcript_and_summary():
                         append_function(
                             toggle_id=summary_toggle_id,
                             section_content=decomposed_summary,
-                            notion_api_key=notion_api_key
                         )
                     else:
                         # Handle unexpected filenames if necessary
                         raise ValueError(f"No append function defined for file: {file_name}")
 
             print(f"Summary chunks: {summary_chunks}")
-        # Break up transcript and summary into chunks
-        transcription_chunks = chunk_text(transcription)
+            # Break up transcript and summary into chunks
+            transcription_chunks = chunk_text(transcription)
 
-        transcript_toggle_id = create_toggle_block(page_id, "Transcript", "orange")
-        for transcription_chunk in transcription_chunks:
-            append_transcript_to_notion(transcript_toggle_id, transcription_chunk, notion_api_key)
-        return
-        # Loop over summary chunks and call the Notion function
-
-        # Loop over transcription chunks and call the Notion function
-
-        # Update page properties
-        await update_notion_page_properties(page_id)
+            
+            transcript_toggle_id = create_toggle_block(page_id, "Transcript", "orange")
+            for transcription_chunk in transcription_chunks:
+                append_transcript_to_notion(transcript_toggle_id, transcription_chunk)
 
         return {"message": "Success"}
     
