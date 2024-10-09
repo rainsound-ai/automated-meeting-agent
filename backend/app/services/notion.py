@@ -1,3 +1,4 @@
+from typing import List, Dict
 import requests
 from fastapi import HTTPException
 from app.lib.Env import notion_api_key, rainsound_meetings_database_id
@@ -6,6 +7,10 @@ from app.services.chunk_text import chunk_text
 from app.services.parse_markdown_to_notion_blocks import (
     convert_content_to_blocks, 
     parse_rich_text
+)
+from app.models import (
+    NotionBlock, 
+    ToggleBlock
 )
 
 
@@ -17,7 +22,7 @@ HEADERS = {
     "Content-Type": "application/json"
 }
 
-def get_headers():
+def get_headers() -> Dict[str, str]:
     """
     Constructs the headers required for Notion API requests.
     
@@ -28,11 +33,11 @@ def get_headers():
         **HEADERS
     }
 
-def append_blocks_to_notion(toggle_id, blocks):
+def append_blocks_to_notion(toggle_id: str, blocks: List[NotionBlock]) -> Dict:
     """
     Appends a list of blocks to a Notion page.
     
-    :param page_id: The ID of the Notion page.
+    :param toggle_id: The ID of the Notion toggle block.
     :param blocks: A list of Notion block objects to append.
     :return: Response from Notion API.
     """
@@ -51,49 +56,41 @@ def append_blocks_to_notion(toggle_id, blocks):
 
     return response.json()
 
-def append_intro_to_notion(toggle_id, section_content):
+def append_intro_to_notion(toggle_id: str, section_content: str) -> None:
     """
     Appends the Intro section to a Notion page.
     
-    :param page_id: The ID of the Notion page.
-    :param intro_content: The content for the Intro section.
+    :param toggle_id: The ID of the Notion toggle block.
+    :param section_content: The content for the Intro section.
     """
-    blocks = convert_content_to_blocks(section_content)
+    blocks: List[NotionBlock] = convert_content_to_blocks(section_content)
     append_blocks_to_notion(toggle_id, blocks)
 
-def append_direct_quotes_to_notion(toggle_id, section_content):
+def append_direct_quotes_to_notion(toggle_id: str, section_content: str) -> None:
     """
     Appends the Direct Quotes section to a Notion page.
     
-    :param page_id: The ID of the Notion page.
-    :param quotes_content: The content for the Direct Quotes section.
+    :param toggle_id: The ID of the Notion toggle block.
+    :param section_content: The content for the Direct Quotes section.
     """
-    
-    blocks = convert_content_to_blocks(section_content)
+    blocks: List[NotionBlock] = convert_content_to_blocks(section_content)
     append_blocks_to_notion(toggle_id, blocks)
 
-def append_next_steps_to_notion(toggle_id, section_content):
+def append_next_steps_to_notion(toggle_id: str, section_content: str) -> None:
     """
     Appends the Next Steps section to a Notion page.
     
-    :param page_id: The ID of the Notion page.
-    :param next_steps_content: The content for the Next Steps section.
+    :param toggle_id: The ID of the Notion toggle block.
+    :param section_content: The content for the Next Steps section.
     """
-    blocks = convert_content_to_blocks(section_content)
+    blocks: List[NotionBlock] = convert_content_to_blocks(section_content)
     append_blocks_to_notion(toggle_id, blocks)
 
-
-def upload_transcript_to_notion(page_id, transcription):
-    transcription_chunks = chunk_text(transcription)
-    toggle_id = create_toggle_block(page_id, "Transcript", "orange")
+def upload_transcript_to_notion(page_id: str, transcription: str) -> None:
+    transcription_chunks: List[str] = chunk_text(transcription)
+    toggle_id: str = create_toggle_block(page_id, "Transcript", "orange")
     for transcription_chunk in transcription_chunks:
-        """
-        Appends a transcript chunk as a paragraph block to a Notion page.
-        
-        :param page_id: The ID of the Notion page.
-        :param transcription_chunk: The text of the transcription chunk.
-        """
-        blocks = [
+        blocks: List[NotionBlock] = [
             {
                 "object": "block",
                 "type": "paragraph",
@@ -104,7 +101,7 @@ def upload_transcript_to_notion(page_id, transcription):
         ]
         append_blocks_to_notion(toggle_id, blocks)
 
-def set_summarized_checkbox_on_notion_page_to_true(page_id):
+def set_summarized_checkbox_on_notion_page_to_true(page_id: str) -> None:
     """
     Updates the 'Summarized' property of a Notion page to True.
     
@@ -123,14 +120,14 @@ def set_summarized_checkbox_on_notion_page_to_true(page_id):
     if response.status_code != 200:
         raise HTTPException(status_code=500, detail=f"Failed to update page: {response.text}")
 
-def append_transcript_to_notion(toggle_id, transcription_chunk):
+def append_transcript_to_notion(toggle_id: str, transcription_chunk: str) -> None:
     """
     Appends a transcript chunk as a paragraph block to a Notion page.
     
-    :param page_id: The ID of the Notion page.
+    :param toggle_id: The ID of the Notion toggle block.
     :param transcription_chunk: The text of the transcription chunk.
     """
-    blocks = [
+    blocks: List[NotionBlock] = [
         {
             "object": "block",
             "type": "paragraph",
@@ -141,8 +138,8 @@ def append_transcript_to_notion(toggle_id, transcription_chunk):
     ]
     append_blocks_to_notion(toggle_id, blocks)
 
-def create_toggle_block(page_id: str, title: str, color: str = "blue"):
-    toggle_block = {
+def create_toggle_block(page_id: str, title: str, color: str = "blue") -> str:
+    toggle_block: ToggleBlock = {
         "object": "block",
         "type": "toggle",
         "toggle": {
@@ -164,7 +161,12 @@ def create_toggle_block(page_id: str, title: str, color: str = "blue"):
     toggle_id = response['results'][0]['id']
     return toggle_id
 
-def get_meetings_with_jumpshare_links_and_unsummarized_from_notion():
+def get_meetings_with_jumpshare_links_and_unsummarized_from_notion() -> List[Dict]:
+    """
+    Fetches meetings from Notion that have Jumpshare links and are unsummarized.
+    
+    :return: List of Notion meeting records.
+    """
     try:
         headers = get_headers()
         filter_data = {

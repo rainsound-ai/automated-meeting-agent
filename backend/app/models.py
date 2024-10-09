@@ -1,40 +1,29 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, Dict, List
 
 # Standard config (if you have special settings for your models, otherwise skip it)
 class StandardModelConfig:
     orm_mode = True
     allow_population_by_field_name = True
 
-# Define TranscriptionRequest model
-class TranscriptionRequest(BaseModel):
-    transcription: Optional[str] = None
+class Meeting(BaseModel):
+    id: str
+    properties: Dict[str, Dict[str, Dict[str, List[Dict[str, Dict[str, str]]]]]]
+    jumpshare_link: Optional[str]
 
-    class Config(StandardModelConfig):
-        schema_extra = {
-            "example": {
-                "transcription": "This is an example transcription."
-            }
-        }
+class Transcription(BaseModel):
+    content: str
 
-# Define TranscriptionResponse model
-class TranscriptionResponse(BaseModel):
-    transcription: str
+class JumpshareLink(BaseModel):
+    url: str
 
-    class Config(StandardModelConfig):
-        schema_extra = {
-            "example": {
-                "transcription": "This is the transcribed text."
-            }
-        }
+class NotionBlock:
+    object: str
+    type: str
+    paragraph: Optional[Dict[str, List[Dict[str, str]]]] = None
+    toggle: Optional[Dict[str, List[Dict[str, str]]]] = None
 
-# Define any other models you need
-class HelloWorldResponse(BaseModel):
-    message: str
-
-    class Config(StandardModelConfig):
-        schema_extra = {
-            "example": {
-                "message": "Hello, world!"
-            }
-        }
+class ToggleBlock:
+    object: str
+    type: str
+    toggle: Dict[str, List[Dict[str, str]]]

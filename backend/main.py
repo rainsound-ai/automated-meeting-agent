@@ -4,8 +4,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api import api_router
-import sys
-from app.lib import JsonSchemas
+from app.api.update_notion_with_transcript_and_summary import update_notion_with_transcript_and_summary
 
 app = FastAPI()
 
@@ -40,9 +39,11 @@ else:
 
 app.include_router(api_router, prefix=prefix)
 
+@app.on_event("startup")
+async def startup_event():
+    print("Running Notion update on startup")
+    await update_notion_with_transcript_and_summary()
+
 if environment == "dev":
     if __name__ == "__main__":
-        if "--save-json-schemas" in sys.argv:
-            JsonSchemas.save_all()
-        else:
-            uvicorn.run(app="main:app", host="0.0.0.0", reload=True)
+        uvicorn.run(app="main:app", host="0.0.0.0", reload=True)

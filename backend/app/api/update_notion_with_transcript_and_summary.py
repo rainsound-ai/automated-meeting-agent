@@ -10,37 +10,41 @@ from app.services.notion import (
     upload_transcript_to_notion,
     get_meetings_with_jumpshare_links_and_unsummarized_from_notion
 )
+from typing import List, Dict
+from app.models import (
+    Meeting,
+    Transcription,
+    JumpshareLink
+)
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 api_router = APIRouter()
 
 @api_router.post("/update_notion_with_transcript_and_summary")
-async def update_notion_with_transcript_and_summary():
+async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
     print("Received request for updating Notion with transcript and summary.")
 
     try:
-        meetings_to_summarize = get_meetings_with_jumpshare_links_and_unsummarized_from_notion()
+        meetings_to_summarize: List[Meeting] = get_meetings_with_jumpshare_links_and_unsummarized_from_notion()
         print("Preparing to add summaries and transcripts to these meetings:")
         for meeting in meetings_to_summarize:
             print(meeting.get('properties').get('Name').get('title')[0].get('text').get('content'))
 
         # Remove all but the first item in the array
-        first_meeting_to_summarize = meetings_to_summarize[:1]
+        first_meeting_to_summarize = meetings_to_summarize[1:2]
 
         for meeting in first_meeting_to_summarize:
-            page_id = meeting.get('id')
+            page_id: str = meeting.get('id')
 
-            jumpshare_video = await get_video_from_jumpshare_link(meeting.get('properties').get('Jumpshare Link').get('url'))
+            jumpshare_video: UploadFile = await get_video_from_jumpshare_link(JumpshareLink(url=meeting.get('properties').get('Jumpshare Link').get('url')))
 
-            transcription = await transcribe(jumpshare_video)
+            transcription: Transcription = await transcribe(jumpshare_video)
 
             await decomposed_summarize_transcription_and_upload_to_notion(transcription, page_id)
 
             upload_transcript_to_notion(page_id, transcription)
 
-            set_summarized_checkbox_on_notion_page_to_true(
-                page_id=page_id,
-            )
+            set_summarized_checkbox_on_notion_page_to_true(page_id=page_id)
 
         return {"message": "Success"}
     
@@ -49,13 +53,13 @@ async def update_notion_with_transcript_and_summary():
         traceback.print_exc()  
         raise HTTPException(status_code=500, detail=f"Error updating Notion with transcript and summary: {e}")
 
-async def get_video_from_jumpshare_link(jumpshare_link):
+async def get_video_from_jumpshare_link(jumpshare_link: JumpshareLink) -> UploadFile:
     try:
         print("Received request for getting file from Jumpshare link.")
 
-        modified_link = jumpshare_link + "+"
+        modified_link = jumpshare_link.url + "+"
         headers = {
-                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
         }
 
         response = requests.get(modified_link, headers=headers, allow_redirects=True)
