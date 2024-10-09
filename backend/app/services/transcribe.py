@@ -1,6 +1,5 @@
 from app.lib.Env import open_ai_api_key
-from app.models import TranscriptionResponse
-from fastapi import APIRouter, File, UploadFile, HTTPException
+from fastapi import File, UploadFile, HTTPException
 import os
 import uuid
 import shutil
@@ -9,14 +8,11 @@ from openai import OpenAI
 import gc
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
-
 client = OpenAI(api_key=open_ai_api_key)
 
-api_router = APIRouter()
+temp_dir = 'temp'
 
-# Function to clear the temp directory
 def clear_temp_directory():
-    temp_dir = 'temp'
     if os.path.exists(temp_dir):
         shutil.rmtree(temp_dir)
     os.makedirs(temp_dir, exist_ok=True)
@@ -67,8 +63,6 @@ def transcribe_then_delete_chunk(chunk_path, idx):
     print(f"Chunk {idx} deleted after transcription.")
     return idx, result
 
-# Main API route
-@api_router.post("/transcribe", response_model=TranscriptionResponse)
 async def transcribe(file: UploadFile = File(...)):
     clear_temp_directory()
 
@@ -76,7 +70,6 @@ async def transcribe(file: UploadFile = File(...)):
         file_extension = os.path.splitext(file.filename)[1]
         temp_filename = f"{uuid.uuid4()}{file_extension}"
         temp_path = os.path.join("temp", temp_filename)
-        temp_dir = 'temp'
 
         # Save the uploaded file
         with open(temp_path, "wb") as buffer:
@@ -84,9 +77,6 @@ async def transcribe(file: UploadFile = File(...)):
                 buffer.write(content)
         print(f"File {file.filename} saved to {temp_path}.")
 
-        # # Check if the file is a video
-        # if file.content_type.startswith("video/"):
-            # print("File is a video. Extracting audio...")
         audio_output_path = os.path.join(temp_dir, f"audio_{uuid.uuid4()}.mp3")
         extract_audio_from_video(temp_path, audio_output_path)
         os.remove(temp_path)  # Remove the original video file
