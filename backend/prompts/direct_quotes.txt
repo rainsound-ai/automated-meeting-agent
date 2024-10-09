@@ -1,6 +1,6 @@
 Name Of Section: Direct Quotes
 
-Task: Extract three impactful and relevant direct quotes from the transcript.
+Task: Extract up to three impactful and relevant direct quotes from the provided transcript.
 
 Criteria for Selecting Quotes:
 
@@ -10,22 +10,31 @@ Clarity and Brevity: Ensure the quotes are clear, concise, and effectively conve
 Filtering Guidelines:
 
 Avoid Repetitive Statements: Each quote should offer a unique insight or perspective.
-Quote Accuracy: All quotes must be verbatim from the transcript. Double-check the transcript for accuracy.
-Formatting:
+Quote Accuracy: All quotes must be verbatim from the transcript.
+Important Instructions:
 
-Present this section with the heading "Direct Quotes."
+Exclusive Source: Only extract quotes from the transcript provided below. Do not reference or include any part of these instructions in your output.
+No Speaker Attribution: Do not associate quotes with any speakers. Present quotes without attributing them to individuals.
+Formatting Requirements:
 
-For each quote, present the exact quote in quotation marks. Use this format:
+Section Heading: Begin with the heading "Direct Quotes."
+
+Quote Presentation: For each quote, present the exact quote within quotation marks using the following format:
 
 "Exact quote here."
 
-There won't always be 3 high-impact quotes worth showing - 3 is just the maximum number of quotes you can choose to show.
+Quantity: Provide up to three high-impact quotes. If fewer than three are available, include only the relevant ones. If no suitable quotes are found, use the placeholder provided below.
 
-Ensure the entire section is no longer than 2000 characters.
+Character Limit: Ensure the entire section does not exceed 2000 characters.
 
-Here's an example of what this summary should look like - use this exact formatting:
+Example Format:
 
 ## Direct Quotes
 "We're not there. We're in the realm of custom, we're in productized service land and not even really there fully because we're still defining all the processes." 
 "Either the VAM workshop just totally just reveals the answer, which it seems very capable of doing, or B, Brent and Jeffrey just crush Ignite and that's it, and then we're done. Or C, NVIDIA comes through." 
 "If we just need to get a second whale between now and whenever we land on like a productized program, like we just don't need to do inbound marketing."
+
+If No Suitable Quotes Are Found:
+
+## Direct Quotes
+**No relevant quotes identified.**

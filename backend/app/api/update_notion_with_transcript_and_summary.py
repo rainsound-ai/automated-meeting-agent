@@ -4,7 +4,7 @@ import requests
 from io import BytesIO
 from .transcribe import transcribe
 from .summarize import summarize_transcription  
-from app.models import TranscriptionRequest
+# from app.models import TranscriptionRequest
 from app.lib.Env import (
     notion_api_key,
     rainsound_meetings_database_url
@@ -37,18 +37,17 @@ async def update_notion_with_transcript_and_summary():
         for meeting in first_meeting_to_summarize:
             page_id = meeting.get('id')
 
-            # Read transcription from transcription.txt
-            with open('transcription.txt', 'r') as file:
-                transcription = file.read()
-            # transcription = transcribe(file)
+            # # Read transcription from transcription.txt
+            # with open('transcription.txt', 'r') as file:
+            #     transcription = file.read()
+            jumpshare_video = await get_video_from_jumpshare_link(meeting.get('properties').get('Jumpshare Link').get('url'))
 
-            summary_chunks = await summarize_transcription_and_upload_to_notion(transcription, page_id)
+            transcription = await transcribe(jumpshare_video)
 
-            print(f"Summary chunks: {summary_chunks}")
-            # Break up transcript and summary into chunks
+            await summarize_transcription_and_upload_to_notion(transcription, page_id)
+
             transcription_chunks = chunk_text(transcription)
 
-            
             transcript_toggle_id = create_toggle_block(page_id, "Transcript", "orange")
             for transcription_chunk in transcription_chunks:
                 append_transcript_to_notion(transcript_toggle_id, transcription_chunk)
@@ -123,30 +122,6 @@ async def get_video_from_jumpshare_link(jumpshare_link):
         raise HTTPException(status_code=500, detail="Error processing Jumpshare link.")
 
 
-async def get_transcription_and_summary_from_jumpshare_video(video_file: UploadFile):
-    # Transcribe the audio
-    transcription_response = await transcribe(video_file)
-
-    # Extract transcription text from response
-    transcription = transcription_response.get('transcription')
-
-    # Check if transcription is a dictionary and extract the text field if necessary
-    if isinstance(transcription, dict):
-        transcription = transcription.get('text', '')
-
-    # Summarize the transcription
-    request = TranscriptionRequest(transcription=transcription)
-    summary_response = await summarize_transcription(request)
-
-    # Extract summary text from response
-    summary = summary_response.get('summary')
-
-    # Check if summary is a dictionary and extract the text field if necessary
-    if isinstance(summary, dict):
-        summary = summary.get('text', '')
-
-    return transcription, summary
-
 async def summarize_transcription_and_upload_to_notion(transcription: str, page_id: str):
     prompt_boilerplate_path = os.path.join(BASE_DIR, 'prompts/prompt_boilerplate/context.txt')
 
@@ -166,14 +141,14 @@ async def summarize_transcription_and_upload_to_notion(transcription: str, page_
                 'filename': file_name,
                 'summary': decomposed_summary
             })
-
+            
+            # Map specific functions to file names
             section_mapping = {
                 "intro.txt": append_intro_to_notion,
                 "direct_quotes.txt": append_direct_quotes_to_notion,
                 "next_steps.txt": append_next_steps_to_notion
             }
             append_function = section_mapping.get(file_name)
-            # FUNCTION TO CREATE TOGGLE HERE
             
             if append_function:
                 # Call the helper function to append the summary to Notion

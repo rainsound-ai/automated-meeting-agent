@@ -1,30 +1,46 @@
-Name Of Section: Next Steps
+Name Of Section: Next Actions
 
 Task: Identify and outline the actionable items or decisions made during the meeting.
 
 Include:
-Responsible parties (who is assigned to each task).
-Deadlines (specific dates or timeframes).
-Any follow-up actions required (what steps need to be taken to complete the task).
-Pick the 3 most important action items or decisions.
 
-Filtering Criteria:
+Action Items: Clearly defined tasks or decisions derived directly from the transcript.
+Deadlines: Specific dates or timeframes mentioned for each action item.
+Follow-Up Actions: actions required to complete each task.
+Criteria for Selecting Action Items:
 
+Direct Extraction: Only include actions explicitly mentioned in the transcript. Do not infer or add tasks that are not present in the meeting.
 Impact: Select items that have the highest potential to affect the outcome of the project or business goals.
-Urgency: Prioritize tasks that have the nearest deadlines or need immediate attention.
-Responsibility: Choose tasks assigned to key stakeholders or decision-makers (e.g., team leads or managers).
-Clarity: Focus on actions or decisions that are clearly defined and feasible, avoiding ambiguous or non-actionable points.
+Urgency: Prioritize tasks that have the nearest deadlines or require immediate attention.
+Clarity and Feasibility: Focus on actions that are clearly defined and achievable, avoiding ambiguous or non-actionable points.
+Filtering Guidelines:
 
-There won't always be 3 action items worth showing - 3 is just the maximum number of action items you can show.
+Avoid Hallucinations: Do not attribute tasks to individuals unless the transcript explicitly assigns them. If the responsible party is not clearly stated, omit assigning the task.
+No Extraneous Tasks: Ensure that all action items are directly pulled from the transcript without introducing any unrelated or speculative tasks.
+Limit to Three: There won't always be three high-impact action items worth showing. Three is just the maximum number of action items you can choose to display.
+Handling Insufficient Action Items:
+
+If there are fewer than three high-impact next actions, present only the available actions.
+If no actionable items are identified, state "No next actions identified."
+Formatting:
+
+Present this section with the heading "Next Actions."
 
 Ensure the entire section is no longer than 2000 characters.
 
-Here's an example of what this summary should look like - format it for notion as shown below:
+Use the following example as a template:
 
-## Next Steps
+## Next Actions
 **Microsoft Ignite Preparation**
-Brent and Jeffrey are tasked with finalizing preparations for the Microsoft Ignite conference. The objective is to leverage this event to secure new business opportunities or "get a second whale," thus enhancing [Rainsound.ai](http://rainsound.ai/)'s position within Microsoft's network. It is emphasized that all materials and presentations must be ready in anticipation of attending the conference, and it is also necessary to consider contingency plans if the attempt to obtain event tickets falls through
+Finalize preparations for the Microsoft Ignite conference to leverage the event for securing new business opportunities. Ensure all materials and presentations are ready before the conference date.
+
 **VAM Workshop Utilization**
-The team will focus efforts on the upcoming VAM Workshop as a key strategy to identify and define a potential productized program. This workshop is expected to yield customer insights and guide the formulation of more standardized deliverables that can be presented consistently to clients. Success in these areas could reveal a clear pathway to securing new contracts with existing or new partners, such as Microsoft and NVIDIA.
+Focus efforts on the upcoming VAM Workshop to identify and define a potential productized program. Utilize customer insights from the workshop to guide the formulation of standardized deliverables.
+
 **Microsoft Contract Renewal Strategy**
-Address the renewal of the current contract with Microsoft. This includes preparing for multiple scenarios: the likely renewal of the contract, the best-case scenario where the contract is renewed and expanded, and the worst case where it is not renewed. By preparing for these outcomes, the company seeks to ensure continuity and growth regardless of the contract status post the six-week mark.
+Prepare for the renewal of the current contract with Microsoft by outlining multiple scenarios: likely renewal, best-case expansion, and worst-case non-renewal. Ensure strategies are in place to maintain continuity and growth regardless of the outcome.
+
+If No Action Items are identified:
+
+## Next Actions
+**No next actions identified.**
