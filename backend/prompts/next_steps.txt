@@ -5,8 +5,7 @@ Task: Identify and outline the actionable items or decisions made during the mee
 Include:
 
 Action Items: Clearly defined tasks or decisions derived directly from the transcript.
-Deadlines: Specific dates or timeframes mentioned for each action item.
-Follow-Up Actions: actions required to complete each task.
+
 Criteria for Selecting Action Items:
 
 Direct Extraction: Only include actions explicitly mentioned in the transcript. Do not infer or add tasks that are not present in the meeting.

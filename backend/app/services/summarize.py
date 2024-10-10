@@ -1,9 +1,10 @@
+# summarize.py
 from app.lib.Env import open_ai_api_key
 from fastapi import HTTPException
 import os
+import logging
 from openai import OpenAI
 from app.services.notion import (
-    create_toggle_block, 
     append_intro_to_notion,
     append_direct_quotes_to_notion,
     append_next_steps_to_notion,
@@ -13,6 +14,9 @@ from app.services.summary_eval_agent import evaluate_section  # Import the evalu
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 client = OpenAI(api_key=open_ai_api_key)
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def get_file_path(file_name: str) -> str:
     return os.path.join(BASE_DIR, 'prompts', file_name)
@@ -38,7 +42,7 @@ async def summarize_transcription(transcription: str, prompt: str) -> str:
         print(f"An error occurred during the summarization process: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-async def decomposed_summarize_transcription_and_upload_to_notion(transcription: Transcription, page_id: str) -> None:
+async def decomposed_summarize_transcription_and_upload_to_notion(transcription: Transcription, toggle_id: str) -> None:
     prompt_boilerplate_path = os.path.join(BASE_DIR, 'prompts/prompt_boilerplate/context.txt')
     with open(prompt_boilerplate_path, 'r') as f:
         prompt_boilerplate = f.read() 
@@ -66,18 +70,18 @@ async def decomposed_summarize_transcription_and_upload_to_notion(transcription:
                 evaluation_result = evaluate_section(transcription, decomposed_summary, section_name)
                 section_score = evaluation_result.get('score', 0)  # Default to 0 if 'score' is not present
             except Exception as e:
-                print(f"Error evaluating {section_name}: {e}")
+                logger.error(f"Error evaluating {section_name}: {e}")
                 section_score = 0  # Set a default score if evaluation fails
             
-            print(f"{section_name} - Attempt {attempt + 1}: Section score = {section_score}")
+            logger.info(f"{section_name} - Attempt {attempt + 1}: Section score = {section_score}")
             
             if section_score >= quality_threshold:
-                print(f"{section_name} meets quality standards. Moving to next section.")
+                logger.info(f"{section_name} meets quality standards. Moving to next section.")
                 break
             elif attempt < max_attempts - 1:
-                print(f"{section_name} quality below threshold. Retrying... (Attempt {attempt + 2}/{max_attempts})")
+                logger.info(f"{section_name} quality below threshold. Retrying... (Attempt {attempt + 2}/{max_attempts})")
             else:
-                print(f"Max attempts reached for {section_name}. Using the best version generated.")
+                logger.info(f"Max attempts reached for {section_name}. Using the best version generated.")
         
         summary_chunks.append({
             'filename': file_name,
@@ -86,8 +90,6 @@ async def decomposed_summarize_transcription_and_upload_to_notion(transcription:
         full_summary += f"## {section_name}\n{decomposed_summary}\n\n"
     
     # Upload to Notion
-    summary_toggle_id = create_toggle_block(page_id, "Summary", "green")
-    
     for chunk in summary_chunks:
         file_name = chunk['filename']
         decomposed_summary = chunk['summary']
@@ -103,11 +105,11 @@ async def decomposed_summarize_transcription_and_upload_to_notion(transcription:
         if append_function:
             # Call the helper function to append the summary to Notion
             append_function(
-                toggle_id=summary_toggle_id,
+                toggle_id=toggle_id,
                 section_content=decomposed_summary,
             )
         else:
             # Handle unexpected filenames if necessary
             raise ValueError(f"No append function defined for file: {file_name}")
-
-    print("Summary uploaded to Notion successfully.")
+    
+    logger.info("Summary uploaded to Notion successfully.")
