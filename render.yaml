@@ -1,5 +1,5 @@
 services:
-  - name: meeting-agent-backend
+  - name: automated-meeting-agent
     type: web
     env: python
     plan: free
@@ -8,14 +8,3 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.12.0
-
-  - name: meeting-agent-frontend
-    type: web
-    env: node
-    plan: free
-    buildCommand: "cd frontend && npm install && npm run build"
-    startCommand: "cd frontend && npm run preview -- --port $PORT --host 0.0.0.0"
-
-    envVars:
-      - key: NODE_VERSION
-        value: 20
