@@ -1,4 +1,3 @@
-# transcribe.py
 from app.lib.Env import open_ai_api_key
 from fastapi import File, UploadFile, HTTPException
 import os
@@ -21,8 +20,11 @@ async def extract_audio_from_video(video_path, audio_output_path):
     process = await asyncio.create_subprocess_exec(
         *command, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
-    await process.communicate()
-    print(f"Audio extracted from video and saved to {audio_output_path}")
+    stdout, stderr = await process.communicate()
+    if process.returncode != 0:
+        logger.error(f"Error extracting audio: {stderr.decode()}")
+        raise RuntimeError("Failed to extract audio from video")
+    logger.info(f"Audio extracted from video and saved to {audio_output_path}")
 
 async def chunk_audio(input_file, output_dir, chunk_duration_sec=30):
     output_pattern = os.path.join(output_dir, "chunk_%03d.mp3")
@@ -33,8 +35,11 @@ async def chunk_audio(input_file, output_dir, chunk_duration_sec=30):
     process = await asyncio.create_subprocess_exec(
         *command, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
-    await process.communicate()
-    print(f"Audio file chunked and saved to {output_dir}")
+    stdout, stderr = await process.communicate()
+    if process.returncode != 0:
+        logger.error(f"Error chunking audio: {stderr.decode()}")
+        raise RuntimeError("Failed to chunk audio file")
+    logger.info(f"Audio file chunked and saved to {output_dir}")
 
 async def validate_mp3(file_path):
     async with aiofiles.open(file_path, "rb") as file:
@@ -62,7 +67,6 @@ async def transcribe_chunk(chunk_path):
             response_format="text"
         )
         logger.info(f"Successfully transcribed chunk: {chunk_path}")
-        print(f"Successfully transcribed chunk: {chunk_path}")
         return result
     except Exception as e:
         logger.error(f"Error transcribing chunk {chunk_path}: {str(e)}")
@@ -81,7 +85,7 @@ async def transcribe(file: UploadFile = File(...)):
             async with aiofiles.open(temp_path, "wb") as buffer:
                 while content := await file.read(1024 * 1024):  # Read in 1MB chunks
                     await buffer.write(content)
-            print(f"File {file.filename} saved to {temp_path}.")
+            logger.info(f"File {file.filename} saved to {temp_path}.")
 
             audio_output_path = os.path.join(temp_dir, f"audio_{uuid.uuid4()}.mp3")
             await extract_audio_from_video(temp_path, audio_output_path)
@@ -100,10 +104,10 @@ async def transcribe(file: UploadFile = File(...)):
 
             # Clean up the original file
             os.remove(temp_path)
-            print("Temporary files cleaned up.")
+            logger.info("Temporary files cleaned up.")
 
             return final_transcription.strip()
 
     except Exception as e:
-        print(f"Error: {str(e)}")
+        logger.error(f"Error in transcription process: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
