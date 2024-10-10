@@ -31,7 +31,7 @@ async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
             print(meeting.get('properties').get('Name').get('title')[0].get('text').get('content'))
 
         # Remove all but the first item in the array
-        first_meeting_to_summarize = meetings_to_summarize[1:2]
+        first_meeting_to_summarize = meetings_to_summarize[:1]
 
         for meeting in first_meeting_to_summarize:
             page_id: str = meeting.get('id')
