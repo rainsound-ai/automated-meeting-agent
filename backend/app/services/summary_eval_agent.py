@@ -51,9 +51,9 @@ def generate_expected_outcome(transcription: str, section_name: str) -> str:
     """
     
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="o1-mini",
         messages=[
-            {"role": "system", "content": f"You are an AI assistant that analyzes meeting transcripts and generates expected {section_name} sections for summaries."},
+            # {"role": "system", "content": f"You are an AI assistant that analyzes meeting transcripts and generates expected {section_name} sections for summaries."},
             {"role": "user", "content": prompt.format(transcription=transcription)}
         ]
     )
@@ -88,9 +88,9 @@ def evaluate_intro(actual: str, expected: str) -> Dict[str, any]:
     """
     
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="o1-mini",
         messages=[
-            {"role": "system", "content": "You are an AI assistant that evaluates meeting summaries."},
+            # {"role": "system", "content": "You are an AI assistant that evaluates meeting summaries."},
             {"role": "user", "content": prompt}
         ]
     )
@@ -130,9 +130,9 @@ def evaluate_quotes(transcription: str, actual_quotes: str, expected_quotes: str
     """
     
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="o1-mini",
         messages=[
-            {"role": "system", "content": "You are an AI assistant that evaluates meeting quote extractions."},
+            # {"role": "system", "content": "You are an AI assistant that evaluates meeting quote extractions."},
             {"role": "user", "content": prompt}
         ]
     )
@@ -172,9 +172,9 @@ def evaluate_actions(transcription: str, actual_actions: str, expected_actions: 
     """
     
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="o1-mini",
         messages=[
-            {"role": "system", "content": "You are an AI assistant that evaluates meeting action item extractions."},
+            # {"role": "system", "content": "You are an AI assistant that evaluates meeting action item extractions."},
             {"role": "user", "content": prompt}
         ]
     )

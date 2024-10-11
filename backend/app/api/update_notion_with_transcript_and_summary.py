@@ -63,7 +63,7 @@ async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
         meetings_to_summarize: List[Meeting] = get_meetings_with_jumpshare_links_and_unsummarized_from_notion()
         logger.info(f"Found {len(meetings_to_summarize)} meetings to summarize.")
 
-        for meeting in meetings_to_summarize[:1]:  # Process only the first meeting
+        for meeting in meetings_to_summarize:
             try:
                 await process_meeting(meeting)
                 logger.info(f"Successfully processed meeting {meeting['id']}")
