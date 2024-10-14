@@ -26,8 +26,6 @@ Section Heading: Begin with the heading "Intro."
 Single Paragraph: Present the summary in a single, coherent paragraph under the heading.
 Formatting Instructions:
 
-Section Heading: Begin with the heading "Intro."
-Summary Presentation: Write the summary as a single paragraph under the heading.
 Example Format:
 
 ## Intro

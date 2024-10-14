@@ -5,6 +5,7 @@ from openai import OpenAI
 from app.lib.Env import open_ai_api_key
 import logging
 import re
+import functools
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -13,55 +14,52 @@ client = OpenAI(api_key=open_ai_api_key)
 
 GOLD_STANDARD_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'gold_standard_evals')
 
-def load_section_specific_gold_standard_data(section_name: str) -> Optional[Tuple[str, str]]:
+@functools.lru_cache(maxsize=None)
+def get_gold_standard_file(section_name: str) -> Optional[Tuple[str, str]]:
     try:
-        folders = [f for f in os.listdir(GOLD_STANDARD_DIR) if os.path.isdir(os.path.join(GOLD_STANDARD_DIR, f))]
-        if not folders:
-            logger.warning("No gold standard folders found.")
+        fotmatted_section_name = section_name.lower().replace(' ', '_')
+        transcript_file = 'gold_standard_transcript.txt'
+        summary_file = f'gold_standard_{fotmatted_section_name}.txt'
+        print("summary file:", summary_file)
+        
+        transcript_path = os.path.join(GOLD_STANDARD_DIR, transcript_file)
+        summary_path = os.path.join(GOLD_STANDARD_DIR, summary_file)
+        print("transcript path:", transcript_path)
+        print("summary path:", summary_path)
+        
+        if not os.path.exists(transcript_path) or not os.path.exists(summary_path):
+            logger.warning(f"Missing gold standard files for {section_name}.")
             return None
         
-        random_folder = random.choice(folders)
-        folder_path = os.path.join(GOLD_STANDARD_DIR, random_folder)
-        
-        transcript_file = next((f for f in os.listdir(folder_path) if f.startswith('gold_standard_transcript')), None)
-        summary_file = next((f for f in os.listdir(folder_path) if f.startswith('gold_standard_summary')), None)
-        
-        if not transcript_file or not summary_file:
-            logger.warning(f"Missing gold standard files in {random_folder}.")
-            return None
-        
-        with open(os.path.join(folder_path, transcript_file), 'r') as f:
+        with open(transcript_path, 'r') as f:
             transcript = f.read()
         
-        with open(os.path.join(folder_path, summary_file), 'r') as f:
-            full_summary = f.read()
+        with open(summary_path, 'r') as f:
+            summary_section = f.read()
             
-        # Extract the relevant section from the full summary
-        section_pattern = rf"## {section_name}\n(.*?)(?=\n## |\Z)"
-        section_match = re.search(section_pattern, full_summary, re.DOTALL | re.IGNORECASE)
-        section_summary = section_match.group(1).strip() if section_match else ""
         
-        return transcript, section_summary
+        return transcript, summary_section
     except Exception as e:
-        logger.error(f"Error loading gold standard data: {str(e)}")
+        logger.error(f"Error loading gold standard data for {section_name}: {str(e)}")
         return None
 
-def evaluate_section(transcription: str, section_summary: str, section_name: str) -> Dict[str, any]:
+
+def evaluate_section(transcript: str, section_summary: str, section_name: str) -> Dict[str, any]:
     try:
-        gold_standard_data = load_section_specific_gold_standard_data(section_name)
+        gold_standard_data = get_gold_standard_file(section_name)
         gold_standard_transcript, gold_standard_summary = gold_standard_data or (None, None)
 
         prompt = f"""
         Evaluate the following {section_name} section of a meeting summary:
 
-        Actual transcript (excerpt):
-        {transcription}...  # Limit transcript length to avoid token limits
+        Actual transcript:
+        {transcript}
 
         {section_name} summary to evaluate:
         {section_summary}
 
-        Gold standard transcript (excerpt):
-        {gold_standard_transcript}...
+        Gold standard transcript:
+        {gold_standard_transcript}
 
         Gold standard {section_name} summary:
         {gold_standard_summary}
@@ -78,7 +76,7 @@ def evaluate_section(transcription: str, section_summary: str, section_name: str
         4. Accuracy: Does it stick to facts from the transcript without inferring or making assumptions?
         5. Structure: Does it follow a logical structure appropriate for a {section_name} section?
 
-        Provide your evaluation in the following format:
+        Provide your evaluation in the following format - do not add any additional formatting or decorations:
         Score: [A single number between 0 and 1, where 1 is the best]
         Feedback: [Your detailed feedback here, including strengths and areas for improvement]
         """
@@ -87,7 +85,7 @@ def evaluate_section(transcription: str, section_summary: str, section_name: str
         evaluation = parse_evaluation_response(response)
         
         logger.info(f"Evaluation for {section_name}: {evaluation}")
-        return {"section_score": evaluation["score"], "feedback": evaluation["feedback"]}
+        return evaluation
     except Exception as e:
         logger.error(f"Evaluation failed with error: {str(e)}")
         raise
@@ -109,16 +107,22 @@ def get_openai_response(prompt: str) -> str:
 
 def parse_evaluation_response(response: str) -> Dict[str, any]:
     try:
-        score_match = re.search(r'Score:\s*(0\.\d+|1\.0|1)', response)
-        feedback_match = re.search(r'Feedback:\s*(.+)', response, re.DOTALL)
+        # Extract score
+        score_match = re.search(r'Score:\s*(0\.\d+|1\.0)', response)
+        score = float(score_match.group(1)) if score_match else "Couldnt find score"
 
-        score = float(score_match.group(1)) if score_match else 0.5
-        feedback = feedback_match.group(1).strip() if feedback_match else "No feedback provided."
+        # Extract feedback (everything after "Feedback:")
+        feedback_pattern = f"{re.escape("Feedback:")}(.*)"
+        feedback_match = re.search(feedback_pattern, response, re.DOTALL)
+        feedback = feedback_match.group(1).strip() if feedback_match else "Couldnt find feedback"
 
-        return {"score": score, "feedback": feedback}
+        return {
+            "score": score,
+            "feedback": feedback
+        }
+
     except Exception as e:
-        logger.error(f"Error parsing evaluation response: {str(e)}")
-        raise
+        return logger.error(f"Error parsing evaluation response: {str(e)}")
 
 def calculate_f1_score(precision: float, recall: float) -> float:
     if precision + recall == 0:
