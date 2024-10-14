@@ -93,7 +93,7 @@ def append_intro_to_notion(toggle_id: str, section_content: str) -> None:
 def append_direct_quotes_to_notion(toggle_id: str, section_content: str) -> None:
     append_section_to_notion(toggle_id, section_content, "Direct Quotes")
 
-def append_next_steps_to_notion(toggle_id: str, section_content: str) -> None:
+def append_next_actions_to_notion(toggle_id: str, section_content: str) -> None:
     append_section_to_notion(toggle_id, section_content, "Next Steps")
 
 def upload_transcript_to_notion(toggle_id: str, transcription: str) -> None:

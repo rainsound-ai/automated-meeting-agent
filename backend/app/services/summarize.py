@@ -7,19 +7,16 @@ from openai import OpenAI
 from app.services.notion import (
     append_intro_to_notion,
     append_direct_quotes_to_notion,
-    append_next_steps_to_notion,
+    append_next_actions_to_notion,
 )
 from app.models import Transcription
-from app.services.summary_eval_agent import evaluate_section  # Import the evaluation function
+from app.services.eval_agent import evaluate_section  # Import the evaluation function
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 client = OpenAI(api_key=open_ai_api_key)
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-def get_file_path(file_name: str) -> str:
-    return os.path.join(BASE_DIR, 'prompts', file_name)
 
 async def summarize_transcription(transcription: str, prompt: str) -> str:
     try:
@@ -47,10 +44,10 @@ async def decomposed_summarize_transcription_and_upload_to_notion(transcription:
     with open(prompt_boilerplate_path, 'r') as f:
         prompt_boilerplate = f.read() 
     
-    prompts_files = ["intro.txt", "direct_quotes.txt", "next_steps.txt"]
+    prompts_files = ["intro.txt", "direct_quotes.txt", "next_actions.txt"]
     
-    max_attempts = 3
-    quality_threshold = 0.7  # Adjust this value as needed
+    max_attempts = 5
+    quality_threshold = 0.8  # Adjust this value as needed
     
     summary_chunks = []
     full_summary = ""
@@ -59,35 +56,50 @@ async def decomposed_summarize_transcription_and_upload_to_notion(transcription:
         section_name = file_name.split('.')[0].replace('_', ' ').title()
         file_path = os.path.join(BASE_DIR, 'prompts', file_name) 
         
+        best_score = 0
+        best_summary = ""
+        best_feedback = ""
+        
         for attempt in range(max_attempts):
             with open(file_path, 'r') as f:
                 prompt_content = f.read()
                 full_prompt = prompt_boilerplate + prompt_content
                 decomposed_summary = await summarize_transcription(transcription, full_prompt)
             
-            # Evaluate the section
             try:
                 evaluation_result = evaluate_section(transcription, decomposed_summary, section_name)
-                section_score = evaluation_result.get('score', 0)  # Default to 0 if 'score' is not present
+                section_score = evaluation_result["section_score"]
+                feedback = evaluation_result["feedback"]
+                
+                logger.info(f"{section_name} - Attempt {attempt + 1}: Section score = {section_score}")
+                logger.info(f"Feedback: {feedback}")
+                
+                if section_score > best_score:
+                    best_score = section_score
+                    best_summary = decomposed_summary
+                    best_feedback = feedback
+                
+                if section_score >= quality_threshold:
+                    logger.info(f"{section_name} meets quality standards. Moving to next section.")
+                    break
+                elif attempt < max_attempts - 1:
+                    logger.info(f"{section_name} quality below threshold. Retrying... (Attempt {attempt + 2}/{max_attempts})")
+                else:
+                    logger.info(f"Max attempts reached for {section_name}. Using the best version generated (score: {best_score}).")
+            
             except Exception as e:
-                logger.error(f"Error evaluating {section_name}: {e}")
-                section_score = 0  # Set a default score if evaluation fails
-            
-            logger.info(f"{section_name} - Attempt {attempt + 1}: Section score = {section_score}")
-            
-            if section_score >= quality_threshold:
-                logger.info(f"{section_name} meets quality standards. Moving to next section.")
-                break
-            elif attempt < max_attempts - 1:
-                logger.info(f"{section_name} quality below threshold. Retrying... (Attempt {attempt + 2}/{max_attempts})")
-            else:
-                logger.info(f"Max attempts reached for {section_name}. Using the best version generated.")
+                logger.error(f"Error evaluating {section_name}: {str(e)}")
+                if attempt == max_attempts - 1:
+                    best_summary = decomposed_summary
+                    best_feedback = "Evaluation failed"
         
         summary_chunks.append({
             'filename': file_name,
-            'summary': decomposed_summary
+            'summary': best_summary,
+            'score': best_score,
+            'feedback': best_feedback
         })
-        full_summary += f"## {section_name}\n{decomposed_summary}\n\n"
+        full_summary += f"## {section_name}\nScore: {best_score}\nFeedback: {best_feedback}\n\n{best_summary}\n\n"
     
     # Upload to Notion
     for chunk in summary_chunks:
@@ -98,18 +110,22 @@ async def decomposed_summarize_transcription_and_upload_to_notion(transcription:
         section_mapping = {
             "intro.txt": append_intro_to_notion,
             "direct_quotes.txt": append_direct_quotes_to_notion,
-            "next_steps.txt": append_next_steps_to_notion
+            "next_actions.txt": append_next_actions_to_notion
         }
         append_function = section_mapping.get(file_name)
         
         if append_function:
             # Call the helper function to append the summary to Notion
-            append_function(
-                toggle_id=toggle_id,
-                section_content=decomposed_summary,
-            )
+            try:
+                await append_function(
+                    toggle_id=toggle_id,
+                    section_content=decomposed_summary,
+                )
+                logger.info(f"Successfully uploaded {file_name} to Notion")
+            except Exception as e:
+                logger.error(f"Failed to upload {file_name} to Notion: {str(e)}")
         else:
             # Handle unexpected filenames if necessary
-            raise ValueError(f"No append function defined for file: {file_name}")
+            logger.warning(f"No append function defined for file: {file_name}")
     
-    logger.info("Summary uploaded to Notion successfully.")
+    logger.info("Summary upload to Notion completed.")

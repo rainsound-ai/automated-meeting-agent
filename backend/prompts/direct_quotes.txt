@@ -20,21 +20,19 @@ Formatting Requirements:
 Section Heading: Begin with the heading "Direct Quotes."
 
 Quote Presentation: For each quote, present the exact quote within quotation marks using the following format:
-
 "Exact quote here."
 
-Quantity: Provide up to three high-impact quotes. If fewer than three are available, include only the relevant ones. If no suitable quotes are found, use the placeholder provided below.
+Quantity:
 
+Standard Case: Provide up to three high-impact quotes.
+Edge Case: If more than three high-impact quotes are necessary to capture the meeting's essence, include additional quotes as needed.
 Character Limit: Ensure the entire section does not exceed 2000 characters.
 
 Example Format:
-
 ## Direct Quotes
-"We're not there. We're in the realm of custom, we're in productized service land and not even really there fully because we're still defining all the processes." 
-"Either the VAM workshop just totally just reveals the answer, which it seems very capable of doing, or B, Brent and Jeffrey just crush Ignite and that's it, and then we're done. Or C, NVIDIA comes through." 
-"If we just need to get a second whale between now and whenever we land on like a productized program, like we just don't need to do inbound marketing."
-
-If No Suitable Quotes Are Found:
+"It solves aligning on the skills that we need to have to be good AI engineers. It solves giving concrete solutions to known problems rather than having to reinvent the wheel for any given AI agent, and it gives concrete resources for upskilling, like, all the way to the highest level without having to sort of, like, meander your way to it."
+"I’m thinking I probably want to clone your code base and start working from there, but I think there’s some strategy involved with the right timing for that."
+"This is legit a case in which you could build a spawning agent and have it work well."
 
 ## Direct Quotes
 **No relevant quotes identified.**
