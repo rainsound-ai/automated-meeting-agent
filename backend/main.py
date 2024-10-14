@@ -7,15 +7,15 @@ from app.api.update_notion_with_transcript_and_summary import update_notion_with
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-print(f"Running in {environment} environment")
+logger.info(f"💡 Running in {environment} environment")
 
 async def run_update_task():
     try:
-        logger.info("Starting Notion update task")
+        logger.info("🌺Starting Notion update task")
         await update_notion_with_transcript_and_summary()
-        logger.info("Notion update task completed successfully")
+        logger.info("🎬 Notion update task completed successfully")
     except Exception as e:
-        logger.error(f"Error in Notion update task: {str(e)}")
+        logger.error(f"🚨 Error in Notion update task: {str(e)}")
 
 if __name__ == "__main__":
     asyncio.run(run_update_task())

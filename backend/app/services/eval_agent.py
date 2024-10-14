@@ -19,15 +19,12 @@ def get_gold_standard_file(section_name: str) -> Optional[Tuple[str, str]]:
         fotmatted_section_name = section_name.lower().replace(' ', '_')
         transcript_file = 'gold_standard_transcript.txt'
         summary_file = f'gold_standard_{fotmatted_section_name}.txt'
-        print("summary file:", summary_file)
         
         transcript_path = os.path.join(GOLD_STANDARD_DIR, transcript_file)
         summary_path = os.path.join(GOLD_STANDARD_DIR, summary_file)
-        print("transcript path:", transcript_path)
-        print("summary path:", summary_path)
         
         if not os.path.exists(transcript_path) or not os.path.exists(summary_path):
-            logger.warning(f"Missing gold standard files for {section_name}.")
+            logger.warning(f"🚨 Missing gold standard files for {section_name}.")
             return None
         
         with open(transcript_path, 'r') as f:
@@ -39,7 +36,7 @@ def get_gold_standard_file(section_name: str) -> Optional[Tuple[str, str]]:
         
         return transcript, summary_section
     except Exception as e:
-        logger.error(f"Error loading gold standard data for {section_name}: {str(e)}")
+        logger.error(f"🚨 Error loading gold standard data for {section_name}: {str(e)}")
         return None
 
 
@@ -84,10 +81,10 @@ def evaluate_section(transcript: str, section_summary: str, section_name: str) -
         response = get_openai_response(prompt)
         evaluation = parse_evaluation_response(response)
         
-        logger.info(f"Evaluation for {section_name}: {evaluation}")
+        logger.info(f"💡 Evaluation for {section_name}: {evaluation}")
         return evaluation
     except Exception as e:
-        logger.error(f"Evaluation failed with error: {str(e)}")
+        logger.error(f"🚨 Evaluation failed with error: {str(e)}")
         raise
 
 def get_openai_response(prompt: str) -> str:
@@ -99,10 +96,10 @@ def get_openai_response(prompt: str) -> str:
             ]
         )
         content = response.choices[0].message.content
-        logger.info(f"OpenAI API response: {content}")
+        logger.info(f"💡 OpenAI API response: {content}")
         return content
     except Exception as e:
-        logger.error(f"Error getting OpenAI response: {str(e)}")
+        logger.error(f"🚨 Error getting OpenAI response: {str(e)}")
         return ""
 
 def parse_evaluation_response(response: str) -> Dict[str, any]:
@@ -112,7 +109,7 @@ def parse_evaluation_response(response: str) -> Dict[str, any]:
         score = float(score_match.group(1)) if score_match else "Couldnt find score"
 
         # Extract feedback (everything after "Feedback:")
-        feedback_pattern = f"{re.escape("Feedback:")}(.*)"
+        feedback_pattern = f'{re.escape("Feedback:")}(.*)'
         feedback_match = re.search(feedback_pattern, response, re.DOTALL)
         feedback = feedback_match.group(1).strip() if feedback_match else "Couldnt find feedback"
 
@@ -122,7 +119,7 @@ def parse_evaluation_response(response: str) -> Dict[str, any]:
         }
 
     except Exception as e:
-        return logger.error(f"Error parsing evaluation response: {str(e)}")
+        return logger.error(f"🚨 Error parsing evaluation response: {str(e)}")
 
 def calculate_f1_score(precision: float, recall: float) -> float:
     if precision + recall == 0:
