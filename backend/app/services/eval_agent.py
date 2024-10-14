@@ -1,5 +1,4 @@
 import os
-import random
 from typing import Optional, Dict, Tuple
 from openai import OpenAI
 from app.lib.Env import open_ai_api_key

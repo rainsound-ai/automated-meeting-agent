@@ -2,7 +2,6 @@ from typing import List, Dict, Tuple
 import requests
 from fastapi import HTTPException
 from app.lib.Env import notion_api_key, rainsound_meetings_database_id
-import traceback
 import logging
 from app.services.chunk_text import chunk_text
 from app.services.parse_markdown_to_notion_blocks import (
@@ -13,7 +12,7 @@ from app.models import (
     NotionBlock, 
     ToggleBlock
 )
-from tenacity import retry, stop_after_attempt, wait_exponential, RetryError
+from tenacity import retry, stop_after_attempt, wait_exponential
 
 # Configuration Constants
 NOTION_VERSION = "2022-06-28"

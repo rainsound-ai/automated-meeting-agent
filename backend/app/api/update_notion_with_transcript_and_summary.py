@@ -1,12 +1,12 @@
 import logging
 from fastapi import APIRouter, HTTPException, UploadFile
 import traceback
-import requests
 from io import BytesIO
 from contextlib import asynccontextmanager
 from app.services.transcribe import transcribe
 from app.services.summarize import decomposed_summarize_transcription_and_upload_to_notion  
 import os
+import httpx
 from app.services.notion import (
     set_summarized_checkbox_on_notion_page_to_true,
     upload_transcript_to_notion,
@@ -83,8 +83,6 @@ async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
         logger.error(f"Error in update_notion_with_transcript_and_summary: {str(e)}")
         logger.error(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Error updating Notion with transcript and summary: {str(e)}")
-
-import httpx
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def get_video_from_jumpshare_link(jumpshare_link: JumpshareLink) -> UploadFile:
