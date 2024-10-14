@@ -67,7 +67,8 @@ def evaluate_section(transcript: str, section_summary: str, section_name: str) -
         Instructions:
         1. The gold standard summary provided above is an example of a high-quality {section_name} section based on the gold standard transcript.
         2. Use this as a reference for what a good {section_name} section should cover and how it should be structured.
-        3. Evaluate the provided {section_name} summary based on how well it captures the key information from the actual transcript, compared to how the gold standard summary captures information from its transcript.
+        3. **Do not replicate the gold standard summary verbatim.** Instead, focus on understanding the quality, completeness, and clarity it demonstrates.
+        4. Evaluate the provided {section_name} summary based on how well it captures the key information from the actual transcript, comparing this effectiveness to how the gold standard summary captures information from its transcript.
 
         Criteria:
         1. Conciseness: Is the summary concise while covering key points?
