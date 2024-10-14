@@ -1,0 +1,4 @@
+Direct Quotes
+It solves aligning on the skills that we need to have to be good AI engineers. It solves giving concrete solutions to known problems rather than having to reinvent the wheel for any given AI agent, and it gives concrete resources for upskilling, like, all the way to the highest level without having to sort of, like, meander your way to it.
+I’m thinking I probably want to clone your code base and start working from there, but I think there’s some strategy involved with the right timing for that.
+This is legit a case in which you could build a spawning agent and have it work well.

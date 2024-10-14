@@ -1,0 +1,7 @@
+Next Actions
+Conference Scheduling and Ticket Purchasing
+Immediately confirm dates for upcoming conferences, particularly focusing on those scheduled for February. Expedite the ticket purchasing process to ensure participation in key events, addressing previous delays experienced in July’s Microsoft Ignite prioritization. Follow-up actions involve notifying Brent and Jefferey about finalized dates and ensuring alignment with sales strategy goals.
+AI Skill Tree Development
+Begin the creation of an AI skill tree, starting with five levels of AI engineering. This initiative aims to align and enhance the skills necessary for AI engineering and provide concrete solutions for upskilling. Follow-up actions include collaborating with team members to gather necessary resources and moving forward with a detailed action plan for the skill tree.
+Link Processing Agent Development
+Begin the development of a link processing agent capable of generating bulk summaries for content types such as articles and YouTube videos. The next step is to determine the optimal timing for cloning the code base from existing automated meeting engines and implement necessary adjustments to include various media. Follow-up actions include discussing reusable code components with team members and potentially integrating Notion database features for streamlined operations.
