@@ -65,7 +65,7 @@ async def delete_block(block_id: str):
     headers = get_headers()
     response = requests.delete(url, headers=headers)
     if response.status_code != 200:
-        logger.error(f"Failed to delete block {block_id}: {response.text}")
+        logger.error(f"🚨 Failed to delete block {block_id}: {response.text}")
 
 async def safe_append_blocks_to_notion(toggle_id: str, blocks: List[NotionBlock]) -> Tuple[Dict, List[str]]:
     try:
@@ -75,7 +75,7 @@ async def safe_append_blocks_to_notion(toggle_id: str, blocks: List[NotionBlock]
             block_tracker.add_block(block_id)
         return response, block_ids
     except Exception as e:
-        logger.error(f"Error appending blocks to Notion: {str(e)}")
+        logger.error(f"🚨 Error appending blocks to Notion: {str(e)}")
         raise
 
 async def append_section_to_notion(toggle_id: str, section_content: str, section_name: str) -> None:
@@ -83,7 +83,7 @@ async def append_section_to_notion(toggle_id: str, section_content: str, section
     try:
         response, block_ids = await safe_append_blocks_to_notion(toggle_id, blocks)
     except Exception as e:
-        logger.error(f"Failed to append {section_name} to Notion: {str(e)}")
+        logger.error(f"🚨 Failed to append {section_name} to Notion: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to append {section_name} to Notion")
 
 async def append_intro_to_notion(toggle_id: str, section_content: str) -> None:
@@ -110,7 +110,7 @@ async def upload_transcript_to_notion(toggle_id: str, transcription: str) -> Non
             ]
             await safe_append_blocks_to_notion(toggle_id, blocks)
     except Exception as e:
-        logger.error(f"Error uploading transcript to Notion: {str(e)}")
+        logger.error(f"🚨 Error uploading transcript to Notion: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to upload transcript to Notion")
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
@@ -169,5 +169,5 @@ async def get_meetings_with_jumpshare_links_and_unsummarized_from_notion() -> Li
         notion_data = response.json()
         return notion_data.get('results', [])
     except requests.exceptions.RequestException as e:
-        logger.error(f"Failed to fetch meetings from Notion: {str(e)}")
+        logger.error(f"🚨 Failed to fetch meetings from Notion: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to fetch meetings from Notion")

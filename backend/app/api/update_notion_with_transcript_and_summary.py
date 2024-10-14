@@ -35,7 +35,7 @@ async def meeting_processing_context(meeting: Meeting):
     try:
         yield
     except Exception as e:
-        logger.error(f"Error processing meeting {meeting['id']}: {str(e)}")
+        logger.error(f"🚨 Error processing meeting {meeting['id']}: {str(e)}")
         await rollback_blocks()
         raise
     else:
@@ -61,32 +61,32 @@ async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
     logger.info("Received request for updating Notion with transcript and summary.")
     try:
         meetings_to_summarize: List[Meeting] = await get_meetings_with_jumpshare_links_and_unsummarized_from_notion()
-        logger.info(f"Found {len(meetings_to_summarize)} meetings to summarize.")
+        logger.info(f"💡 Found {len(meetings_to_summarize)} meetings to summarize.")
 
         for meeting in meetings_to_summarize:
             try:
                 await process_meeting(meeting)
-                logger.info(f"Successfully processed meeting {meeting['id']}")
+                logger.info(f"✅ Successfully processed meeting {meeting['id']}")
             except RetryError as e:
-                logger.error(f"Failed to process meeting {meeting['id']} after all retry attempts: {str(e)}")
+                logger.error(f"🚨 Failed to process meeting {meeting['id']} after all retry attempts: {str(e)}")
             except Exception as e:
-                logger.error(f"Unexpected error processing meeting {meeting['id']}: {str(e)}")
+                logger.error(f"🚨 Unexpected error processing meeting {meeting['id']}: {str(e)}")
 
         return {"message": "Processing completed"}
     
     except Exception as e:
-        logger.error(f"Error in update_notion_with_transcript_and_summary: {str(e)}")
+        logger.error(f"🚨 Error in update_notion_with_transcript_and_summary: {str(e)}")
         logger.error(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Error updating Notion with transcript and summary: {str(e)}")
     
     except Exception as e:
-        logger.error(f"Error in update_notion_with_transcript_and_summary: {str(e)}")
+        logger.error(f"🚨 Error in update_notion_with_transcript_and_summary: {str(e)}")
         logger.error(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Error updating Notion with transcript and summary: {str(e)}")
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def get_video_from_jumpshare_link(jumpshare_link: JumpshareLink) -> UploadFile:
-    logger.info(f"Getting file from Jumpshare link: {jumpshare_link.url}")
+    logger.info(f"💡 Getting file from Jumpshare link: {jumpshare_link.url}")
     try:
         modified_link = jumpshare_link.url + "+"
         headers = {
@@ -103,9 +103,9 @@ async def get_video_from_jumpshare_link(jumpshare_link: JumpshareLink) -> Upload
                 jumpshare_video = UploadFile(file=video_content, filename="video.mp4")
                 return jumpshare_video
             else:
-                logger.error(f"Failed to download video. Status code: {video_response.status_code}")
+                logger.error(f"🚨 Failed to download video. Status code: {video_response.status_code}")
                 raise HTTPException(status_code=video_response.status_code, detail="Failed to download video")
     except Exception as e:
-        logger.error(f"Error processing Jumpshare link: {str(e)}")
+        logger.error(f"🚨 Error processing Jumpshare link: {str(e)}")
         logger.error(traceback.format_exc())
         raise HTTPException(status_code=500, detail="Error processing Jumpshare link.")

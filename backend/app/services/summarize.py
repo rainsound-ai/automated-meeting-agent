@@ -24,7 +24,7 @@ def read_file(file_path):
 
 async def summarize_transcription(transcription: str, prompt: str) -> str:
     try:
-        print("Received request for summarization.")
+        logger.info("🌺 Received request for summarization.")
         response = client.chat.completions.create(
             model="o1-mini",
             messages=[
@@ -34,10 +34,10 @@ async def summarize_transcription(transcription: str, prompt: str) -> str:
         summary = response.choices[0].message.content
         return summary
     except OpenAIError as e:
-        logger.error(f"OpenAI API error: {str(e)}")
+        logger.error(f"🚨 OpenAI API error: {str(e)}")
         raise HTTPException(status_code=500, detail="Error in OpenAI API call")
     except Exception as e:
-        logger.error(f"Unexpected error during summarization: {str(e)}")
+        logger.error(f"🚨 Unexpected error during summarization: {str(e)}")
         raise HTTPException(status_code=500, detail="Unexpected error during summarization")
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
@@ -61,7 +61,7 @@ async def decomposed_summarize_transcription_and_upload_to_notion(transcription:
 
         for attempt in range(max_attempts):
             full_prompt = prompt_boilerplate + prompt_content + f"\n\nPrevious feedback:\n{feedback_history}"
-            print(f"🚨 Prompt for {section_name} - Attempt {attempt + 1}:\n{full_prompt}")
+            logger.info(f"💡 Prompt for {section_name} - Attempt {attempt + 1}:\n{full_prompt}")
             decomposed_summary = await summarize_transcription(transcription, full_prompt)
             
             try:
@@ -69,27 +69,25 @@ async def decomposed_summarize_transcription_and_upload_to_notion(transcription:
                 section_score = evaluation_result["score"]
                 section_feedback = evaluation_result["feedback"]
                 
-                logger.info(f"{section_name} - Attempt {attempt + 1}: Section score = {section_score}")
+                logger.info(f"💡 {section_name} - Attempt {attempt + 1}: Section score = {section_score}")
                 feedback_history = f"Attempt {attempt + 1} feedback: {section_feedback}"
                 
                 if section_score > best_score:
                     best_summary = decomposed_summary
                     best_score = section_score
-                    print("🚨 updating best summary for", file_name)
-                    print("🚨 best score:", best_score)
                 
                 if section_score >= quality_threshold:
-                    logger.info(f"{section_name} meets quality standards. Moving to next section.")
+                    logger.info(f"💡 {section_name} meets quality standards. Moving to next section.")
                     break
                 elif attempt < max_attempts - 1:
-                    logger.info(f"{section_name} quality below threshold. Retrying... (Attempt {attempt + 2}/{max_attempts})")
+                    logger.info(f"💡 {section_name} quality below threshold. Retrying... (Attempt {attempt + 2}/{max_attempts})")
                 else:
-                    logger.info(f"Max attempts reached for {section_name}. Using the best version generated (score: {best_score}).")
+                    logger.info(f"💡 Max attempts reached for {section_name}. Using the best version generated (score: {best_score}).")
             
             except Exception as e:
-                logger.error(f"Error evaluating {section_name}: {str(e)}")
+                logger.error(f"🚨 Error evaluating {section_name}: {str(e)}")
 
-        print("appending summary chunk to summary chunks for", file_name)
+        logger.info(f"💡 Appending summary chunk to summary chunks for {file_name}")
         summary_chunks.append({
             'filename': file_name,
             'summary': best_summary,
@@ -101,21 +99,19 @@ async def decomposed_summarize_transcription_and_upload_to_notion(transcription:
         "next_actions.txt": append_next_actions_to_notion
     }
     
-    print("Number of summary chunks:", len(summary_chunks))
     for chunk in summary_chunks:
         file_name = chunk['filename']
         decomposed_summary = chunk['summary']
         append_function = section_mapping.get(file_name)
-        print("appending summary chunk to notion for", file_name)
+        logger.info(f"💡 Appending summary chunk to notion for {file_name}")
         
         if append_function:
             try:
-                print("🚨About to upload this summary section to notion:", decomposed_summary)
                 await upload_to_notion(append_function, toggle_id, decomposed_summary)
-                logger.info(f"Successfully uploaded {file_name} summary section to Notion")
+                logger.info(f"✅ Successfully uploaded {file_name} summary section to Notion")
             except Exception as e:
-                logger.error(f"Failed to upload {file_name} summary section to Notion after retries: {str(e)}")
+                logger.error(f"🚨 Failed to upload {file_name} summary section to Notion after retries: {str(e)}")
         else:
-            logger.warning(f"No append function defined for file: {file_name}")
+            logger.warning(f"🚨 No append function defined for file: {file_name}")
     
     logger.info("Summary upload to Notion completed.")

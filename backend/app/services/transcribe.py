@@ -32,7 +32,7 @@ async def extract_audio_stream(video_path: str) -> AsyncGenerator[bytes, None]:
     await process.wait()
     if process.returncode != 0:
         stderr = await process.stderr.read()
-        logger.error(f"Error extracting audio: {stderr.decode()}")
+        logger.error(f"🚨 Error extracting audio: {stderr.decode()}")
         raise RuntimeError("Failed to extract audio from video")
 
 async def transcribe_stream(audio_stream: AsyncGenerator[bytes, None]) -> AsyncGenerator[str, None]:
@@ -67,7 +67,7 @@ async def transcribe(file: UploadFile = File(...)) -> str:
             async with aiofiles.open(temp_path, "wb") as buffer:
                 while content := await file.read(1024 * 1024):  # Read in 1MB chunks
                     await buffer.write(content)
-            logger.info(f"File {file.filename} saved to {temp_path}.")
+            logger.info(f"💡 File {file.filename} saved to {temp_path}.")
 
         audio_stream = extract_audio_stream(temp_path)
         transcription_stream = transcribe_stream(audio_stream)
@@ -79,7 +79,7 @@ async def transcribe(file: UploadFile = File(...)) -> str:
         return " ".join(full_transcription)
 
     except Exception as e:
-        logger.error(f"Error in transcription process: {str(e)}")
+        logger.error(f"🚨 Error in transcription process: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         if 'temp_path' in locals():
