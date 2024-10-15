@@ -1,5 +1,5 @@
 services:
-  - name: automated-meeting-agent
+  - name: automated-link-summary-agent
     type: web
     env: python
     plan: free
