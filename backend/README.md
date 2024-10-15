@@ -1,6 +1,6 @@
 # Backend
 
-This is the FastAPI backend for our meeting agent.
+This is the FastAPI backend for our automated meeting agent.
 
 ## Development
 
@@ -31,3 +31,9 @@ python main.py
 Install our recommended VSCode extensions by running the `show recommended extensions` command.
 
 Then install the pre-commit git hook. First make sure you have run `poetry shell`. Then run `pre-commit install`.
+
+# Deploy
+push to main
+
+# Note
+There is no frontend - it's just a cronjob in render.com

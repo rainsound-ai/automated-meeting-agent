@@ -79,11 +79,6 @@ async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
         logger.error(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Error updating Notion with transcript and summary: {str(e)}")
     
-    except Exception as e:
-        logger.error(f"🚨 Error in update_notion_with_transcript_and_summary: {str(e)}")
-        logger.error(traceback.format_exc())
-        raise HTTPException(status_code=500, detail=f"Error updating Notion with transcript and summary: {str(e)}")
-
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def get_video_from_jumpshare_link(jumpshare_link: JumpshareLink) -> UploadFile:
     logger.info(f"💡 Getting file from Jumpshare link: {jumpshare_link.url}")
