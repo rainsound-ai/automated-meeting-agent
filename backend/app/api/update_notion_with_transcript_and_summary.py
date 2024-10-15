@@ -41,6 +41,9 @@ async def meeting_processing_context(meeting):
     else:
         await set_summarized_checkbox_on_notion_page_to_true(meeting['id'])
 
+def contains_the_string_youtube(link):
+    link_lower = link.lower()
+    return "youtube" in link_lower or "youtu.be" in link_lower
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def process_link(meeting):
@@ -49,23 +52,24 @@ async def process_link(meeting):
             page_id: str = meeting['id']
             link_from_notion = meeting['properties']['Link']['title'][0]['plain_text']
             print("link from notion 🚨", link_from_notion)
-            video_path, captions_available = await download_youtube_video(link_from_notion, "./downloads")
+            if contains_the_string_youtube(link_from_notion):
+                video_path, captions_available = await download_youtube_video(link_from_notion, "./downloads")
 
-            if captions_available:
-                with open("captions.txt") as f:
-                    transcription = f.read()
-            else:
-                transcription = await transcribe(video_path)
-            
-                async with aiofiles.open(video_path, 'rb') as f:
-                    file_content = await f.read()
+                if captions_available:
+                    with open("captions.txt") as f:
+                        transcription = f.read()
+                else:
+                    transcription = await transcribe(video_path)
                 
-                temp_upload_file = UploadFile(
-                    filename=os.path.basename(video_path),
-                    file=BytesIO(file_content),
-                )
-                transcription = await transcribe(temp_upload_file)
-                print(transcription)
+                    async with aiofiles.open(video_path, 'rb') as f:
+                        file_content = await f.read()
+                    
+                    temp_upload_file = UploadFile(
+                        filename=os.path.basename(video_path),
+                        file=BytesIO(file_content),
+                    )
+                    transcription = await transcribe(temp_upload_file)
+                    print(transcription)
             
             # # Create toggle blocks once
             summary_toggle_id = await create_toggle_block(page_id, "Summary", "green")

@@ -14,17 +14,17 @@ client = OpenAI(api_key=open_ai_api_key)
 GOLD_STANDARD_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'gold_standard_evals')
 
 @functools.lru_cache(maxsize=None)
-def get_gold_standard_file(section_name: str) -> Optional[Tuple[str, str]]:
+def get_gold_standard_files() -> Optional[Tuple[str, str]]:
     try:
-        fotmatted_section_name = section_name.lower().replace(' ', '_')
+        
         transcript_file = 'gold_standard_transcript.txt'
-        summary_file = f'gold_standard_{fotmatted_section_name}.txt'
+        summary_file = 'gold_standard_summary.txt'
         
         transcript_path = os.path.join(GOLD_STANDARD_DIR, transcript_file)
         summary_path = os.path.join(GOLD_STANDARD_DIR, summary_file)
         
         if not os.path.exists(transcript_path) or not os.path.exists(summary_path):
-            logger.warning(f"🚨 Missing gold standard files for {section_name}.")
+            logger.error(f"🚨 Gold standard files not found at {transcript_path} or {summary_path}")
             return None
         
         with open(transcript_path, 'r') as f:
@@ -36,42 +36,48 @@ def get_gold_standard_file(section_name: str) -> Optional[Tuple[str, str]]:
         
         return transcript, summary_section
     except Exception as e:
-        logger.error(f"🚨 Error loading gold standard data for {section_name}: {str(e)}")
+        logger.error(f"🚨 Error loading gold standard data: {str(e)}")
         return None
 
 
-def evaluate_section(transcript: str, section_summary: str, section_name: str) -> Dict[str, any]:
+def evaluate_section(original_article: str, summary_to_evaluate: str) -> Dict[str, any]:
     try:
-        gold_standard_data = get_gold_standard_file(section_name)
-        gold_standard_transcript, gold_standard_summary = gold_standard_data or (None, None)
+        gold_standard_transcript, gold_standard_summary = get_gold_standard_files()
 
         prompt = f"""
-        Evaluate the following {section_name} section of a meeting summary:
+        # Guardrails Agent Prompt for Evaluating AI Tech Summaries
+        Evaluate the following summary of an article about emerging AI technology:
 
-        Actual transcript:
-        {transcript}
+        Original article:
+        {original_article}
 
-        {section_name} summary to evaluate:
-        {section_summary}
+        Summary to evaluate:
+        {summary_to_evaluate}
 
         Gold standard transcript:
         {gold_standard_transcript}
 
-        Gold standard {section_name} summary:
+        Gold standard summary:
         {gold_standard_summary}
 
         Instructions:
-        1. The gold standard summary provided above is an example of a high-quality {section_name} section based on the gold standard transcript.
-        2. Use this as a reference for what a good {section_name} section should cover and how it should be structured.
-        3. **Do not replicate the gold standard summary verbatim.** Instead, focus on understanding the quality, completeness, and clarity it demonstrates.
-        4. Evaluate the provided {section_name} summary based on how well it captures the key information from the actual transcript, comparing this effectiveness to how the gold standard summary captures information from its transcript.
+        1. Carefully read both the original article and the provided summary.
+        2. Evaluate the summary based on how well it captures the key information from the original article about emerging AI technology.
+        3. Use the criteria below to assess the quality and effectiveness of the summary.
+        4. The gold standard summary provided above is an example of a high-quality summary based on the gold standard transcript.
+        5. Use this as a reference for what a good summary should cover and how it should be structured.
+        6. **Do not replicate the gold standard summary verbatim.** Instead, focus on understanding the quality, completeness, and clarity it demonstrates.
+        7. Evaluate the provided summary to evaluate based on how well it captures the key information from the actual transcript, comparing this effectiveness to how the gold standard summary captures information from its transcript.
+
 
         Criteria:
-        1. Conciseness: Is the summary concise while covering key points?
-        2. Completeness: Does it cover the main topics and relevant context for this section?
-        3. Clarity: Is it written in a clear and professional manner?
-        4. Accuracy: Does it stick to facts from the transcript without inferring or making assumptions?
-        5. Structure: Does it follow a logical structure appropriate for a {section_name} section?
+        1. Format: Does the summary consist of one key point as a headline/title, followed by 3-5 supporting sub-bullets, and is it suitable for a flashcard (not exceeding 2000 characters in total)?
+        2. Focus: Does it identify and prioritize the most significant or groundbreaking aspect of the technology discussed?
+        3. Depth: Do the sub-bullets effectively support and expand on the main point?
+        4. Balance: Does it strike a good balance between technical and non-technical information?
+        5. Clarity: Is it written in clear, accessible language for a general audience with some tech background?
+        6. Technical Accuracy: Are key technical terms included when essential, without overuse of jargon?
+        7. Completeness: Does the summary provide a clear understanding of the most crucial aspect of the emerging AI technology discussed?
 
         Provide your evaluation in the following format - do not add any additional formatting or decorations:
         Score: [A single number between 0 and 1, where 1 is the best]
@@ -81,7 +87,7 @@ def evaluate_section(transcript: str, section_summary: str, section_name: str) -
         response = get_openai_response(prompt)
         evaluation = parse_evaluation_response(response)
         
-        logger.info(f"💡 Evaluation for {section_name}: {evaluation}")
+        logger.info(f"💡 Evaluation: {evaluation}")
         return evaluation
     except Exception as e:
         logger.error(f"🚨 Evaluation failed with error: {str(e)}")

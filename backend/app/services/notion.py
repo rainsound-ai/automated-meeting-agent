@@ -78,22 +78,13 @@ async def safe_append_blocks_to_notion(toggle_id: str, blocks: List[NotionBlock]
         logger.error(f"🚨 Error appending blocks to Notion: {str(e)}")
         raise
 
-async def append_section_to_notion(toggle_id: str, section_content: str, section_name: str) -> None:
+async def append_summary_to_notion(toggle_id: str, section_content: str) -> None:
     blocks: List[NotionBlock] = convert_content_to_blocks(section_content)
     try:
         response, block_ids = await safe_append_blocks_to_notion(toggle_id, blocks)
     except Exception as e:
-        logger.error(f"🚨 Failed to append {section_name} to Notion: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Failed to append {section_name} to Notion")
-
-async def append_intro_to_notion(toggle_id: str, section_content: str) -> None:
-    await append_section_to_notion(toggle_id, section_content, "Intro")
-
-async def append_direct_quotes_to_notion(toggle_id: str, section_content: str) -> None:
-    await append_section_to_notion(toggle_id, section_content, "Direct Quotes")
-
-async def append_next_actions_to_notion(toggle_id: str, section_content: str) -> None:
-    await append_section_to_notion(toggle_id, section_content, "Next Steps")
+        logger.error(f"🚨 Failed to append summary to Notion: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to append summary to Notion")
 
 async def upload_transcript_to_notion(toggle_id: str, transcription: str) -> None:
     transcription_chunks: List[str] = chunk_text_with_2000_char_limit_for_notion(transcription)

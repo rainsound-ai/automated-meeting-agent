@@ -1,31 +1,168 @@
-I can't hear you at all anymore unless you stopped speaking Hello Hey miles Hey Hey Hey, sorry about that, I think it's just a random death spot Okay Um Oh sick, yeah, um, I just wanted to hear what you were posting about and Just wanted to comment on I'm just going to go make dates for all the conferences on the brainstorm and mobilize the ticket purchasing like ASAP because WTF I'm not going to to ignite What you what you were saying in um Inside you were saying worth refactoring Yeah So I was asking do you think it would be worth it to circle back It sounds worth I never Yeah, and um, that's the sort of thing we're gonna have to do for other stuff too So it's gonna pay dividends on other apps that want to make use of what you've already built So, yeah, I think worth and then um, do you agree worth Breaking the rule doing another Yeah, I think it's I think it's great see and then This meeting summary I think this direct quote is good That's like the best direct quote I've seen Mm-hmm Okay, I'm reading that now I Think that's the best summary yet and and quite good and short and sweet and actionable and awesome. That's perfect Um And then the next thing is basically okay I set up an interface in the code where you import the eval agent you point it to your prompts your prompt library And it generates eval prompts essentially based on the prompt and then it provides it to the solution that it tries to do based on the prompt. Yeah, I I agree Well Cool That makes sense. Yeah, I think I think Claude is or a sonnet 3 5 is probably the best coding agent and then Oh one Just has like a very Narrow set of use cases that it's very good at in my personal opinion, but coding may not be one of them Cool I Met with Brent this morning where He's got a guy that feels like a great fit and Then he's talking to other other candidates as well. I'm meeting with them next week And Yep, and then I Went late last night kind of compiling all the Resources for the skill tree.
-
-So I'm just like I was I was toasted this morning. I had just enough in me to Like Just kind of do all the stuff with with Brent and then just like decided to go climb so I just finished climbing and I'm about to get into into some more stuff Yeah You Yeah, for sure, I'm I'm feeling like for me personally like what what happened what's I Don't know if there's like anything that happened. I feel like I've been having a great day every day for As long as I can remember but um, like it's just been like Taxing to have all these sort of non deep work sessions Like Like even today like Brent wanted to reschedule from yesterday So I had a meeting today and then Luca wants to finish the skill treated tonight Like I had to send them those resources Like I need need to take action on these Dates for the conferences because Brent and Jeffrey want to know for the people and If we weren't able to get a conference in November by saying it was hot priority in July Then that means that I need to act right now because there's conferences in February So And I'm sort of like spurred into action on that front kind of kind of like all right never again on that That's too valuable of a thing to not do Really curious what what actually what actually went down there. I have no clue how that could possibly be the case You Yeah, there's there's slack messages in July where we're like ignite is top priority like I I'm pretty sure it wasn't sold out in July.
-
-Maybe I'm wrong You Maybe that Maybe There was just enough friction not from necessarily you but just like in general that like we were just a little slow to the jump I'm not sure I know that we've like It's been very dynamic in terms of however things evolved in the last few months like we didn't even pursued start pursuing the acquisition calm thing until Like a week and a half two weeks into August So, yeah, we were probably in the depths of just getting owned Financially and just like couldn't even think about it or something Despite it being top priority quote-unquote Yeah, totally You We've made it we've made a ton of strides But it just goes to show like how far I'm sorry, I didn't one more time, please You Pretty we're pretty damn persistent to our to our credit Yeah, so I think I think it just reveals how far ahead of time we need to act Because it's not just having tickets it's it's also like the strategy of like talking to those clients Those prospects say months ahead of time like to repeat the strategy that we're doing with Microsoft and in order to get to talking to them we need to be Sort of researching what we want how we want to approach them which takes another, you know month or two ahead of time So it's like a six-month lead or something Exactly Yes, so I think I'm just going to go ahead and You know, it's not the end of the world I really do it kind of focuses us like maybe we don't have to think on two timelines Like we can do the workshop and then we just have two months of just You know crushing and building, you know Or even three months if there's no conferences in January, I can't remember So like in my mind it could be fine And it focuses Brent and Jeffrey because they don't have to sweat like they're not going to go to a conference until next year The the the thing that has to fall in place is that Microsoft for news in six weeks? We need that to happen So that we can just stay stay on a good platform, but otherwise we're in a good place
-
-Where everybody can just really get our get everything together and I think that's pretty strong In the van workshops gonna really I think be a just a huge thing like I think I think we're going to come away from that with like all sorts of ideas and and leads, so Who knows where we're going to be at it might be nice to not have something immediately after that Yeah, I think that's a great question It might be nice to not have something immediately after that That's true everything's gonna jump it's gonna be kind of another earthquake So I'm gonna go ahead and date all those and Get Luca rolling on the field tree Because that's like our method of aligning on all the AI does in case that wasn't obvious or explicit and And I think and I and I mean that like both for Luca and everybody but also like Just organizationally, you know just everybody needs to be kind of like barking up the same tree as far as The kinds of vocab and approaches that are out there, let's let's not just be like Yeah, let's just be aware of the way other people are approaching the same problems It's kind of my perspective and I think that that I think today we're going to be able to put that all into place pretty effectively, it's just a matter of like What does it take to sort of? Start moving on the skill tree collectively With regards to what we're already doing because I don't want to break up any flows But it's also important that we'd be starting to check off, you know, the various skills we need to have Well, it seems like that's what we're moving towards Yeah, I think we're gonna I think the first iteration of the skill tree is essentially just going to be five levels of AI engineering just Not even like detailing all the other skills just that one skill set and then We'll iterate from there on the other skill sets and each level is essentially just going to be a set of check boxes and it's just going to be like All the shit you like move to them like um Like make a whatever agent go che
-
-ck the skill tree check off everything that you did or what that you like have demonstrated With whatever agents you've built And then we've got them all checked on one level now You're the next level it's kind of the way Luca and I were thinking about it as a starting point So that's not really like high effort It's just kind of like go check this after you finish an agent and see and see what all you've Acquired essentially And what problem does the skill tree solve It solves aligning on the skills that we need to have to be good AI engineers it solved giving concrete solutions to Known problems rather than having to reinvent the wheel for any given AI agent and It gives concrete resources for upskilling Like all the way to the highest level without having to sort of like meander your way to it That'll seem they'll seem usable does that flow sound okay to you I'm sorry. I didn't hear you Cool Yeah, I think that's it if you're down with all that then that's that's what I've got on my plate for the next few hours and Then I might oh, and then I'm in that I'm working with yeah, and I might finally be in the in the codeland Where to swear to God But uh, I know I know that I know that um It's important to me that we like just feel good about the approach to the the skill tree So I just wanted to make sure you were down with that since Luca and I are going to be Kind of pitching the first generation partly Awesome What about him Um No, I haven't heard anything since yesterday, um Ian seems somewhat gung-ho following yesterday, but he's also taking next week off.
-
-So my suspicion is he's just going to um Finish whatever Microsoft scoped This week take next week off and just be incubating on the various developer experience stuff We'll probably see Ian Begin to dig into that Like a week and a half from now And then I don't know about Aubrey Yeah, all that seemed good to you Yeah, okay, well if we're good then let's let's uh, let's break and go go food in food in I have already I hope you have a great rest of your day, killing it on the stuff, great job. I'm going to knock these conference dates and skill-free things out and hit it on the link processing agent, and I guess the last thing I'll say is I might want to get with you on what code is reusable for that from your domain, but I'll probably just start bouncing around before doing that, so we can talk about that another time. Link processing agent? Yeah I want to take a list of links. I'll start with articles I guess, just because that'll be probably easier, and then move to YouTube videos, but those are roughly the two types of content that I want to be able to generate bulk summaries for, and then ideally compile those summaries into more generalized reports so that I can just kind of consolidate the frontier of AI each week in not a lot of time, and that'll be really helpful for me and hopefully helpful for other people. Well, yeah. I think that's pretty much everything we've got up here. I thought maybe that would be the case, so. You're going to need a transcriber for videos. You're going to need an audio ripper to get the transcription. You're going to need motion parsing to put stuff into motion in the right format. You're going to need a summarizer with a summarization. You're going to need an aliasing agent. Yeah, got all that.
-
-I'm thinking I probably want to clone your code base and start working from there, but I think there's some strategy involved with the right timing for that, because I could clone it now and probably do pretty darn well, but if you're about to crush in the next day and a half and then it's just like that would be a better starting point, then it's like, okay, well, maybe I should just wait until Friday afternoon and do it then or whatever, so that's kind of what I have in mind to ask you about. I think you could start... I think you could use where I'm at as a starting point, which is pretty damn good, like the automated meeting engine, and yeah, no, you've got a good starting point if you want to get started today. It is just going to get better and better, but it's going to be pretty modular. So, yeah. I have to be like Tim, I was like, I revised that chunking logic into a chunking agent just so that it makes sense that you can clone this instead, but things are going to get better every day, so like waiting for things to get better is just an infinite community waiting forever. I think you've got a great starting point. So, in your opinion, there's not going to be a substantial enough difference as of, say, like 24 hours from now to just wait for that. I think it's between today and tomorrow. That'd be the two options. Just in your opinion, should I clone it today or should I clone it tomorrow? Make it as simple as that. Okay. Yeah, I think the only reason I – there's a small chance that I don't end up getting to it because Luca and I talked for a while or Daniel gets with me to work on architecture for Agent Doze or something like that just for fun. If that happens, then I'll clone it like tomorrow morning, but that answers my question. If I don't get it tonight, I might just – maybe I could just ping you before I do it to make sure it's in a good place in case you're in the middle of something. Do you think that's a good idea? Okay. Sounds good.
-
-Well, that answers everything I need to know. I feel like that's all great stuff. Awesome, awesome. Cool, man. Well, I hope you have a great rest of your day. Oh, yeah. You know what you can do is if you want to use Notion as the interface for your agent, you can set it up so that you create a new database called Links Database. Links to Summarize Database. It has a link field and a place to put a summary. And you can crawl through Notion. And all of the links that need to be summarized and run this tool automatically, exactly like it works on the Notions database. Just looking every 10 minutes if it needs to summarize everything that it can in the Notions field. That might be even better and faster. Your workflow would be find the link, create a Notions database page for that link, drop it in the link properties. That sounds perfect and probably like a better way to go. Literally just copy, automate, and make the transcription conditional on whether or not it's a video. Okay. That all sounds great. There may be a chance that it would be most efficient to just pair with you briefly and have you show me what you're talking about. But maybe that's not necessary and I can just get in there and everything you just said is enough to go on. I'm just kind of speaking out loud. Awesome. Well, that sounds really good. I mean, that just sounds like we're going to – yeah. What's up? Agent, spawning agent. Totally. Yeah. For sure. I think if there's a way to get a big enough win out of just like a few days bouncing around in Notion and deriving it from what you've got, that would be just so sick that I could just go on to a new agent scope after that. Like if that was available, it's just like, my God, that's a big win. Okay. Cool. I mean, we'll have three different pieces of content already. Meetings, YouTube videos, and articles if I do my job. Oh, podcasts is the other one I wanted to do. I think that's the move. That's what I have already built.
-
-It's just named specifically. We still need to like – Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. And don't we still need to set it up to accept those other types of media, or like set up the way of getting the audio transcription from like Spotify or whatever? Like aren't there some things to do to just kind of link those things up, even if they're somewhat minor? Oh yeah, if you can't drop a direct link to a video, then there's no way to do that. Okay. Well, yeah, it sounds like it's really close, and it's just generalizing what you've already got, which is amazing, and that sounds like a huge win, and yeah. A lot of stuff is, but not everything. Like the Lex Friedman podcast, for example, you know, like those AI podcasts are on YouTube, like there's practical machine learning, for example, I don't think is on YouTube. Cool. Just for example. Yeah, so getting it to accept a Spotify link. Probably it. Like links. But then you can share links to podcasts, though, too. You just need to have an account. So like if the agent could like accept Spotify credentials and visit the link, the share link, then that would just be it. So we already have a pretty generalized Notion database summary. Like a Notion database crawler. I'm not trying to say you shouldn't go for a link generating agent. I'm just saying I think we already have it, and all we're talking about is adding Spotify support, and I think it's clearer that there's as many agents as possible. Maybe we need to put it to a different idea. I think the other thing that doesn't exist. I could see that. I think the other thing that doesn't exist, though, is like the kind of summary that you want from a meeting is not necessarily the same structure that you want from an article or a YouTube video.
-
-I think that they might be a different structure, and we might want some sort of intelligent routing or a way of knowing like, oh, is this a YouTube link? Use this structure. Is this a meeting? Use this structure. Yeah, so that's all that's in the prompt files. So you could argue that it's already a super generalized tool because if you clone the repo and then all you have to do is replace the prompt files with how to deal with various types of media and deploy it. That's not a bad UI for a product. Obviously, you could set up a UI that allows you to basically modify your prompts and do all that. It's already super generalized. So, yeah, like what I'm imagining is like as opposed to, tell me if this is different than what you're saying, but like what I'm imagining is just routing between, say, three different prompts. I want an article summarizer, a YouTube summarizer, and a meeting summarizer, and they all have just their own prompt structure, probably minor differences between them, but like that's all I'm imagining. It's like one if statement. You know what I mean? If-else statement. You know what I just realized, though? Like it's not super generalizable yet. And the bottlenecks are, I'm just thinking of them to a certain extent. So like we have a hard-coded array of which prompt files to look for, and we map those names from the array to functions that should be called, and those functions are specific. There's just some like specific stuff going on, like the three sections of the summary, and then the like notion markdown parsing logic is specific to the three sections of the summary. I think this is actually right. Like if we wanted to go and say generalize, like transcribe, summarize, and make them indicate automatically to the patient, we need a generalized like notion markdown parsing library.
-
-We need generalized support for as many prompt files as we want, and basically just like go through and do a total after practice where it can support any number of prompts. It can support any variety of markdowns. It can automatically generate any variety of emails. And I can see that taking like maybe around a week. So what I'm realizing is that like all these little building blocks, like punting on the notion parsing library, the eval agent, the intelligence chunking agent for putting stuff into notion without breaking up the context, all that kind of shit, if like you put it all together, you can make a pretty specific thing that I feel is super generalized. So you're talking about is this the right agent for me? Should I just pick a different one? Is this something that you're interested in just like taking on? Like do you want to just generalize what you've already? Yeah, okay. I feel like you're inspired and have a downhill like angle here. Like you could just add in YouTube and you already know the answer. When I realized that you could just like clone the repo and like change some function names and have your app done, I realized that I've been working uphill for like a month and this is a giant downhill slope. Well, dude, that would be the most incredible tool ever if I could just fucking put like a list of 400 YouTube links and articles. And that's a real number. Like we're talking hundreds. Like if we could just plop that in there and it just makes a summary for all of them, best fucking tool ever. Oh my God. Yeah, all you have to do on your end is have an LLM write you a Python script that just crunches all of your links into a notion database. And you know, the thing will just start automatically summarizing them all. Cool. Well, yeah, I mean, so do you want to take this on then? And then I'll pick a different thing. All right. Well, that feels good because it keeps your runway as long as possible and I feel like you're inspired on it.
-
-So that seems like just a no brainer. So then I guess briefly, let me look at the list. Kind of changes things a little bit. Well, like what? Yeah. But I only have like one agent really. I totally see that. Yeah, go ahead. I think so. I don't feel like doing the work of like breaking them out into isolated apps that you can plug into any other app. I feel like just letting them do their job for this app. I'll have to generalize it in order for this to be a generalized app. So I think I've got a really juicy one to pivot to, but that was my second choice. I really want to build a conversation harvesting agent that can traverse chat GPT and any given conversation and like just grab all the useful stuff out of it. Like I think it's different than a summarizer. I think it needs to actually traverse it because I don't want to like if there's like you know millions of words in a conversation I don't think it's going to be effective to try to summarize it into like a few sentences and like three steps or something like that. I think it needs to be a different approach. I feel like that's a really juicy next thing that I've been chewing on for a while but I've gotten some validation from other people on. Okay I'm gonna do that then. I've been calling it like a conversation harvester. It picks out all of the useful highlights like ideally in a variety of modes but like to be specific it might identify the most important prompts and responses in a conversation like because usually in a conversation like you're like do do do do do do here's all this context and BAM here's the one where it's just fucking awesome and then we're gonna like hit that over and over and over again and there's 15 of those and like being able to just kind of like go through all of my various conversations in my chat GPT history and find all the instances of that and just like this is a really useful prompt response context.
-
-This is a really useful prompt response context like I think that would be really really helpful. There's a few almost like borderline like app level things that I feel like I've made in chat GPT where it's just like it combines two or more like really useful like mental models and just spits out these great like tables or formatted like answers for like some thing I think like the SIPOC diagrams that I was I don't know if you saw it out what I paired with that on system design does but like combining SIPOC diagrams with system design is like smashing together two mental models that just felt like okay iterate on that iterate on that like give me another one give me another one like being able to isolate that very easily like I was spending hours just just scrolling through the conversation because it was so long and took me so long to get back to the response that I wanted so hopefully that makes sense what I'm trying to describe.
-
-I think that's where I might start but I'm not really sure where I'm going to land yet that's one specific thing that I know I want but I'm not totally sure if that's going to be where I start yet or not it might be I think that there's other things that I want out of conversations too like for example I want to know if a conversation even is useful at all like I have probably like a thousand plus chat GPT conversations and I want something that can go through and just fucking prune all the bullshit so I have only the ones that are worthwhile left delete the rest so it's kind of like a few different things and I need to narrow the scope oh yeah it's a good idea situation here are the prompts in the conversation that worked super well away from we recommend you kind of yeah I think that's a good way to put it right so I need to I need to go feature by feature I think it's probably going to do something similar to what you're describing or what we're what we've been talking about with this summarizer where it starts out being one thing it just just scores all the useful conversations maybe and then and then it and then from there it harvests all the useful or a like scores all the prompt and responses from all the useful conversations you know it would be another iteration and then I don't know where it could go but like I kind of see this being like another big big agent I don't know how to put it like you were saying quantity we're talking about the quantity thing and this agent feels like it's kind of finding its final form I think I think whatever this thing I'm describing final form could be I don't know I could probably take me a couple months I think what you I think where you yeah not sure I like I almost like saying it needs to be in a final form you know just see it through until it reaches whatever that is but then you start you can pick that apart a little bit like all right well how do you define that but there's there's a feeling that I feel like we're t
-
-rying to to pinpoint which is after you iterate a few times the kind of it kind of becomes clear what it's supposed to be and just waiting until you discover what that is and then making that that's what we're trying to do with each of our agents but that's a little bit hard to well pin down we were talking about like what's the right level of specificity right level abstraction like it might be that that quote-unquote final form is some sort of generalizable thing it might be different from age the agent it's hard to say it might just be like oh when it has like a certain number of features that all feel like they synergize together like you kind of know when you have it maybe like a song like you could you could keep adding more shit to a song you can keep iterating on it but there's like a feel where you just it's good time yeah so I think I think where I might start just to kind of put a totally totally no no you're good so I think um to put it to put a bow on that like having talked through it with you I think something that sounds reasonable is just to make something that can prune chat GPT conversations perhaps if I can and like score them like you said and and and recommend deleting any yeah just deleting anything that falls below a certain threshold and then a an idea for the next iteration beyond that would be doing the same thing within a conversation scoring prompts and responses though I might flip those two iterations I'm just not sure which is it depends on which one is harder yeah yeah let's see how it does I guess this is a good sort of stress test the next actions are bush bush and bush we should just spend an entire meeting trying to like fuck with it awesome man really great I this feels I mean it feels fantastic I'm really stoked to get to work on this and I feel like you're about to crush that other thing I think that's going to be just fucking awesome we're we're starting to bark up that tree for sure we're really moving in the right direction
-
-cool mm-hmm even just setting up a tutorial for it yeah yeah yeah even just setting up a tutorial for it on school would be worth money awesome man okay well um I'll let you get going I'm gonna go eat but uh that was like a very productive hour uh-huh shockingly so totally amazing um well it feels like we're working on the right thing which is the most important thing so I think this just shows the importance of frequently touching base yeah awesome dude we'll hope you have a great rest of your day feel free to hit me up if you want to bounce any more ideas but I'm gonna go get my shit done and and hit this sounds good all right man good luck talk to you later you too dude catch you later man
+2024 will be the year of AI agents.
+So what are AI agents?
+And to start explaining that,
+we have to look at the various shifts that  we're seeing in the field of generative AI.
+And the first shift I would like to talk  to you about
+is this move from monolithic models to compound AI systems.
+So models on their own are limited by the data they've been trained on.
+So that impacts what they know about the world
+and what sort of tasks they can solve.
+They are also hard to adapt.
+So you could tune a model, but it would take  an investment in data,
+and in resources.
+So let's take a concrete example  to illustrate this point.
+I want to plan a vacation for this summer,
+and I want to know how many vacation days are at my disposal.
+What I can do is take my query,
+feed that into a model that can generate a response.
+I think we can all expect that this answer will be incorrect,
+because the model doesn't know who I am
+and does not have access  to this sensitive information about me.
+So models on their own could be useful for a  number of tasks, as we've seen in other videos.
+So they can help with summarizing documents,
+they can help me with creating first drafts for emails
+and different reports I'm trying to do.
+But the magic gets unlocked when I start building systems
+around the model and actually take the model and  integrate them into the existing processes I have.
+So if we were to design a system to solve this,
+I would have to give the model access to the  database where my vacation data is stored.
+So that same query would get  fed into the language model.
+The difference now is the model would  be prompted to create a search query,
+and that would be a search query that  can go into the database that I have.
+So that would go and fetch the information  from the database, output an answer,
+and then that would go back into the  model that can generate a sentence
+to answer, so, "Maya, you have ten days  left in your vacation database."
+So the answer that I would get here would be correct.
+This is an example of a compound AI system,
+and it recognizes that certain problems are better solved
+when you apply the principles of system design.
+So what does that mean?
+By the term "system", you can understand there's multiple components.
+So systems are inherently modular.
+I can have a model, I can choose between tuned models,
+large language models, image generation models,
+but also I have programmatic components that can come around it.
+So I can have output verifiers.
+I can have programs that can that can take  a query and then break it down
+to increase the chances of the answer being correct.
+I can combine that with searching databases.
+I can combine that with different tools.
+So when we talking about a system approaches,
+I can break down what I desire my program to do
+and pick the right components to be able to solve that.
+And this is inherently easier to solve for than tuning a model.
+So that makes this much faster and quicker to adapt.
+Okay, so the example I use below,
+is an example of a compound AI system.
+You also might be popular with retrieval augmented generation (RAG),
+which is one of the most popular  and commonly used compound AI systems out there.
+Most RAG systems and the example I  use below are defined in a certain way.
+So if I bring a very different query, let's  ask about the weather in this example here.
+It's going to fail because this the path  that this program has to follow
+is to always search my vacation policy database.
+And that has nothing to do with the weather.
+So when we say the path to answer a query,
+we are talking about something called  the control logic of a program.
+So compound AI systems, we said   most of them have programmatic control logic.
+So that was something that I defined myself as the human.
+Now let's talk about, where do agents come in?
+One other way of controlling the logic  of a compound AI system
+is to put a large language model in charge,
+and this is only possible because   we're seeing tremendous improvements
+in the capabilities of reasoning   of large language models.
+So large language models, you  can feed them complex problems
+and you can prompt them to break them down  and come up with a plan on how to tackle it.
+Another way to think about it is,
+on one end of the spectrum,  I'm telling my system to think fast,
+act as programmed, and don't deviate  from the instructions I've given you.
+And on the other end of the spectrum,
+you're designing your system to think slow.
+So, create a plan, attack each part of the plan,
+see where you get stuck, see if you need to readjust the plan.
+So I might give you a complex question,
+and if you would just give me the  first answer that pops into your head,
+very likely the answer might be wrong,
+but you have higher chances of success  if you break it down,
+understand where you need external help to  solve some parts of the problem,
+and maybe take an afternoon to solve it.
+And when we put a LLMs in charge of the logic,
+this is when we're talking  about an agentic approach.
+So let's break down the components of LLM agents.
+The first capability is the ability to reason, which we talked about.
+So this is putting the model at the core of how problems are being solved.
+The model will be prompted to come up with a plan  and to reason about each step of the process along the way.
+Another capability of agents is the ability to act.
+And this is done by external programs  that are known in the industry as tools.
+So tools are external pieces of the program,
+and the model can define when to call them  and how to call them
+in order to best execute the  solution to the question they've been asked.
+So an example of a tool can be search,
+searching the web, searching a database at their disposal.
+Another example can be a  calculator to do some math.
+This could be a piece of program code  that maybe might manipulate the database.
+This can also be another language model that  maybe you're trying to do a translation task,
+and you want a model that can be able to do that.
+And there's so many other possibilities of what can do here.
+So these can be APIs.
+Basically any piece of external program  you want to give your model access to.
+Third capability, that is  the ability to access memory.
+And the term "memory" can mean a couple of things.
+So we talked about the models thinking through the program
+kind of how you think out loud  when you're trying to solve through a problem.
+So those inner logs can be stored and can be  useful to retrieve at different points in time.
+But also this could be the history of  conversations that you as a human had
+when interacting with the agent.
+And that would allow to make the experience   much more personalized.
+So the way of configuring agents,   there's many are ways to approach it.
+One of the more most popular ways of going about it is through something called ReACT,
+which, as you can tell by the name,
+combines the reasoning and act components of LLM agents.
+So let's make this very concrete.
+What happens when I configure a REACT agent?
+You have your user query that gets fed into a model. So an alarm the alarm is given a prompt.
+So the instructions that's given is don't  give me the first answer that pops to you.
+Think slow planning your work. And then try to execute something.
+Tried to act. And when you want to act, you can define whether.
+If you want to use external tools to  help you come up with the solution.
+Once you get you call a  tool and you get an answer.
+Maybe it gave you the wrong answer  or it came up with an error.
+You can observe that. So the alarm would observe.
+The answer would determine if it does answer the  question at hand, or whether it needs to iterate
+on the plan and tackle it differently. Up until I get to a final answer.
+So let's go back and make  this very concrete again.
+Let's talk about my vacation example. And as you can tell, I'm really excited
+to go on one, so I want to take  the rest of my vacation days.
+I'm planning to go on to Florida next month.
+I'm planning on being outdoors  a lot and I'm prone to burning.
+So I want to know what is the number of two ounce  sunscreen bottles that I should bring with me?
+And this is a complex problem. So there's a first thing.
+There's a number of things to plan. One is how many vacation days
+are my planning to take? And maybe that is information
+the system can retrieve from its memory. Because I asked that question before.
+Two is how many hours do I plan to be in the sun? I said, I plan to be in there a lot,
+so maybe that would mean looking into the weather  forecast, for next month in Florida and seeing
+what is the average sun hours that are expected. Three is trying maybe going to a public health
+website to understand what is the recommended  dosage of sunscreen per hour in the sun.
+And then for doing some math, to be able  to determine how much of that sunscreen
+fits into two ounce bottles. So that's quite complicated.
+But what's really powerful here is  there's so many paths that can be
+explored in order to solve a problem. So this makes the system quite modular.
+And I can hit it with much more complex problems. So going back to the concept of compound AI
+systems, compound AI systems are here to stay. What we're going to observe this year is that
+they're going to become more agent tech. The way I like to think about it is
+you have a sliding scale of AI autonomy. And you would the person defining the system
+would examine what trade offs they want in terms  of autonomy in the system for certain problems,
+especially problems that are narrow, well-defined. So you don't expect someone to ask them about the
+weather when they need to ask about vacations. So a narrow problem set.
+You can define a narrow system like this one. It's more efficient to go the programmatic
+route because every single query  will be answered the same way.
+If I were to apply the genetic approach here, there might be unnecessarily
+looping and iteration. So for narrow problems, pragmatic approach can
+be more efficient than going the generic route. But if I expect to have a system, accomplish very
+complex tasks like, say, trying to solve  GitHub issues independently, and handle
+a variety of queries, a spectrum of queries. This is where an agent de Groot can be helpful,
+because it would take you too much effort to  configure every single path in the system.
+And we're still in the early days of agent systems.
+We're seeing rapid progress when you combine the  effects of system design with a genetic behavior.
+And of course, you will have a human in the  loop in most cases as the accuracy is improving.
+I hope you found this video very useful, and  please subscribe to the channel to learn more.

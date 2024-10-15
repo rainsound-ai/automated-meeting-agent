@@ -107,12 +107,12 @@ def convert_line_to_block(line):
         return None
     
     # Section Titles
-    if line.startswith("## "):
-        title = line[3:].strip()
+    if line.startswith("# "):
+        title = line[2:].strip()
         return {
             "object": "block",
-            "type": "heading_2",
-            "heading_2": {
+            "type": "heading_1",
+            "heading_1": {
                 "rich_text": [
                     {
                         "type": "text",

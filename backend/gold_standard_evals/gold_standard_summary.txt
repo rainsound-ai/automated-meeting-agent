@@ -1,0 +1,7 @@
+The Rise of Compound AI Systems and AI Agents
+
+Shift from monolithic models to modular, integrated AI systems enhances flexibility and task-specific performance
+AI agents combine reasoning (using LLMs), acting (utilizing external tools), and memory access for complex problem-solving
+ReACT framework enables iterative planning and tool usage for handling multifaceted queries
+Modular design allows for quicker adaptation and scaling without extensive model retraining
+Balance between AI autonomy and human oversight ensures accuracy and reliability in evolving applications
