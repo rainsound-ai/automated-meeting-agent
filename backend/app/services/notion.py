@@ -3,7 +3,7 @@ import requests
 from fastapi import HTTPException
 from app.lib.Env import notion_api_key, rainsound_meetings_database_id
 import logging
-from app.services.chunk_text import chunk_text
+from app.services.chunk_text_with_2000_char_limit_for_notion import chunk_text_with_2000_char_limit_for_notion
 from app.services.parse_markdown_to_notion_blocks import (
     convert_content_to_blocks, 
     parse_rich_text
@@ -96,7 +96,7 @@ async def append_next_actions_to_notion(toggle_id: str, section_content: str) ->
     await append_section_to_notion(toggle_id, section_content, "Next Steps")
 
 async def upload_transcript_to_notion(toggle_id: str, transcription: str) -> None:
-    transcription_chunks: List[str] = chunk_text(transcription)
+    transcription_chunks: List[str] = chunk_text_with_2000_char_limit_for_notion(transcription)
     try:
         for transcription_chunk in transcription_chunks:
             blocks: List[NotionBlock] = [

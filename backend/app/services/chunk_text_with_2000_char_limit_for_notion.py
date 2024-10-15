@@ -1,4 +1,4 @@
-def chunk_text(text, max_length=1999):
+def chunk_text_with_2000_char_limit_for_notion(text, max_length=1999):
     """
     Splits the input text into chunks, each with a maximum length of `max_length` characters.
     

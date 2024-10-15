@@ -120,8 +120,3 @@ def parse_evaluation_response(response: str) -> Dict[str, any]:
 
     except Exception as e:
         return logger.error(f"🚨 Error parsing evaluation response: {str(e)}")
-
-def calculate_f1_score(precision: float, recall: float) -> float:
-    if precision + recall == 0:
-        return 0
-    return 2 * (precision * recall) / (precision + recall)
