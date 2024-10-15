@@ -684,6 +684,17 @@ files = [
 cli = ["click (>=5.0)"]
 
 [[package]]
+name = "pytubefix"
+version = "8.1.1"
+description = "Python3 library for downloading YouTube Videos."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "pytubefix-8.1.1-py3-none-any.whl", hash = "sha256:c317ce8fa56f0eb39d11e90327f07f41310530a3e927fb261b3104b0fc7c21af"},
+    {file = "pytubefix-8.1.1.tar.gz", hash = "sha256:b4b993303428b997f7103f9b9306d65a00f7c7c387113d899b0bb7c0a9e4fd0d"},
+]
+
+[[package]]
 name = "pytz"
 version = "2024.2"
 description = "World timezone definitions, modern and historical"
@@ -1189,4 +1200,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "a9fe915dd8c009c926db5e0cf9d612cad73ac304b7f04650d25a6a36c0c0740a"
+content-hash = "20fdb0858caea722f85cb139f6b8ff34b8b5799359c108a067c82fe03c7c2aef"

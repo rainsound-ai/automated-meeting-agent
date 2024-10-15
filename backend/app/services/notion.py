@@ -1,7 +1,7 @@
 from typing import List, Dict, Tuple
 import requests
 from fastapi import HTTPException
-from app.lib.Env import notion_api_key, rainsound_meetings_database_id
+from app.lib.Env import notion_api_key, rainsound_link_summary_database_id
 import logging
 from app.services.chunk_text_with_2000_char_limit_for_notion import chunk_text_with_2000_char_limit_for_notion
 from app.services.parse_markdown_to_notion_blocks import (
@@ -152,22 +152,22 @@ async def create_toggle_block(page_id: str, title: str, color: str = "blue") -> 
     return toggle_id
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
-async def get_meetings_with_jumpshare_links_and_unsummarized_from_notion() -> List[Dict]:
+async def get_unsummarized_links_from_notion() -> List[Dict]:
     try:
         headers = get_headers()
         filter_data = {
             "filter": {
-                "and": [
-                    {"property": "Jumpshare Link", "url": {"is_not_empty": True}},
-                    {"property": "Summarized", "checkbox": {"equals": False}}
-                ]
+                "property": "Summarized",
+                "checkbox": {
+                    "equals": False
+                }
             }
         }
-        rainsound_meetings_database_url = f"https://api.notion.com/v1/databases/{rainsound_meetings_database_id}/query"
-        response = requests.post(rainsound_meetings_database_url, headers=headers, json=filter_data)
+        rainsound_link_summary_database_url = f"https://api.notion.com/v1/databases/{rainsound_link_summary_database_id}/query"
+        response = requests.post(rainsound_link_summary_database_url, headers=headers, json=filter_data)
         response.raise_for_status()
         notion_data = response.json()
         return notion_data.get('results', [])
     except requests.exceptions.RequestException as e:
-        logger.error(f"🚨 Failed to fetch meetings from Notion: {str(e)}")
-        raise HTTPException(status_code=500, detail="Failed to fetch meetings from Notion")
+        logger.error(f"🚨 Failed to fetch links from Notion: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to fetch links from Notion")

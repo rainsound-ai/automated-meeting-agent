@@ -7,21 +7,21 @@ from app.services.transcribe import transcribe
 from app.services.summarize import decomposed_summarize_transcription_and_upload_to_notion  
 import os
 import httpx
+import asyncio
 from app.services.notion import (
     set_summarized_checkbox_on_notion_page_to_true,
     upload_transcript_to_notion,
-    get_meetings_with_jumpshare_links_and_unsummarized_from_notion,
+    get_unsummarized_links_from_notion,
     block_tracker, 
     rollback_blocks,
     create_toggle_block
 )
 from typing import List, Dict
-from app.models import (
-    Meeting,
-    Transcription,
-    JumpshareLink
-)
 from tenacity import retry, stop_after_attempt, wait_exponential, RetryError
+from pytubefix import YouTube
+from pytubefix.cli import on_progress
+import re
+import aiofiles
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 api_router = APIRouter()
@@ -30,7 +30,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 @asynccontextmanager
-async def meeting_processing_context(meeting: Meeting):
+async def meeting_processing_context(meeting):
     block_tracker.clear()
     try:
         yield
@@ -41,36 +41,59 @@ async def meeting_processing_context(meeting: Meeting):
     else:
         await set_summarized_checkbox_on_notion_page_to_true(meeting['id'])
 
+
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
-async def process_meeting(meeting: Meeting):
+async def process_link(meeting):
     async with meeting_processing_context(meeting):
-        page_id: str = meeting['id']
-        jumpshare_video = await get_video_from_jumpshare_link(JumpshareLink(url=meeting['properties']['Jumpshare Link']['url']))
-        transcription: Transcription = await transcribe(jumpshare_video)
-        
-        # Create toggle blocks once
-        summary_toggle_id = await create_toggle_block(page_id, "Summary", "green")
-        transcript_toggle_id = await create_toggle_block(page_id, "Transcript", "orange")
-        
-        # Pass the created toggle IDs to the respective functions
-        await decomposed_summarize_transcription_and_upload_to_notion(transcription, summary_toggle_id)
-        await upload_transcript_to_notion(transcript_toggle_id, transcription)
+        try: 
+            page_id: str = meeting['id']
+            link_from_notion = meeting['properties']['Link']['title'][0]['plain_text']
+            print("link from notion 🚨", link_from_notion)
+            video_path, captions_available = await download_youtube_video(link_from_notion, "./downloads")
+
+            if captions_available:
+                with open("captions.txt") as f:
+                    transcription = f.read()
+            else:
+                transcription = await transcribe(video_path)
+            
+                async with aiofiles.open(video_path, 'rb') as f:
+                    file_content = await f.read()
+                
+                temp_upload_file = UploadFile(
+                    filename=os.path.basename(video_path),
+                    file=BytesIO(file_content),
+                )
+                transcription = await transcribe(temp_upload_file)
+                print(transcription)
+            
+            # # Create toggle blocks once
+            summary_toggle_id = await create_toggle_block(page_id, "Summary", "green")
+            transcript_toggle_id = await create_toggle_block(page_id, "Transcript", "orange")
+            
+            # # Pass the created toggle IDs to the respective functions
+            await decomposed_summarize_transcription_and_upload_to_notion(transcription, summary_toggle_id)
+            await upload_transcript_to_notion(transcript_toggle_id, transcription)
+        except Exception as e:
+            logger.error(f"🚨 Error in process_link for meeting {meeting['id']}: {str(e)}")
+            logger.error(f"Full traceback: {traceback.format_exc()}")
+            raise
 
 @api_router.post("/update_notion_with_transcript_and_summary")
 async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
     logger.info("Received request for updating Notion with transcript and summary.")
     try:
-        meetings_to_summarize: List[Meeting] = await get_meetings_with_jumpshare_links_and_unsummarized_from_notion()
-        logger.info(f"💡 Found {len(meetings_to_summarize)} meetings to summarize.")
+        links_to_summarize = await get_unsummarized_links_from_notion()
+        logger.info(f"💡 Found {len(links_to_summarize)} links to summarize.")
 
-        for meeting in meetings_to_summarize:
+        for link in links_to_summarize:
             try:
-                await process_meeting(meeting)
-                logger.info(f"✅ Successfully processed meeting {meeting['id']}")
+                await process_link(link)
+                logger.info(f"✅ Successfully processed meeting {link['id']}")
             except RetryError as e:
-                logger.error(f"🚨 Failed to process meeting {meeting['id']} after all retry attempts: {str(e)}")
+                logger.error(f"🚨 Failed to process meeting {link['id']} after all retry attempts: {str(e)}")
             except Exception as e:
-                logger.error(f"🚨 Unexpected error processing meeting {meeting['id']}: {str(e)}")
+                logger.error(f"🚨 Unexpected error processing meeting {link['id']}: {str(e)}")
 
         return {"message": "Processing completed"}
     
@@ -78,34 +101,44 @@ async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
         logger.error(f"🚨 Error in update_notion_with_transcript_and_summary: {str(e)}")
         logger.error(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Error updating Notion with transcript and summary: {str(e)}")
-    
-    except Exception as e:
-        logger.error(f"🚨 Error in update_notion_with_transcript_and_summary: {str(e)}")
-        logger.error(traceback.format_exc())
-        raise HTTPException(status_code=500, detail=f"Error updating Notion with transcript and summary: {str(e)}")
+
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
-async def get_video_from_jumpshare_link(jumpshare_link: JumpshareLink) -> UploadFile:
-    logger.info(f"💡 Getting file from Jumpshare link: {jumpshare_link.url}")
+async def download_youtube_video(youtube_url: str, output_path: str = "./") -> str:
+    logger.info(f"💡 Downloading video from YouTube link: {youtube_url}")
+    
     try:
-        modified_link = jumpshare_link.url + "+"
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
-        }
-        async with httpx.AsyncClient() as client:
-            response = await client.get(modified_link, headers=headers, follow_redirects=True)
-            final_url = response.url
-            video_response = await client.get(final_url, headers=headers)
+        yt = YouTube(youtube_url, on_progress_callback = on_progress)
+        print("🚨video title", yt.title)
+        youtube_audio = yt.streams.get_audio_only()
+        video_path = youtube_audio.download(mp3=True)
 
-            if video_response.status_code == 200:
-                video_content = BytesIO(video_response.content)
-                video_content.seek(0)
-                jumpshare_video = UploadFile(file=video_content, filename="video.mp4")
-                return jumpshare_video
-            else:
-                logger.error(f"🚨 Failed to download video. Status code: {video_response.status_code}")
-                raise HTTPException(status_code=video_response.status_code, detail="Failed to download video")
+        captions_available = False
+        youtube_captions = yt.captions['en']
+        
+        if youtube_captions:
+            captions_available = True
+            # Remove caption numbers and timestamps
+            youtube_captions.save_captions("captions.txt")
+            
+            # get the file called captions.txt at the root of the directory
+            with open("captions.txt") as f:
+                youtube_captions_txt = f.read()
+
+            cleaned_captions = re.sub(r'^\d+\n\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}\n', '', youtube_captions_txt, flags=re.MULTILINE)
+
+            # Remove any remaining empty lines
+            cleaned_captions = re.sub(r'\n\s*\n', '\n', cleaned_captions)
+
+            # Remove leading/trailing whitespace from each line
+            cleaned_captions = '\n'.join(line.strip() for line in cleaned_captions.split('\n') if line.strip())
+
+            # save cleaned captions to a file called captions.txt
+            with open("captions.txt", "w") as f:
+                f.write(cleaned_captions)
+        return video_path, captions_available
+ 
+    
     except Exception as e:
-        logger.error(f"🚨 Error processing Jumpshare link: {str(e)}")
-        logger.error(traceback.format_exc())
-        raise HTTPException(status_code=500, detail="Error processing Jumpshare link.")
+        logger.error(f"🚨 Error downloading YouTube video: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error downloading YouTube video: {str(e)}")
