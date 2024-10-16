@@ -6,8 +6,18 @@ from contextlib import asynccontextmanager
 from app.services.transcribe import transcribe
 from app.services.summarize import decomposed_summarize_transcription_and_upload_to_notion  
 import os
-import httpx
-import asyncio
+from typing import List, Dict
+from tenacity import retry, stop_after_attempt, wait_exponential, RetryError
+from pytubefix import YouTube
+from pytubefix.cli import on_progress
+import re
+import aiofiles
+import requests
+from bs4 import BeautifulSoup
+import PyPDF2
+import io
+import docx
+import re
 from app.services.notion import (
     set_summarized_checkbox_on_notion_page_to_true,
     upload_transcript_to_notion,
@@ -16,12 +26,6 @@ from app.services.notion import (
     rollback_blocks,
     create_toggle_block
 )
-from typing import List, Dict
-from tenacity import retry, stop_after_attempt, wait_exponential, RetryError
-from pytubefix import YouTube
-from pytubefix.cli import on_progress
-import re
-import aiofiles
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 api_router = APIRouter()
@@ -51,11 +55,12 @@ async def process_link(meeting):
         try: 
             page_id: str = meeting['id']
             link_from_notion = meeting['properties']['Link']['title'][0]['plain_text']
-            print("link from notion 🚨", link_from_notion)
             if contains_the_string_youtube(link_from_notion):
+                logger.info("💡 About to download youtube video")
                 video_path, captions_available = await download_youtube_video(link_from_notion, "./downloads")
 
                 if captions_available:
+                    logger.info("💡 Captions available")
                     with open("captions.txt") as f:
                         transcription = f.read()
                 else:
@@ -69,8 +74,16 @@ async def process_link(meeting):
                         file=BytesIO(file_content),
                     )
                     transcription = await transcribe(temp_upload_file)
-                    print(transcription)
-            
+
+                try:
+                    logger.info("💡 Removing temp files")   
+                    os.remove("captions.txt")
+                    os.remove(video_path)
+                except Exception as e:
+                    logger.error(f"🚨 Error removing temp files: {str(e)}")
+                    traceback.print_exc()
+            else: 
+                transcription = extract_text_from_link(link_from_notion)
             # # Create toggle blocks once
             summary_toggle_id = await create_toggle_block(page_id, "Summary", "green")
             transcript_toggle_id = await create_toggle_block(page_id, "Transcript", "orange")
@@ -82,6 +95,53 @@ async def process_link(meeting):
             logger.error(f"🚨 Error in process_link for meeting {meeting['id']}: {str(e)}")
             logger.error(f"Full traceback: {traceback.format_exc()}")
             raise
+
+def extract_text_from_link(url):
+    try:
+        response = requests.get(url)
+        content_type = response.headers.get('Content-Type', '').lower()
+
+        if 'application/pdf' in content_type:
+            return extract_text_from_pdf(response.content)
+        elif 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' in content_type:
+            return extract_text_from_docx(response.content)
+        elif 'text/html' in content_type:
+            return extract_text_from_html(response.text)
+        else:
+            return extract_text_from_html(response.text)  # Default to HTML parsing
+    except Exception as e:
+        logger.error(f"🚨 Error extracting text from {url}: {str(e)}")
+        return ""
+
+def extract_text_from_pdf(content):
+    pdf_file = io.BytesIO(content)
+    pdf_reader = PyPDF2.PdfReader(pdf_file)
+    text = ""
+    for page in pdf_reader.pages:
+        text += page.extract_text() + "\n"
+    return clean_text(text)
+
+def extract_text_from_docx(content):
+    docx_file = io.BytesIO(content)
+    doc = docx.Document(docx_file)
+    text = ""
+    for para in doc.paragraphs:
+        text += para.text + "\n"
+    return clean_text(text)
+
+def extract_text_from_html(html_content):
+    soup = BeautifulSoup(html_content, 'html.parser')
+    for script in soup(["script", "style"]):
+        script.decompose()
+    text = soup.get_text()
+    return clean_text(text)
+
+def clean_text(text):
+    # Remove extra whitespace
+    text = re.sub(r'\s+', ' ', text)
+    # Remove special characters and digits
+    text = re.sub(r'[^a-zA-Z\s]', '', text)
+    return text.strip()
 
 @api_router.post("/update_notion_with_transcript_and_summary")
 async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
@@ -113,7 +173,7 @@ async def download_youtube_video(youtube_url: str, output_path: str = "./") -> s
     
     try:
         yt = YouTube(youtube_url, on_progress_callback = on_progress)
-        print("🚨video title", yt.title)
+        logger.info("💡Video title", yt.title)
         youtube_audio = yt.streams.get_audio_only()
         video_path = youtube_audio.download(mp3=True)
 
