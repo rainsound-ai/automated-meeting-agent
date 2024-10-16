@@ -78,6 +78,8 @@ def evaluate_section(original_article: str, summary_to_evaluate: str) -> Dict[st
         5. Clarity: Is it written in clear, accessible language for a general audience with some tech background?
         6. Technical Accuracy: Are key technical terms included when essential, without overuse of jargon?
         7. Completeness: Does the summary provide a clear understanding of the most crucial aspect of the emerging AI technology discussed?
+        8. Credit: Does the summary list who did what when listing a thing that was done or an accomplishment? Does it give credit where credit is due?
+        9. Blog Inclusion: Is this ready to be included in a weekly blog post. Will a reader be hungry for more after reading this knowledge snack?
 
         Provide your evaluation in the following format - do not add any additional formatting or decorations:
         Score: [A single number between 0 and 1, where 1 is the best]

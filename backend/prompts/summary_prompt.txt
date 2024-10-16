@@ -16,6 +16,7 @@ Guidelines:
 - Use clear, concise language accessible to a general audience with some tech background
 - Avoid jargon, but include key technical terms when essential
 - If faced with multiple important topics, choose the most groundbreaking or influential as your key point
+- Try to list who did what when listing a thing that was done or an accomplishment. Give credit where credit is due.
 
 Format your response as follows:
 
@@ -28,3 +29,5 @@ Format your response as follows:
 - [Sub-bullet 5: Supporting point or detail (if needed)]
 
 Your summary should leave the reader with a clear understanding of the most crucial aspect of the emerging AI technology discussed in the article, formatted for easy comprehension on a flashcard.
+
+Since this will ultimately be part of a blog post make sure it hooks people who read it. We want our readers to be hungry for more knowledge snacks.
