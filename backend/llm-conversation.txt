@@ -1,0 +1,372 @@
+ChatGPT - Summary Evaluation Guidelines
+Summary Evaluation Guidelines
+October 21, 2024
+This conversation may reflect the link creatorâs personalized data, which isnât shared and can meaningfully change how the model responds.
+You said:
+keep responses concise and focused
+given this prompt
+prompt = f"""
+Evaluate the following {section_name} section of a meeting summary:
+Actual transcript:
+{transcript}
+{section_name} summary to evaluate:
+{section_summary}
+Gold standard transcript:
+{gold_standard_transcript}
+Gold standard {section_name} summary:
+{gold_standard_summary}
+Instructions:
+1. The gold standard summary provided above is an example of a high-quality {section_name} section based on the gold standard transcript.
+2. Use this as a reference for what a good {section_name} section should cover and how it should be structured.
+3. Evaluate the provided {section_name} summary based on how well it captures the key information from the actual transcript, compared to how the gold standard summary captures information from its transcript.
+Criteria:
+1. Conciseness: Is the summary concise while covering key points?
+2. Completeness: Does it cover the main topics and relevant context for this section?
+3. Clarity: Is it written in a clear and professional manner?
+4. Accuracy: Does it stick to facts from the transcript without inferring or making assumptions?
+5. Structure: Does it follow a logical structure appropriate for a {section_name} section?
+Provide your evaluation in the following format - do not add any additional formatting or decorations:
+Score: [A single number between 0 and 1, where 1 is the best]
+Feedback: [Your detailed feedback here, including strengths and areas for improvement]
+"""
+and these examples of feedback
+Feedback:
+The provided Next Actions summary demonstrates strong conciseness, clarity, and a logical structure, effectively outlining the key action items from the transcript. It successfully captures the main topics of Conference Scheduling and Ticket Purchasing, AI Skill Tree Development, and Link Processing Agent Development. However, there are areas for improvement to enhance completeness and accuracy:
+**Strengths:**
+- **Conciseness:** The summary is brief yet comprehensive, avoiding unnecessary details while highlighting essential actions.
+- **Clarity:** Each action item is clearly articulated, making it easy for team members to understand their responsibilities.
+- **Structure:** The use of headings and bullet points organizes the information effectively, facilitating quick reference.
+**Areas for Improvement:**
+- **Completeness:** The summary could benefit from specifying responsible individuals for each action. For example, the gold standard mentions that "Luca is to begin the creation of an AI skill tree," which assigns clear ownership.
+- **Accuracy:** Including contextual details, such as addressing previous delays (e.g., "addressing previous delays experienced in Julyâs Microsoft Ignite prioritization"), would provide better insight into the urgency and importance of the actions.
+- **Detail:** While maintaining conciseness, adding minor specifics from the gold standard can enhance the actionable quality of the summary without compromising its brevity.
+Attempt 4 feedback: **Strengths:**
+1. **Conciseness:** The summary includes three direct quotes that are relatively concise and focus on key topics discussed during the meeting.
+2. **Clarity:** Each quote is clear and conveys specific points made by the speakers, making it easy to understand the main ideas.
+**Areas for Improvement:**
+1. **Completeness:** The provided summary captures some important aspects but misses other significant points covered in the transcript. For example, discussions about conference planning, the skill tree development, and strategies for engaging with clients are not represented in the selected quotes.
+2. **Accuracy:** While the first quote closely matches the gold standard, the second and third quotes deviate from the gold standard summaries. The second quote in the evaluation summary focuses on client engagement strategy, which is important, but the third quote about generating summaries from links is partially captured in the gold standard but lacks the depth regarding the link processing agent's functionality.
+3. **Structure:** The summary follows a straightforward listing of quotes but could benefit from grouping related quotes or providing a brief context to enhance the logical flow and comprehensiveness.
+4. **Selection of Quotes:** Some crucial elements from the meeting, such as the discussion on the skill tree, cloning the codebase strategy, and plans for upgrading agents, are not reflected in the selected quotes. Including these would provide a more holistic view of the meeting's content.
+**Recommendations:**
+- **Include More Key Quotes:** Incorporate additional quotes that cover other major topics discussed, such as conference planning, skill tree resources, and agent development strategies.
+- **Enhance Structure:** Organize the quotes in a manner that groups related discussions together, possibly with subheadings if necessary, to improve readability and coherence.
+- **Ensure Alignment with Gold Standard:** Compare selected quotes more closely with the gold standard to ensure all critical points are adequately represented.
+How can we sure that the system isn't trying to make the generated summary match the gold standard summary verbatim, but rather that it's using the relationship between the gold standard summary and gold standard transcript to determine how to make a high quality summary using the real transcript
+does that make sense?
+explain to me that you understand please then let's discuss
+ChatGPT
+Thought for a couple of seconds
+Yes, I understand your objective. You want to ensure that the evaluation process uses the gold standard summary and transcript as benchmarks for quality and structure, rather than having the generated summary mimic the gold standard verbatim. This approach ensures that the system assesses the summary based on how well it captures the essential information and maintains clarity, conciseness, and accuracy relative to the actual transcript, using the gold standard as a quality reference.
+Key Points:
+Reference, Not Replication:
+The gold standard serves as an example of high-quality summarization, guiding the evaluation criteria without being a template to copy.
+Relationship-Based Evaluation:
+The system should assess how effectively the provided summary extracts and presents key information from the actual transcript, comparing this effectiveness to how the gold standard does so with its transcript.
+Avoiding Verbatim Matching:
+Emphasizing that the goal is quality and completeness based on the actual content, not similarity to the gold standard's wording or structure.
+Next Steps:
+Prompt Refinement:
+Ensure the instructions clearly state that the gold standard is a benchmark for quality, not a template to match.
+Evaluation Criteria Emphasis:
+Reinforce criteria like conciseness, completeness, clarity, accuracy, and structure based on the relationship between each summary and its respective transcript.
+Examples Clarification:
+Use feedback examples to illustrate the difference between referencing quality and replicating content.
+Letâs discuss how youâd like to proceed or if there are specific areas youâd like to refine further.
+You said:
+how could I improve the prompt?
+ChatGPT
+Thought for a couple of seconds
+Certainly! Here are some suggestions to enhance your prompt, ensuring that the evaluation focuses on quality relative to the actual transcript without attempting to match the gold standard summary verbatim:
+1.
+Clarify the Role of the Gold Standard
+Emphasize that the gold standard summary is a benchmark for quality and structure, not a template to replicate.
+Add to Instructions:
+Reference, Not Replication:
+The gold standard summary should serve as an example of high-quality summarization. Do not attempt to match its wording or structure exactly but use it to understand what makes a summary effective.
+2.
+Explicitly Prevent Verbatim Matching
+Instruct the evaluator to focus on content quality rather than similarity to the gold standard.
+Add to Instructions:
+Avoid Verbatim Matching:
+Do not replicate phrases or the structure of the gold standard summary. Focus on how well the provided summary captures the key information from the actual transcript.
+3.
+Enhance Relationship-Based Evaluation
+Ensure the evaluation emphasizes how well the summary reflects the actual transcript compared to the gold standardâs reflection of its transcript.
+Modify Evaluation Criteria:
+Use Gold Standard as a Quality Benchmark:
+Assess the provided summary based on how comprehensively and accurately it captures the key points from the actual transcript, using the gold standard summary as a measure of high-quality performance.
+4.
+Refine Evaluation Criteria Descriptions
+Make the criteria more explicit about using the gold standard for quality reference.
+Revise Criteria Section:
+vbnet
+Copy code
+Criteria:
+1
+. Conciseness:
+Is
+the summary concise
+while
+covering
+key
+points?
+2
+. Completeness: Does it cover the main topics
+and
+relevant context
+for
+this section?
+3
+. Clarity:
+Is
+it written
+in
+a clear
+and
+professional manner?
+4
+. Accuracy: Does it stick
+to
+facts
+from
+the transcript without inferring
+or
+making assumptions?
+5
+.
+Structure
+: Does it follow a logical
+structure
+appropriate
+for
+a {section_name} section?
+*Note:* Use the gold standard summary
+as
+a reference
+for
+high-quality summaries
+in
+terms
+of
+these criteria,
+not
+as
+a template
+to
+replicate.
+5.
+Incorporate Clear Instructions on Usage of Gold Standard
+Ensure the evaluator understands how to utilize the gold standard effectively.
+Add to Instructions:
+Guidance on Using the Gold Standard:
+Compare how the gold standard summary captures information from its transcript to how the provided summary captures information from the actual transcript.
+Focus on the effectiveness of information extraction and presentation rather than similarity in wording or structure.
+6.
+Provide an Explicit Warning Against Verbatim Imitation
+Add a direct statement to prevent the evaluator from copying the gold standard summary.
+Add to Instructions:
+Do Not Imitate:
+The evaluation should not involve copying or imitating the gold standard summary. Instead, use it to understand the quality and depth expected in a high-quality summary.
+7.
+Example Enhancement
+Ensure your feedback examples clearly illustrate the distinction between referencing quality and replicating content.
+Enhance Feedback Examples:
+Highlight how the strengths are derived from the relationship to the transcript and gold standard without mirroring it.
+Show that areas for improvement focus on enhancing content quality based on the actual transcript, not on aligning with the gold standardâs phrasing or structure.
+Revised Prompt Example
+Hereâs how you can incorporate these improvements into your prompt:
+python
+Copy code
+prompt =
+f"""
+Evaluate the following
+{section_name}
+section of a meeting summary:
+Actual transcript:
+{transcript}
+{section_name}
+summary to evaluate:
+{section_summary}
+Gold standard transcript:
+{gold_standard_transcript}
+Gold standard
+{section_name}
+summary:
+{gold_standard_summary}
+Instructions:
+1. The gold standard summary provided above is an example of a high-quality
+{section_name}
+section based on the gold standard transcript.
+2. Use this as a reference for what a good
+{section_name}
+section should cover and how it should be structured.
+3. **Do not replicate the gold standard summary verbatim.** Instead, focus on understanding the quality, completeness, and clarity it demonstrates.
+4. Evaluate the provided
+{section_name}
+summary based on how well it captures the key information from the actual transcript, comparing this effectiveness to how the gold standard summary captures information from its transcript.
+Criteria:
+1. Conciseness: Is the summary concise while covering key points?
+2. Completeness: Does it cover the main topics and relevant context for this section?
+3. Clarity: Is it written in a clear and professional manner?
+4. Accuracy: Does it stick to facts from the transcript without inferring or making assumptions?
+5. Structure: Does it follow a logical structure appropriate for a
+{section_name}
+section?
+*Note:* Use the gold standard summary as a quality benchmark for these criteria, not as a template to imitate.
+Provide your evaluation in the following format - do not add any additional formatting or decorations:
+Score: [A single number between 0 and 1, where 1 is the best]
+Feedback: [Your detailed feedback here, including strengths and areas for improvement]
+"""
+Summary of Improvements
+Role Clarification:
+Clearly define the purpose of the gold standard.
+Prevent Verbatim Matching:
+Direct instructions to avoid copying.
+Focus on Quality Relationship:
+Emphasize evaluating based on content quality relative to the transcript.
+Enhanced Criteria Descriptions:
+Make evaluation criteria align with quality benchmarks.
+Clear Usage Instructions:
+Guide on how to use the gold standard effectively.
+Implementing these changes will help ensure that the evaluation process remains focused on assessing the quality and effectiveness of the summary in capturing key information from the actual transcript, using the gold standard as a benchmark for excellence rather than a template to copy.
+You said:
+got this error in production but not dev
+File "/opt/render/project/src/backend/app/services/eval_agent.py", line 115
+feedback_pattern = f"{re.escape("Feedback:")}(.*)"
+^^^^^^^^
+SyntaxError: f-string: unmatched '('
+ChatGPT
+Thought for 4 seconds
+The error you're encountering is due to incorrect nesting of quotation marks within the f-string, leading to a
+SyntaxError
+. Here's a detailed explanation and how to fix it:
+Error Explanation
+python
+Copy code
+feedback_pattern =
+f"
+{re.escape(
+"Feedback:"
+)}
+(.*)"
+Issue:
+The f-string starts with a double quote (
+"
+). Inside the f-string, you're using another set of double quotes for
+"Feedback:"
+. This causes Python to interpret the first closing double quote after
+re.escape(
+as the end of the f-string, leaving the rest
+Feedback:")}(.*)"
+invalid and resulting in the
+SyntaxError: f-string: unmatched '('
+.
+Why It Might Work in Development but Not in Production
+Different Python Versions:
+Development and production environments might be using different Python versions. Some Python versions might be more lenient or have different parsing rules.
+Code Context:
+There might be surrounding code or specific configurations in development that inadvertently mask this issue.
+How to Fix It
+You need to correctly nest the quotation marks in your f-string. Here are a few ways to do this:
+1. Use Single Quotes for the Outer f-String
+Switch the outer quotes to single quotes so that the inner double quotes don't interfere.
+python
+Copy code
+feedback_pattern =
+f'
+{re.escape(
+"Feedback:"
+)}
+(.*)'
+2. Escape the Inner Double Quotes
+If you prefer to keep the outer quotes as double quotes, escape the inner double quotes using a backslash (
+\
+).
+python
+Copy code
+feedback_pattern =
+f"
+{re.escape(\
+"Feedback:\")}(.*)"
+3. Use Triple Quotes
+Another approach is to use triple quotes, which can help with more complex strings, though it's not necessary in this simple case.
+python
+Copy code
+feedback_pattern =
+f"""
+{re.escape(
+"Feedback:"
+)}
+(.*)"""
+Recommended Fix
+Using single quotes for the outer f-string is the simplest and most readable solution:
+python
+Copy code
+feedback_pattern =
+f'
+{re.escape(
+"Feedback:"
+)}
+(.*)'
+Final Code Example
+Here's how your code should look after the fix:
+python
+Copy code
+import
+re
+# Corrected f-string with single quotes
+feedback_pattern =
+f'
+{re.escape(
+"Feedback:"
+)}
+(.*)'
+# Example usage
+summary_text =
+"""
+Score: 0.85
+Feedback:
+The provided summary is concise and clear but could include more details on the action items.
+"""
+match
+= re.search(feedback_pattern, summary_text, re.DOTALL)
+if
+match
+:
+feedback =
+match
+.group(
+1
+).strip()
+print
+(
+"Extracted Feedback:"
+, feedback)
+else
+:
+print
+(
+"Feedback section not found."
+)
+Additional Recommendations
+Consistent Quoting:
+Adopt a consistent quoting style throughout your codebase to avoid similar issues. For example, prefer single quotes for strings unless double quotes are necessary.
+Linting Tools:
+Use linting tools like
+flake8
+or
+pylint
+to catch such syntax errors during development.
+Testing:
+Ensure that your production environment runs the same Python version as your development environment to minimize discrepancies.
+By correctly nesting your quotes, you should eliminate the
+SyntaxError
+and ensure that your code runs smoothly in both development and production environments.
+Continue this conversation
+Report content
+|
+Terms of use
+|
+Privacy policy
+|

@@ -50,14 +50,17 @@ def contains_the_string_youtube(link):
     link_lower = link.lower()
     return "youtube" in link_lower or "youtu.be" in link_lower
 
+def title_is_not_a_url(link):
+    return True
+
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def process_link(meeting):
     async with meeting_processing_context(meeting):
         try: 
             page_id: str = meeting['id']
             link_from_notion = meeting['properties']['Link']['title'][0]['plain_text']
-            # Handle youtube videos
             if contains_the_string_youtube(link_from_notion):
+            # Handle youtube videos
                 logger.info("💡 About to download youtube video")
                 video_path, captions_available = await download_youtube_video(link_from_notion)
                 print("🚨video path", video_path)
@@ -90,9 +93,30 @@ async def process_link(meeting):
                     except Exception as e:
                         logger.error(f"🚨 Error removing youtube audio file: {str(e)}")
                         traceback.print_exc()
-            # Handle pdf, docx, or html
+            elif title_is_not_a_url(link_from_notion):
+            # Handle gpt conversation
+                llm_conversation = meeting['properties']["LLM Conversation"]["files"][0]
+                file_url = llm_conversation['file']['url']
+                try:
+                    # Download the content from the URL
+                    response = requests.get(file_url)
+                    response.raise_for_status()  # Raise an exception for bad status codes
+                    
+                    # Parse the HTML content
+                    soup = BeautifulSoup(response.text, 'html.parser')
+                    text = soup.get_text(separator='\n', strip=True)
+                    cleaned_text = '\n'.join(line.strip() for line in text.split('\n') if line.strip())
+                    
+                    transcription = cleaned_text 
+                    print("Successfully processed and saved the LLM conversation.")
+                except requests.RequestException as e:
+                    print(f"Error downloading file: {e}")
+                except Exception as e:
+                    print(f"Error processing file content: {e}")
             else: 
+            # Handle pdf, docx, or html
                 transcription = extract_text_from_link(link_from_notion)
+
             # # Create toggle blocks once
             summary_toggle_id = await create_toggle_block(page_id, "Summary", "green")
             transcript_toggle_id = await create_toggle_block(page_id, "Transcript", "orange")
