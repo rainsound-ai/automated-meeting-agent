@@ -51,13 +51,25 @@ def contains_the_string_youtube(link):
     return "youtube" in link_lower or "youtu.be" in link_lower
 
 def title_is_not_a_url(link):
-    return True
+    # Regular expression pattern for URL validation
+    pattern = re.compile(
+        r'^'
+        r'(?:(?:http|https)://)?'  # optional scheme
+        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain
+        r'localhost|'  # localhost
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # IP
+        r'(?::\d+)?'  # optional port
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+    
+    return not bool(pattern.match(link))
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def process_link(meeting):
     async with meeting_processing_context(meeting):
         try: 
             page_id: str = meeting['id']
+            is_llm_conversation = False
+            llm_conversation_file_name = None
             link_from_notion = meeting['properties']['Link']['title'][0]['plain_text']
             if contains_the_string_youtube(link_from_notion):
             # Handle youtube videos
@@ -76,8 +88,7 @@ async def process_link(meeting):
                         logger.error(f"🚨 Error removing captions file: {str(e)}")
                         traceback.print_exc()
                 else:
-                    # Handle when we had to transcribe the youtube audio to get a transcript
-                
+                # Handle when we had to transcribe the youtube audio to get a transcript
                     async with aiofiles.open(video_path, 'rb') as f:
                         file_content = await f.read()
                     
@@ -101,6 +112,8 @@ async def process_link(meeting):
                     # Download the content from the URL
                     response = requests.get(file_url)
                     response.raise_for_status()  # Raise an exception for bad status codes
+                    # get the file name from the response headers
+                    llm_conversation_file_name = llm_conversation['name']
                     
                     # Parse the HTML content
                     soup = BeautifulSoup(response.text, 'html.parser')
@@ -108,6 +121,7 @@ async def process_link(meeting):
                     cleaned_text = '\n'.join(line.strip() for line in text.split('\n') if line.strip())
                     
                     transcription = cleaned_text 
+                    is_llm_conversation = True
                     print("Successfully processed and saved the LLM conversation.")
                 except requests.RequestException as e:
                     print(f"Error downloading file: {e}")
@@ -122,7 +136,7 @@ async def process_link(meeting):
             transcript_toggle_id = await create_toggle_block(page_id, "Transcript", "orange")
             
             # # Pass the created toggle IDs to the respective functions
-            await decomposed_summarize_transcription_and_upload_to_notion(transcription, summary_toggle_id)
+            await decomposed_summarize_transcription_and_upload_to_notion(page_id, transcription, summary_toggle_id, is_llm_conversation, llm_conversation_file_name)
             await upload_transcript_to_notion(transcript_toggle_id, transcription)
         except Exception as e:
             logger.error(f"🚨 Error in process_link for meeting {meeting['id']}: {str(e)}")

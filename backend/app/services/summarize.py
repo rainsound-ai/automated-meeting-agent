@@ -6,6 +6,7 @@ import logging
 from openai import OpenAI, OpenAIError
 from app.services.notion import (
     append_summary_to_notion,
+    update_notion_title_with_llm_conversation_file_name
 )
 from app.models import Transcription
 from app.services.eval_agent import evaluate_section
@@ -40,7 +41,8 @@ async def summarize_transcription(transcription: str, prompt: str) -> str:
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 
-async def decomposed_summarize_transcription_and_upload_to_notion(transcription: Transcription, toggle_id: str) -> None:
+async def decomposed_summarize_transcription_and_upload_to_notion(page_id, transcription: Transcription, toggle_id: str, is_llm_conversation=False, llm_conversation_file_name=None) -> None:
+
     prompt_file = "summary_prompt.txt"
     max_attempts = 5
     quality_threshold = 0.8
@@ -51,6 +53,11 @@ async def decomposed_summarize_transcription_and_upload_to_notion(transcription:
     best_score = 0
     feedback = ""
 
+    if is_llm_conversation:
+        print("🚨 Using LLM conversation summary prompt")
+        prompt_file = "llm_conversation_summary_prompt.txt"
+        prompt_content = read_file(os.path.join(BASE_DIR, 'prompts', prompt_file))
+
     for attempt in range(max_attempts):
         full_prompt = prompt_content + f"\n\nPrevious feedback:\n{feedback}"
         logger.info(f"💡 Prompt for summary - Attempt {attempt + 1}:\n{full_prompt}")
@@ -58,11 +65,11 @@ async def decomposed_summarize_transcription_and_upload_to_notion(transcription:
         try:
             decomposed_summary = await summarize_transcription(transcription, full_prompt)
             
-            evaluation_result = evaluate_section(transcription, decomposed_summary)
+            evaluation_result = evaluate_section(transcription, decomposed_summary, is_llm_conversation)
             section_score = evaluation_result["score"]
             section_feedback = evaluation_result["feedback"]
             
-            logger.info(f"💡Attempt {attempt + 1}: Section score = {section_score}")
+            logger.info(f"💡Attempt {attempt + 1}: Section score = {section_score}. is_llm_conversation = {is_llm_conversation}")
             
             # Update feedback instead of appending
             feedback = f"Attempt {attempt + 1} feedback: {section_feedback}"
@@ -93,5 +100,10 @@ async def decomposed_summarize_transcription_and_upload_to_notion(transcription:
     
     # Here you would add the code to upload the final_summary to Notion
     await append_summary_to_notion(toggle_id=toggle_id, section_content=final_summary)
+
+    if llm_conversation_file_name is not None:
+        # Set the notion page title to the same title as the llm conversation file
+        formatted_llm_conversation_file_name = llm_conversation_file_name.replace(".html", " ")
+        await update_notion_title_with_llm_conversation_file_name(page_id, f"LLM Conversation: {formatted_llm_conversation_file_name}")
 
     return final_summary

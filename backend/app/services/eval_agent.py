@@ -40,60 +40,101 @@ def get_gold_standard_files() -> Optional[Tuple[str, str]]:
         return None
 
 
-def evaluate_section(original_article: str, summary_to_evaluate: str) -> Dict[str, any]:
-    try:
-        gold_standard_transcript, gold_standard_summary = get_gold_standard_files()
+def evaluate_section(original_article: str, summary_to_evaluate: str, is_llm_conversation=False) -> Dict[str, any]:
+    if is_llm_conversation:
+        try:
+            prompt = f"""
+            # Guardrails Agent Prompt for Evaluating Summaries Of my Conversations With LLMs
+            Evaluate the following summary of a conevrsatio I had with an LLM:
 
-        prompt = f"""
-        # Guardrails Agent Prompt for Evaluating AI Tech Summaries
-        Evaluate the following summary of an article about emerging AI technology:
+            Original Conversation:
+            {original_article}
 
-        Original article:
-        {original_article}
+            Summary of conversation to evaluate:
+            {summary_to_evaluate}
 
-        Summary to evaluate:
-        {summary_to_evaluate}
+            Instructions:
+            1. Carefully read both the original conversation and the provided summary.
+            2. Evaluate the summary based on how well it captures the key information from the conversation.
+            3. Use the criteria below to assess the quality and effectiveness of the summary.
 
-        Gold standard transcript:
-        {gold_standard_transcript}
+            Criteria:
+            1. Format: Does the summary consist of one key point as a headline/title, followed by 3-5 supporting sub-bullets, and is it suitable for a flashcard (not exceeding 2000 characters in total)?
+            2. Focus: Does it identify and prioritize the most significant or groundbreaking aspects of the conversation?
+            3. Depth: Do the sub-bullets effectively support and expand on the main point?
+            4. Balance: Does it strike a good balance between technical and non-technical information?
+            5. Clarity: Is it written in clear, accessible language for a general audience with some tech background?
+            6. Technical Accuracy: Are key technical terms included when essential, without overuse of jargon?
+            7. Completeness: Does the summary provide a clear understanding of the most crucial aspect of the conversation?
+            8. Blog Inclusion: Is this ready to be included in a weekly blog post? Will a reader be hungry for more after reading this knowledge snack?
 
-        Gold standard summary:
-        {gold_standard_summary}
+            Provide your evaluation in the following format from which you shall never deviate - do not add any additional formatting or decorations:
+            Score: [A single number between 0 and 1, where 1 is the best]
+            Feedback: [Your detailed feedback here, including strengths and areas for improvement]
+            """
+            
+            response = get_openai_response(prompt)
+            evaluation = parse_evaluation_response(response)
+            
+            logger.info(f"💡 Evaluation: {evaluation}")
+            return evaluation
+        except Exception as e:
+            logger.error(f"🚨 Evaluation failed with error: {str(e)}")
+            raise 
+    else: 
+        try:
+            gold_standard_transcript, gold_standard_summary = get_gold_standard_files()
 
-        Instructions:
-        1. Carefully read both the original article and the provided summary.
-        2. Evaluate the summary based on how well it captures the key information from the original article about emerging AI technology.
-        3. Use the criteria below to assess the quality and effectiveness of the summary.
-        4. The gold standard summary provided above is an example of a high-quality summary based on the gold standard transcript.
-        5. Use this as a reference for what a good summary should cover and how it should be structured.
-        6. **Do not replicate the gold standard summary verbatim.** Instead, focus on understanding the quality, completeness, and clarity it demonstrates.
-        7. Evaluate the provided summary to evaluate based on how well it captures the key information from the actual transcript, comparing this effectiveness to how the gold standard summary captures information from its transcript.
+            prompt = f"""
+            # Guardrails Agent Prompt for Evaluating AI Tech Summaries
+            Evaluate the following summary of an article about emerging AI technology:
+
+            Original article:
+            {original_article}
+
+            Summary to evaluate:
+            {summary_to_evaluate}
+
+            Gold standard transcript:
+            {gold_standard_transcript}
+
+            Gold standard summary:
+            {gold_standard_summary}
+
+            Instructions:
+            1. Carefully read both the original article and the provided summary.
+            2. Evaluate the summary based on how well it captures the key information from the original article about emerging AI technology.
+            3. Use the criteria below to assess the quality and effectiveness of the summary.
+            4. The gold standard summary provided above is an example of a high-quality summary based on the gold standard transcript.
+            5. Use this as a reference for what a good summary should cover and how it should be structured.
+            6. **Do not replicate the gold standard summary verbatim.** Instead, focus on understanding the quality, completeness, and clarity it demonstrates.
+            7. Evaluate the provided summary to evaluate based on how well it captures the key information from the actual transcript, comparing this effectiveness to how the gold standard summary captures information from its transcript.
 
 
-        Criteria:
-        1. Format: Does the summary consist of one key point as a headline/title, followed by 3-5 supporting sub-bullets, and is it suitable for a flashcard (not exceeding 2000 characters in total)?
-        2. Focus: Does it identify and prioritize the most significant or groundbreaking aspect of the technology discussed?
-        3. Depth: Do the sub-bullets effectively support and expand on the main point?
-        4. Balance: Does it strike a good balance between technical and non-technical information?
-        5. Clarity: Is it written in clear, accessible language for a general audience with some tech background?
-        6. Technical Accuracy: Are key technical terms included when essential, without overuse of jargon?
-        7. Completeness: Does the summary provide a clear understanding of the most crucial aspect of the emerging AI technology discussed?
-        8. Credit: Does the summary list who did what when listing a thing that was done or an accomplishment? Does it give credit where credit is due?
-        9. Blog Inclusion: Is this ready to be included in a weekly blog post. Will a reader be hungry for more after reading this knowledge snack?
+            Criteria:
+            1. Format: Does the summary consist of one key point as a headline/title, followed by 3-5 supporting sub-bullets, and is it suitable for a flashcard (not exceeding 2000 characters in total)?
+            2. Focus: Does it identify and prioritize the most significant or groundbreaking aspect of the technology discussed?
+            3. Depth: Do the sub-bullets effectively support and expand on the main point?
+            4. Balance: Does it strike a good balance between technical and non-technical information?
+            5. Clarity: Is it written in clear, accessible language for a general audience with some tech background?
+            6. Technical Accuracy: Are key technical terms included when essential, without overuse of jargon?
+            7. Completeness: Does the summary provide a clear understanding of the most crucial aspect of the emerging AI technology discussed?
+            8. Credit: Does the summary list who did what when listing a thing that was done or an accomplishment? Does it give credit where credit is due?
+            9. Blog Inclusion: Is this ready to be included in a weekly blog post. Will a reader be hungry for more after reading this knowledge snack?
 
-        Provide your evaluation in the following format - do not add any additional formatting or decorations:
-        Score: [A single number between 0 and 1, where 1 is the best]
-        Feedback: [Your detailed feedback here, including strengths and areas for improvement]
-        """
-        
-        response = get_openai_response(prompt)
-        evaluation = parse_evaluation_response(response)
-        
-        logger.info(f"💡 Evaluation: {evaluation}")
-        return evaluation
-    except Exception as e:
-        logger.error(f"🚨 Evaluation failed with error: {str(e)}")
-        raise
+            Provide your evaluation in the following format - do not add any additional formatting or decorations:
+            Score: [A single number between 0 and 1, where 1 is the best]
+            Feedback: [Your detailed feedback here, including strengths and areas for improvement]
+            """
+            
+            response = get_openai_response(prompt)
+            evaluation = parse_evaluation_response(response)
+            
+            logger.info(f"💡 Evaluation: {evaluation}")
+            return evaluation
+        except Exception as e:
+            logger.error(f"🚨 Evaluation failed with error: {str(e)}")
+            raise
 
 def get_openai_response(prompt: str) -> str:
     try:
