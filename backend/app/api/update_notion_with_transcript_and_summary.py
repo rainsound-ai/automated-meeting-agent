@@ -183,6 +183,7 @@ def get_captions(video_id):
     try:
         transcript = YouTubeTranscriptApi.get_transcript(video_id)
         captions_available = True
+
         # save the captions to a file called captions.txt
         with open("captions.txt", "w") as f:
             for line in transcript:

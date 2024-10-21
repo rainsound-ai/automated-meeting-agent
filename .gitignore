@@ -1,1 +1,8 @@
-backend/temp/*
+__pycache__
+storage
+.env
+.venv
+.ruff_cache
+transcription.txt
+backend/temp/
+./temp
