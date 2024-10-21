@@ -55,11 +55,16 @@ def title_is_not_a_url(link):
     pattern = re.compile(
         r'^'
         r'(?:(?:http|https)://)?'  # optional scheme
-        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain
+        r'(?:'
+        r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain
         r'localhost|'  # localhost
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # IP
+        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'  # IP
+        r')'
         r'(?::\d+)?'  # optional port
-        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+        r'(?:/[^/#?]+)*/?'  # path
+        r'(?:\?[^#]*)?'  # query string
+        r'(?:#.*)?$',  # fragment
+        re.IGNORECASE)
     
     return not bool(pattern.match(link))
 
@@ -75,7 +80,7 @@ async def process_link(meeting):
             # Handle youtube videos
                 logger.info("💡 About to download youtube video")
                 video_path, captions_available = await download_youtube_video(link_from_notion)
-                print("🚨video path", video_path)
+                # print("🚨video path", video_path)
 
                 if captions_available:
                     # Handle when captions were available
@@ -223,7 +228,14 @@ async def download_youtube_video(youtube_url: str) -> str:
         yt = YouTube(youtube_url, on_progress_callback = on_progress)
         print("🚨video title", yt.title)
         
-        youtube_captions = yt.captions['en']
+        for caption_key in ['a.en', 'en']:
+            try:
+                youtube_captions = yt.captions[caption_key]
+                if youtube_captions:
+                    captions_available = True
+                    break
+            except (KeyError, AttributeError):
+                continue
         if youtube_captions:
             # Remove caption numbers and timestamps
             youtube_captions.save_captions("captions.txt")
