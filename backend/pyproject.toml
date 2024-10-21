@@ -19,8 +19,6 @@ pytubefix = "^8.1.1"
 beautifulsoup4 = "^4.12.3"
 pypdf2 = "^3.0.1"
 python-docx = "^1.1.2"
-selenium = "^4.25.0"
-youtube-transcript-api = "^0.6.2"
 
 [tool.poetry.dependencies.uvicorn]
 extras = ["standard"]

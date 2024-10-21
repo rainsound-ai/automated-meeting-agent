@@ -3,14 +3,11 @@ from fastapi import APIRouter, HTTPException, UploadFile
 import traceback
 from io import BytesIO
 from contextlib import asynccontextmanager
-from app.services.transcribe import transcribe
-from app.services.summarize import decomposed_summarize_transcription_and_upload_to_notion  
 import os
-from typing import List, Dict
+from typing import Dict
 from tenacity import retry, stop_after_attempt, wait_exponential, RetryError
-# from pytubefix import YouTube
-# from pytubefix.cli import on_progress
-from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptAvailable, VideoUnavailable
+from pytubefix import YouTube
+from pytubefix.cli import on_progress
 import re
 import aiofiles
 import requests
@@ -19,6 +16,9 @@ import PyPDF2
 import io
 import docx
 import re
+
+from app.services.transcribe import transcribe
+from app.services.summarize import decomposed_summarize_transcription_and_upload_to_notion  
 from app.services.notion import (
     set_summarized_checkbox_on_notion_page_to_true,
     upload_transcript_to_notion,
@@ -50,47 +50,47 @@ def contains_the_string_youtube(link):
     link_lower = link.lower()
     return "youtube" in link_lower or "youtu.be" in link_lower
 
-def get_video_id(url):
-    pattern = r'(?:v=|\/)([0-9A-Za-z_-]{11}).*'
-    match = re.search(pattern, url)
-    if match:
-        return match.group(1)
-    return None
-
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def process_link(meeting):
     async with meeting_processing_context(meeting):
         try: 
             page_id: str = meeting['id']
             link_from_notion = meeting['properties']['Link']['title'][0]['plain_text']
+            # Handle youtube videos
             if contains_the_string_youtube(link_from_notion):
                 logger.info("💡 About to download youtube video")
-                video_id = get_video_id(link_from_notion)
-                captions_available = get_captions(video_id)
-                # video_path, captions_available = await download_youtube_video(link_from_notion, "./downloads")
+                video_path, captions_available = await download_youtube_video(link_from_notion)
+                print("🚨video path", video_path)
+
                 if captions_available:
-                    logger.info("💡 Captions available")
+                    # Handle when captions were available
                     with open("captions.txt") as f:
                         transcription = f.read()
-                # else:
-                #     transcription = await transcribe(video_path)
+                    try:
+                        logger.info("💡 Removing captions file")   
+                        os.remove("captions.txt")
+                    except Exception as e:
+                        logger.error(f"🚨 Error removing captions file: {str(e)}")
+                        traceback.print_exc()
+                else:
+                    # Handle when we had to transcribe the youtube audio to get a transcript
                 
-                #     async with aiofiles.open(video_path, 'rb') as f:
-                #         file_content = await f.read()
+                    async with aiofiles.open(video_path, 'rb') as f:
+                        file_content = await f.read()
                     
-                #     temp_upload_file = UploadFile(
-                #         filename=os.path.basename(video_path),
-                #         file=BytesIO(file_content),
-                #     )
-                #     transcription = await transcribe(temp_upload_file)
+                    temp_upload_file = UploadFile(
+                        filename=os.path.basename(video_path),
+                        file=BytesIO(file_content),
+                    )
+                    transcription = await transcribe(temp_upload_file)
 
-                try:
-                    logger.info("💡 Removing temp files")   
-                    os.remove("captions.txt")
-                    # os.remove(video_path)
-                except Exception as e:
-                    logger.error(f"🚨 Error removing temp files: {str(e)}")
-                    traceback.print_exc()
+                    try:
+                        logger.info("💡 Removing youtube audio file")   
+                        os.remove(video_path)
+                    except Exception as e:
+                        logger.error(f"🚨 Error removing youtube audio file: {str(e)}")
+                        traceback.print_exc()
+            # Handle pdf, docx, or html
             else: 
                 transcription = extract_text_from_link(link_from_notion)
             # # Create toggle blocks once
@@ -176,38 +176,45 @@ async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
         raise HTTPException(status_code=500, detail=f"Error updating Notion with transcript and summary: {str(e)}")
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
-def get_captions(video_id):
+async def download_youtube_video(youtube_url: str) -> str:
+    logger.info(f"💡 Downloading video from YouTube link: {youtube_url}")
     captions_available = False
-    transcript = None
-
+    video_path = None
+    
     try:
-        transcript = YouTubeTranscriptApi.get_transcript(video_id)
-        captions_available = True
-
-        # save the captions to a file called captions.txt
-        with open("captions.txt", "w") as f:
-            for line in transcript:
-                f.write(f"{line['text']}\n")
-
-        with open("captions.txt") as f:
+        yt = YouTube(youtube_url, on_progress_callback = on_progress)
+        print("🚨video title", yt.title)
+        
+        youtube_captions = yt.captions['en']
+        if youtube_captions:
+            # Remove caption numbers and timestamps
+            youtube_captions.save_captions("captions.txt")
+            
+            # get the file called captions.txt at the root of the directory
+            with open("captions.txt") as f:
                 youtube_captions_txt = f.read()
 
-        cleaned_captions = re.sub(r'^\d+\n\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}\n', '', youtube_captions_txt, flags=re.MULTILINE)
+            cleaned_captions = re.sub(r'^\d+\n\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}\n', '', youtube_captions_txt, flags=re.MULTILINE)
 
-        # Remove any remaining empty lines
-        cleaned_captions = re.sub(r'\n\s*\n', '\n', cleaned_captions)
+            # Remove any remaining empty lines
+            cleaned_captions = re.sub(r'\n\s*\n', '\n', cleaned_captions)
 
-        # Remove leading/trailing whitespace from each line
-        cleaned_captions = '\n'.join(line.strip() for line in cleaned_captions.split('\n') if line.strip())
+            # Remove leading/trailing whitespace from each line
+            cleaned_captions = '\n'.join(line.strip() for line in cleaned_captions.split('\n') if line.strip())
 
-        # save cleaned captions to a file called captions.txt
-        with open("captions.txt", "w") as f:
-            f.write(cleaned_captions)
-    except NoTranscriptAvailable:
-        print(f"No transcript available for video: {video_id}")
-    except VideoUnavailable:
-        print(f"Video {video_id} is unavailable")
+            # save cleaned captions to a file called captions.txt
+            with open("captions.txt", "w") as f:
+                f.write(cleaned_captions)
+
+            captions_available = True
+        else:
+            logger.info("🚨 No captions available for this video.")
+            youtube_audio = yt.streams.get_audio_only()
+            video_path = youtube_audio.download(mp3=True)
+            captions_available = False
+        return video_path, captions_available
+ 
+    
     except Exception as e:
-        print(f"An error occurred: {str(e)}")
-
-    return captions_available
+        logger.error(f"🚨 Error downloading YouTube video: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error downloading YouTube video: {str(e)}")
