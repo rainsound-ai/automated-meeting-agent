@@ -6,16 +6,10 @@ from contextlib import asynccontextmanager
 import os
 from typing import Dict
 from tenacity import retry, stop_after_attempt, wait_exponential, RetryError
-from pytubefix import YouTube
-from pytubefix.cli import on_progress
 import re
 import aiofiles
 import requests
 from bs4 import BeautifulSoup
-import PyPDF2
-import io
-import docx
-import re
 
 from app.services.transcribe import transcribe
 from app.services.summarize import decomposed_summarize_transcription_and_upload_to_notion  
@@ -27,6 +21,15 @@ from app.services.notion import (
     rollback_blocks,
     create_toggle_block
 )
+
+from app.helpers.youtube_helpers import (
+    contains_the_string_youtube,
+    title_is_not_a_url
+)
+
+from app.helpers.text_extraction_helpers import extract_text_from_link
+
+from app.services.youtube import get_youtube_captions_or_audio
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 api_router = APIRouter()
@@ -46,27 +49,6 @@ async def meeting_processing_context(meeting):
     else:
         await set_summarized_checkbox_on_notion_page_to_true(meeting['id'])
 
-def contains_the_string_youtube(link):
-    link_lower = link.lower()
-    return "youtube" in link_lower or "youtu.be" in link_lower
-
-def title_is_not_a_url(link):
-    # Regular expression pattern for URL validation
-    pattern = re.compile(
-        r'^'
-        r'(?:(?:http|https)://)?'  # optional scheme
-        r'(?:'
-        r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain
-        r'localhost|'  # localhost
-        r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'  # IP
-        r')'
-        r'(?::\d+)?'  # optional port
-        r'(?:/[^/#?]+)*/?'  # path
-        r'(?:\?[^#]*)?'  # query string
-        r'(?:#.*)?$',  # fragment
-        re.IGNORECASE)
-    
-    return not bool(pattern.match(link))
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def process_link(meeting):
@@ -79,8 +61,7 @@ async def process_link(meeting):
             if contains_the_string_youtube(link_from_notion):
             # Handle youtube videos
                 logger.info("💡 About to download youtube video")
-                video_path, captions_available = await download_youtube_video(link_from_notion)
-                # print("🚨video path", video_path)
+                downloaded_youtube_audio_path, captions_available = await get_youtube_captions_or_audio(link_from_notion)
 
                 if captions_available:
                     # Handle when captions were available
@@ -94,18 +75,18 @@ async def process_link(meeting):
                         traceback.print_exc()
                 else:
                 # Handle when we had to transcribe the youtube audio to get a transcript
-                    async with aiofiles.open(video_path, 'rb') as f:
+                    async with aiofiles.open(downloaded_youtube_audio_path, 'rb') as f:
                         file_content = await f.read()
                     
                     temp_upload_file = UploadFile(
-                        filename=os.path.basename(video_path),
+                        filename=os.path.basename(downloaded_youtube_audio_path),
                         file=BytesIO(file_content),
                     )
                     transcription = await transcribe(temp_upload_file)
 
                     try:
                         logger.info("💡 Removing youtube audio file")   
-                        os.remove(video_path)
+                        os.remove(downloaded_youtube_audio_path)
                     except Exception as e:
                         logger.error(f"🚨 Error removing youtube audio file: {str(e)}")
                         traceback.print_exc()
@@ -148,53 +129,6 @@ async def process_link(meeting):
             logger.error(f"Full traceback: {traceback.format_exc()}")
             raise
 
-def extract_text_from_link(url):
-    try:
-        response = requests.get(url)
-        content_type = response.headers.get('Content-Type', '').lower()
-
-        if 'application/pdf' in content_type:
-            return extract_text_from_pdf(response.content)
-        elif 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' in content_type:
-            return extract_text_from_docx(response.content)
-        elif 'text/html' in content_type:
-            return extract_text_from_html(response.text)
-        else:
-            return extract_text_from_html(response.text)  # Default to HTML parsing
-    except Exception as e:
-        logger.error(f"🚨 Error extracting text from {url}: {str(e)}")
-        return ""
-
-def extract_text_from_pdf(content):
-    pdf_file = io.BytesIO(content)
-    pdf_reader = PyPDF2.PdfReader(pdf_file)
-    text = ""
-    for page in pdf_reader.pages:
-        text += page.extract_text() + "\n"
-    return clean_text(text)
-
-def extract_text_from_docx(content):
-    docx_file = io.BytesIO(content)
-    doc = docx.Document(docx_file)
-    text = ""
-    for para in doc.paragraphs:
-        text += para.text + "\n"
-    return clean_text(text)
-
-def extract_text_from_html(html_content):
-    soup = BeautifulSoup(html_content, 'html.parser')
-    for script in soup(["script", "style"]):
-        script.decompose()
-    text = soup.get_text()
-    return clean_text(text)
-
-def clean_text(text):
-    # Remove extra whitespace
-    text = re.sub(r'\s+', ' ', text)
-    # Remove special characters and digits
-    text = re.sub(r'[^a-zA-Z\s]', '', text)
-    return text.strip()
-
 @api_router.post("/update_notion_with_transcript_and_summary")
 async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
     logger.info("Received request for updating Notion with transcript and summary.")
@@ -217,54 +151,3 @@ async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
         logger.error(f"🚨 Error in update_notion_with_transcript_and_summary: {str(e)}")
         logger.error(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Error updating Notion with transcript and summary: {str(e)}")
-
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
-async def download_youtube_video(youtube_url: str) -> str:
-    logger.info(f"💡 Downloading video from YouTube link: {youtube_url}")
-    captions_available = False
-    video_path = None
-    
-    try:
-        yt = YouTube(youtube_url, on_progress_callback = on_progress)
-        print("🚨video title", yt.title)
-        
-        for caption_key in ['a.en', 'en']:
-            try:
-                youtube_captions = yt.captions[caption_key]
-                if youtube_captions:
-                    captions_available = True
-                    break
-            except (KeyError, AttributeError):
-                continue
-        if youtube_captions:
-            # Remove caption numbers and timestamps
-            youtube_captions.save_captions("captions.txt")
-            
-            # get the file called captions.txt at the root of the directory
-            with open("captions.txt") as f:
-                youtube_captions_txt = f.read()
-
-            cleaned_captions = re.sub(r'^\d+\n\d{2}:\d{2}:\d{2},\d{3} --> \d{2}:\d{2}:\d{2},\d{3}\n', '', youtube_captions_txt, flags=re.MULTILINE)
-
-            # Remove any remaining empty lines
-            cleaned_captions = re.sub(r'\n\s*\n', '\n', cleaned_captions)
-
-            # Remove leading/trailing whitespace from each line
-            cleaned_captions = '\n'.join(line.strip() for line in cleaned_captions.split('\n') if line.strip())
-
-            # save cleaned captions to a file called captions.txt
-            with open("captions.txt", "w") as f:
-                f.write(cleaned_captions)
-
-            captions_available = True
-        else:
-            logger.info("🚨 No captions available for this video.")
-            youtube_audio = yt.streams.get_audio_only()
-            video_path = youtube_audio.download(mp3=True)
-            captions_available = False
-        return video_path, captions_available
- 
-    
-    except Exception as e:
-        logger.error(f"🚨 Error downloading YouTube video: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error downloading YouTube video: {str(e)}")
