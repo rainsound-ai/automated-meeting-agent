@@ -1,5 +1,6 @@
 
 import re
+
 def contains_the_string_youtube(link):
     link_lower = link.lower()
     return "youtube" in link_lower or "youtu.be" in link_lower

@@ -12,7 +12,7 @@ from app.models import (
     NotionBlock, 
     ToggleBlock
 )
-from tenacity import retry, stop_after_attempt, wait_exponential
+# from tenacity import retry, stop_after_attempt, wait_exponential
 
 # Configuration Constants
 NOTION_VERSION = "2022-06-28"
@@ -45,7 +45,7 @@ def get_headers() -> Dict[str, str]:
         **HEADERS
     }
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+# @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def append_blocks_to_notion(toggle_id: str, blocks: List[NotionBlock]) -> Dict:
     blocks_url = f"{NOTION_API_BASE_URL}/blocks/{toggle_id}/children"
     headers = get_headers()
@@ -59,7 +59,7 @@ async def rollback_blocks():
         await delete_block(block_id)
     block_tracker.clear()
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+# @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def delete_block(block_id: str):
     url = f"{NOTION_API_BASE_URL}/blocks/{block_id}"
     headers = get_headers()
@@ -81,7 +81,7 @@ async def safe_append_blocks_to_notion(toggle_id: str, blocks: List[NotionBlock]
 async def append_summary_to_notion(toggle_id: str, section_content: str) -> None:
     blocks: List[NotionBlock] = convert_content_to_blocks(section_content)
     try:
-        response, block_ids = await safe_append_blocks_to_notion(toggle_id, blocks)
+        await safe_append_blocks_to_notion(toggle_id, blocks)
     except Exception as e:
         logger.error(f"🚨 Failed to append summary to Notion: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to append summary to Notion")
@@ -104,7 +104,7 @@ async def upload_transcript_to_notion(toggle_id: str, transcription: str) -> Non
         logger.error(f"🚨 Error uploading transcript to Notion: {str(e)}")
         raise HTTPException(status_code=500, detail="Failed to upload transcript to Notion")
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+# @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def set_summarized_checkbox_on_notion_page_to_true(page_id: str) -> None:
     update_url = f"{NOTION_API_BASE_URL}/pages/{page_id}"
     headers = get_headers()
@@ -142,7 +142,7 @@ async def create_toggle_block(page_id: str, title: str, color: str = "blue") -> 
     block_tracker.add_block(toggle_id)  # Track the toggle block itself
     return toggle_id
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+# @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def get_unsummarized_links_from_notion() -> List[Dict]:
     try:
         headers = get_headers()

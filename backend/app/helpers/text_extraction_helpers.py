@@ -4,11 +4,6 @@ import re
 import PyPDF2
 import docx
 from bs4 import BeautifulSoup
-import requests
-import logging
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 def extract_text_from_pdf(content):
     pdf_file = io.BytesIO(content)
@@ -39,20 +34,3 @@ def clean_text(text):
     # Remove special characters and digits
     text = re.sub(r'[^a-zA-Z\s]', '', text)
     return text.strip()
-
-def extract_text_from_link(url):
-    try:
-        response = requests.get(url)
-        content_type = response.headers.get('Content-Type', '').lower()
-
-        if 'application/pdf' in content_type:
-            return extract_text_from_pdf(response.content)
-        elif 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' in content_type:
-            return extract_text_from_docx(response.content)
-        elif 'text/html' in content_type:
-            return extract_text_from_html(response.text)
-        else:
-            return extract_text_from_html(response.text)  # Default to HTML parsing
-    except Exception as e:
-        logger.error(f"🚨 Error extracting text from {url}: {str(e)}")
-        return ""

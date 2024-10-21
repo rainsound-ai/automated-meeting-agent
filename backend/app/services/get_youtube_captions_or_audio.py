@@ -1,14 +1,15 @@
-from fastapi import HTTPException
-import logging
+
 import re
 from pytubefix import YouTube
 from pytubefix.cli import on_progress
-from tenacity import retry, stop_after_attempt, wait_exponential
+# from tenacity import retry, stop_after_attempt, wait_exponential
+import logging
+from fastapi import HTTPException
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+# @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def get_youtube_captions_or_audio(youtube_url: str) -> str:
     logger.info(f"💡 Downloading video from YouTube link: {youtube_url}")
     captions_available = False
