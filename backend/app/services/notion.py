@@ -169,7 +169,7 @@ async def update_notion_title_with_llm_conversation_file_name(page_id, llm_conve
     headers = get_headers()
     data = {
         "properties": {
-            "Link": {
+            "Title": {
                 "title": [
                     {
                         "text": {

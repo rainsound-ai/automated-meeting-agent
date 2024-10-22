@@ -12,10 +12,8 @@ from app.services.html_docx_or_pdf_handler import handle_html_docx_or_pdf
 from app.services.youtube_handler import (
     handle_youtube_videos
 )
-from app.helpers.youtube_helpers import (
-    contains_the_string_youtube,
-    title_is_not_a_url
-)
+from app.helpers.youtube_helpers import contains_the_string_youtube
+from app.helpers.llm_conversation_helper import link_is_none_and_therefore_this_must_be_an_llm_conversation_html_file
 from app.services.notion import (
     set_summarized_checkbox_on_notion_page_to_true,
     upload_transcript_to_notion,
@@ -49,14 +47,14 @@ async def process_link(item_to_process):
         try: 
             page_id: str = item_to_process['id']
             is_llm_conversation = False
-            link_from_notion = item_to_process['properties']['Link']['title'][0]['plain_text']
+            link_from_notion = item_to_process['properties']['Link']['url'] or None
             llm_conversation_file_name = None
             is_llm_conversation = False
             
 
             if contains_the_string_youtube(link_from_notion):
                 transcription = await handle_youtube_videos(link_from_notion)
-            elif title_is_not_a_url(link_from_notion):
+            elif link_is_none_and_therefore_this_must_be_an_llm_conversation_html_file(link_from_notion):
             # 🤮 using title_is_not_a_url to identify if we're looking at an LLM summary smells 
             # but we'll use it for now since we're not sure what all kinds of things we want to handle
                transcription, llm_conversation_file_name = await handle_llm_conversation(item_to_process)

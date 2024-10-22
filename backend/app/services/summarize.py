@@ -83,4 +83,9 @@ async def decomposed_summarize_transcription_and_upload_to_notion(page_id, trans
             f"LLM Conversation: {formatted_name}"
         )
 
+    else:
+        # get the first line from the best summary
+        title = best_summary.split("\n")[0].replace("# ", "")
+        await update_notion_title_with_llm_conversation_file_name(page_id, title)
+
     return best_summary
