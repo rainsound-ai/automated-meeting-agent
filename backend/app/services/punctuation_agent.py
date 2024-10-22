@@ -1,6 +1,9 @@
 import logging
 from deepmultilingualpunctuation import PunctuationModel
 import nltk
+
+nltk.download('punkt_tab')
+
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
