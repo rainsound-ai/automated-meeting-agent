@@ -5,8 +5,7 @@ import nltk
 from pytubefix import YouTube
 from pytubefix.cli import on_progress
 from fastapi import HTTPException
-from deepmultilingualpunctuation import PunctuationModel
-
+from app.services.punctuation_agent import punctuate_transcript
 # Initialize logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -41,7 +40,6 @@ async def get_youtube_captions_or_audio(youtube_url: str) -> str:
             except (KeyError, AttributeError):
                 continue
         
-        captions_available = False
         if captions_available:
             # Save captions to a temporary file
             temp_caption_file = "captions.srt"
@@ -61,16 +59,7 @@ async def get_youtube_captions_or_audio(youtube_url: str) -> str:
             cleaned_captions = re.sub(r'\n\s*\n', '\n', cleaned_captions)  # Remove empty lines
             cleaned_captions = '\n'.join(line.strip() for line in cleaned_captions.split('\n') if line.strip())
             
-            # Initialize the punctuation model
-            model = PunctuationModel()
-            logger.info("🛠 Restoring punctuation...")
-            punctuated_transcript = model.restore_punctuation(cleaned_captions)
-            
-            # Optionally, capitalize sentences
-            sentences = nltk.sent_tokenize(punctuated_transcript)
-            capitalized_sentences = [sentence.capitalize() for sentence in sentences]
-            punctuated_transcript = ' '.join(capitalized_sentences)
-            
+            punctuated_transcript = punctuate_transcript(cleaned_captions) 
             # Save the punctuated transcript to a file
             output_path = "captions_punctuated.txt"
             with open(output_path, 'w', encoding='utf-8') as f:
