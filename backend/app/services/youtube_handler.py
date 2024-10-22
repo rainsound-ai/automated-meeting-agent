@@ -23,11 +23,11 @@ async def handle_youtube_videos(link_from_notion):
 
     if captions_available:
         # Handle when captions were available
-        with open("captions.txt") as f:
+        with open("captions_punctuated.txt") as f:
             transcription = f.read()
         try:
             logger.info("💡 Removing captions file")   
-            os.remove("captions.txt")
+            os.remove("captions_punctuated.txt")
         except Exception as e:
             logger.error(f"🚨 Error removing captions file: {str(e)}")
             traceback.print_exc()
