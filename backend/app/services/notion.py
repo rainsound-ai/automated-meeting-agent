@@ -1,5 +1,6 @@
 from typing import List, Dict, Tuple
 import requests
+import json
 from fastapi import HTTPException
 from app.lib.Env import notion_api_key, rainsound_link_summary_database_id
 import logging
@@ -146,21 +147,65 @@ async def create_toggle_block(page_id: str, title: str, color: str = "blue") -> 
 async def get_unsummarized_links_from_notion() -> List[Dict]:
     try:
         headers = get_headers()
+        
+        # Corrected filter syntax according to Notion API
         filter_data = {
             "filter": {
-                "property": "Summarized",
-                "checkbox": {
-                    "equals": False
-                }
+                "and": [
+                    {
+                        "property": "Summarized",
+                        "checkbox": {
+                            "equals": False
+                        }
+                    },
+                    {
+                        "or": [
+                            {
+                                "property": "Link",
+                                "url": {
+                                    "is_not_empty": True  # Changed from is_empty: False
+                                }
+                            },
+                            {
+                                "property": "LLM Conversation",
+                                "files": {
+                                    "is_not_empty": True  # Changed from is_empty: False
+                                }
+                            }
+                        ]
+                    }
+                ]
             }
         }
+
+        # Add debugging to see what we're sending
+        logger.debug(f"Sending filter to Notion: {json.dumps(filter_data, indent=2)}")
+
         rainsound_link_summary_database_url = f"https://api.notion.com/v1/databases/{rainsound_link_summary_database_id}/query"
-        response = requests.post(rainsound_link_summary_database_url, headers=headers, json=filter_data)
+        
+        response = requests.post(
+            rainsound_link_summary_database_url, 
+            headers=headers, 
+            json=filter_data
+        )
+        
+        # Add debugging for the response
+        if response.status_code != 200:
+            logger.error(f"Notion API Error: {response.status_code}")
+            logger.error(f"Response body: {response.text}")
+            
         response.raise_for_status()
         notion_data = response.json()
+        
+        logger.debug(f"Retrieved {len(notion_data.get('results', []))} items from Notion")
+        
         return notion_data.get('results', [])
+        
     except requests.exceptions.RequestException as e:
         logger.error(f"🚨 Failed to fetch links from Notion: {str(e)}")
+        # Add more detailed error information
+        if hasattr(e, 'response') and e.response is not None:
+            logger.error(f"Response body: {e.response.text}")
         raise HTTPException(status_code=500, detail="Failed to fetch links from Notion")
 
 async def update_notion_title_with_llm_conversation_file_name(page_id, llm_conversation_file_name):
