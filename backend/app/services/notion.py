@@ -208,7 +208,7 @@ async def get_unsummarized_links_from_notion() -> List[Dict]:
             logger.error(f"Response body: {e.response.text}")
         raise HTTPException(status_code=500, detail="Failed to fetch links from Notion")
 
-async def update_notion_title_with_llm_conversation_file_name(page_id, llm_conversation_file_name):
+async def update_notion_title_for_summarized_item(page_id, llm_conversation_file_name):
     # update the title of the Notion page with the LLM conversation file name
     update_url = f"{NOTION_API_BASE_URL}/pages/{page_id}"
     headers = get_headers()

@@ -4,7 +4,7 @@ import os
 import logging
 from app.services.notion import (
     append_summary_to_notion,
-    update_notion_title_with_llm_conversation_file_name
+    update_notion_title_for_summarized_item
 )
 from app.models import Transcription
 from app.services.eval_agent import evaluate_section
@@ -78,7 +78,7 @@ async def decomposed_summarize_transcription_and_upload_to_notion(page_id, trans
 
     if llm_conversation_file_name:
         formatted_name = llm_conversation_file_name.replace(".html", " ")
-        await update_notion_title_with_llm_conversation_file_name(
+        await update_notion_title_for_summarized_item(
             page_id, 
             f"LLM Conversation: {formatted_name}"
         )
@@ -86,6 +86,6 @@ async def decomposed_summarize_transcription_and_upload_to_notion(page_id, trans
     else:
         # get the first line from the best summary
         title = best_summary.split("\n")[0].replace("# ", "")
-        await update_notion_title_with_llm_conversation_file_name(page_id, title)
+        await update_notion_title_for_summarized_item(page_id, title)
 
     return best_summary

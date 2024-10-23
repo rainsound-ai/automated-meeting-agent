@@ -127,6 +127,46 @@ def convert_line_to_block(line):
             }
         }
     
+    elif line.startswith("## "):
+        title = line[3:].strip()
+        return {
+            "object": "block",
+            "type": "heading_2",
+            "heading_2": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": title
+                        },
+                        "annotations": {
+                            "bold": True
+                        }
+                    }
+                ]
+            }
+        }
+
+    elif line.startswith("### "):
+        title = line[4:].strip()
+        return {
+            "object": "block",
+            "type": "heading_3",
+            "heading_3": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": title
+                        },
+                        "annotations": {
+                            "bold": True
+                        }
+                    }
+                ]
+            }
+        }
+    
     # Subsection Titles
     elif line.startswith("**") and line.endswith("**"):
         sub_title = line[2:-2].strip()
@@ -145,6 +185,17 @@ def convert_line_to_block(line):
                         }
                     }
                 ]
+            }
+        }
+
+    # Bullet Points
+    elif line.startswith("- "):
+        bullet_text = line[2:].strip()
+        return {
+            "object": "block",
+            "type": "bulleted_list_item",
+            "bulleted_list_item": {
+                "rich_text": parse_rich_text(bullet_text)
             }
         }
     
