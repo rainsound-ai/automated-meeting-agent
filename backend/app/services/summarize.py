@@ -11,7 +11,7 @@ from app.services.notion import (
 )
 from app.models import Transcription
 from app.services.eval_agent import evaluate_section
-from tenacity import retry, stop_after_attempt, wait_exponential
+# from tenacity import retry, stop_after_attempt, wait_exponential
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 client = OpenAI(api_key=open_ai_api_key)
@@ -40,7 +40,7 @@ async def summarize_transcription(transcription: str, prompt: str) -> str:
         logger.error(f"🚨 Unexpected error during summarization: {str(e)}")
         raise HTTPException(status_code=500, detail="Unexpected error during summarization")
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+# @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def upload_to_notion(append_function, toggle_id, section_content):
     await append_function(toggle_id=toggle_id, section_content=section_content)
 

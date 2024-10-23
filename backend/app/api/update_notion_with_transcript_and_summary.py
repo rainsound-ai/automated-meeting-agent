@@ -21,7 +21,7 @@ from app.models import (
     Transcription,
     JumpshareLink
 )
-from tenacity import retry, stop_after_attempt, wait_exponential, RetryError
+# from tenacity import retry, stop_after_attempt, wait_exponential, RetryError
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
 api_router = APIRouter()
@@ -41,7 +41,7 @@ async def meeting_processing_context(meeting: Meeting):
     else:
         await set_summarized_checkbox_on_notion_page_to_true(meeting['id'])
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+# @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def process_meeting(meeting: Meeting):
     async with meeting_processing_context(meeting):
         page_id: str = meeting['id']
@@ -67,8 +67,8 @@ async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
             try:
                 await process_meeting(meeting)
                 logger.info(f"✅ Successfully processed meeting {meeting['id']}")
-            except RetryError as e:
-                logger.error(f"🚨 Failed to process meeting {meeting['id']} after all retry attempts: {str(e)}")
+            # except RetryError as e:
+            #     logger.error(f"🚨 Failed to process meeting {meeting['id']} after all retry attempts: {str(e)}")
             except Exception as e:
                 logger.error(f"🚨 Unexpected error processing meeting {meeting['id']}: {str(e)}")
 
@@ -79,7 +79,7 @@ async def update_notion_with_transcript_and_summary() -> Dict[str, str]:
         logger.error(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Error updating Notion with transcript and summary: {str(e)}")
     
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
+# @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def get_video_from_jumpshare_link(jumpshare_link: JumpshareLink) -> UploadFile:
     logger.info(f"💡 Getting file from Jumpshare link: {jumpshare_link.url}")
     try:
