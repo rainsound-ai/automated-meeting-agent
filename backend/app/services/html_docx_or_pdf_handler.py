@@ -26,7 +26,7 @@ async def handle_html_docx_or_pdf(url):
         else:
             transcript = extract_text_from_html(response.text)  # Default to HTML parsing
         punctuated_transcript = punctuate_transcript(transcript)
-        return punctuated_transcript
+        return punctuated_transcript, "link_database"
     except Exception as e:
         logger.error(f"🚨 Error extracting text from {url}: {str(e)}")
         return ""

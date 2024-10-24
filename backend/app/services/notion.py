@@ -2,7 +2,7 @@ from typing import List, Dict, Tuple
 import requests
 import json
 from fastapi import HTTPException
-from app.lib.Env import notion_api_key, rainsound_link_summary_database_id
+from app.lib.Env import notion_api_key, rainsound_link_summary_database_id, rainsound_meeting_summary_database_id
 import logging
 from app.services.chunk_text_with_2000_char_limit_for_notion import chunk_text_with_2000_char_limit_for_notion
 from app.services.parse_markdown_to_notion_blocks import (
@@ -41,6 +41,7 @@ class NotionBlockTracker:
 block_tracker = NotionBlockTracker()
 
 def get_headers() -> Dict[str, str]:
+
     return {
         "Authorization": f"Bearer {notion_api_key}",
         **HEADERS
@@ -197,7 +198,7 @@ async def get_unsummarized_links_from_notion() -> List[Dict]:
         response.raise_for_status()
         notion_data = response.json()
         
-        logger.debug(f"Retrieved {len(notion_data.get('results', []))} items from Notion")
+        logger.debug(f"Retrieved {len(notion_data.get('results', []))} links from Notion")
         
         return notion_data.get('results', [])
         
@@ -207,6 +208,26 @@ async def get_unsummarized_links_from_notion() -> List[Dict]:
         if hasattr(e, 'response') and e.response is not None:
             logger.error(f"Response body: {e.response.text}")
         raise HTTPException(status_code=500, detail="Failed to fetch links from Notion")
+
+async def get_unsummarized_meetings_from_notion() -> List[Dict]:
+    try:
+        headers = get_headers()
+        filter_data = {
+            "filter": {
+                "and": [
+                    {"property": "Jumpshare Link", "url": {"is_not_empty": True}},
+                    {"property": "Summarized", "checkbox": {"equals": False}}
+                ]
+            }
+        }
+        rainsound_meetings_database_url = f"https://api.notion.com/v1/databases/{rainsound_meeting_summary_database_id}/query"
+        response = requests.post(rainsound_meetings_database_url, headers=headers, json=filter_data)
+        response.raise_for_status()
+        notion_data = response.json()
+        return notion_data.get('results', [])
+    except requests.exceptions.RequestException as e:
+        logger.error(f"🚨 Failed to fetch meetings from Notion: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to fetch meetings from Notion")
 
 async def update_notion_title_for_summarized_item(page_id, llm_conversation_file_name):
     # update the title of the Notion page with the LLM conversation file name

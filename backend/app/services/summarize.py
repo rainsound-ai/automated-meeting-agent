@@ -28,7 +28,7 @@ async def summarize_transcription(transcription: str, prompt: str) -> str:
         logger.error(f"🚨 Unexpected error during summarization: {str(e)}")
         raise HTTPException(status_code=500, detail="Unexpected error during summarization")
 
-async def decomposed_summarize_transcription_and_upload_to_notion(page_id, transcription: Transcription, toggle_id: str, is_llm_conversation=False, llm_conversation_file_name=None) -> None:
+async def decomposed_summarize_transcription_and_upload_to_notion(page_id, transcription: Transcription, toggle_id: str, link_or_meeting_database, is_llm_conversation=False, llm_conversation_file_name=None) -> None:
     max_attempts = 5
     quality_threshold = 0.8
     best_summary = None
@@ -84,8 +84,9 @@ async def decomposed_summarize_transcription_and_upload_to_notion(page_id, trans
         )
 
     else:
-        # get the first line from the best summary
-        title = best_summary.split("\n")[0].replace("# ", "")
-        await update_notion_title_for_summarized_item(page_id, title)
+        if link_or_meeting_database=="link_database":
+            # get the first line from the best summary
+            title = best_summary.split("\n")[0].replace("# ", "")
+            await update_notion_title_for_summarized_item(page_id, title)
 
     return best_summary

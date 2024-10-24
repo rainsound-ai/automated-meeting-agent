@@ -6,9 +6,9 @@ Summarize the provided ChatGPT conversation by extracting and categorizing infor
 **Inputs:**
 - **Conversation Transcript:**
   BEGINNING OF THE CONVERSATION WITH THE LLM
-  ```
+  
   {conversation_transcript}
-  ```
+  
   END OF THE CONVERSATION WITH THE LLM
 
 **Instructions:**
@@ -57,7 +57,6 @@ Summarize the provided ChatGPT conversation by extracting and categorizing infor
    - Cease generating content once all criteria are met and all key points have been addressed without introducing additional information or repetition.
 
 **Example Output:**
-```
 # Coding Assistance
   ## Debugging Python Script
     - Assisted in identifying and fixing a syntax error in a Python script, enhancing the script's functionality and preventing runtime issues.
@@ -69,7 +68,6 @@ Summarize the provided ChatGPT conversation by extracting and categorizing infor
 # Brainstorming Ideas
   ## Enhancing AI Code Editor Features
     - Suggested incorporating real-time collaboration tools and advanced AI-driven code suggestions to improve the user experience and increase programmer productivity.
-```
 
 ---
     
@@ -84,7 +82,6 @@ ChatGPT: To implement federated learning, you can start by selecting a suitable 
 ```
 
 **Summary Generated:**
-```
 # Learning and Education
   ## Fundamentals of Federated Learning
     - Explained federated learning as a machine learning approach enabling multiple devices to collaboratively train a model without sharing raw data, enhancing privacy and reducing centralized storage needs.
@@ -92,7 +89,6 @@ ChatGPT: To implement federated learning, you can start by selecting a suitable 
 # Coding Assistance
   ## Implementing Federated Learning
     - Provided steps to implement federated learning, including selecting frameworks like TensorFlow Federated or PySyft, designing decentralized models, ensuring secure communication, and aggregating trained models centrally.
-```
 
 ---
     
