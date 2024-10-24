@@ -36,33 +36,172 @@ def get_gold_standard_files() -> Optional[Tuple[str, str]]:
 def build_evaluation_prompt(original_transcript: str, summary_to_evaluate: str, is_llm_conversation=False) -> str:
     if is_llm_conversation:
         return f"""
-        # Guardrails Agent Prompt for Evaluating Summaries Of my Conversations With LLMs
-        Evaluate the following summary of a conevrsatio I had with an LLM:
+        ```markdown
+        BEGINNING OF PROMPT TO EVAL AGENT FOR NEW SUMMARY AGENT
 
-        Original Conversation:
+        # Evaluation Agent Prompt for ChatGPT Conversation Summaries
+
+        **Task:**  
+        Evaluate the following summary of a ChatGPT conversation, ensuring it accurately and effectively summarizes the interaction based on the specified categories relevant to Rainsound.ai.
+
+        **Inputs:**
+        - **Original Conversation Transcript:**
+
+        BEGINNING OF ORIGINAL CONVERSATION WITH LLM 
+        ```
         {original_transcript}
+        ```
+        END OF ORIGINAL CONVERSATION WITH LLM 
 
-        Summary of conversation to evaluate:
+        - **Summary to Evaluate:**
+
+        ```
         {summary_to_evaluate}
+        ```
 
-        Instructions:
-        1. Carefully read both the original conversation and the provided summary.
-        2. Evaluate the summary based on how well it captures the key information from the conversation.
-        3. Use the criteria below to assess the quality and effectiveness of the summary.
+        **Instructions:**
 
-        Criteria:
-        1. Format: Does the summary consist of one key point as a headline/title, followed by 3-5 supporting sub-bullets, and is it suitable for a flashcard (not exceeding 2000 characters in total)?
-        2. Focus: Does it identify and prioritize the most significant or groundbreaking aspects of the conversation?
-        3. Depth: Do the sub-bullets effectively support and expand on the main point?
-        4. Balance: Does it strike a good balance between technical and non-technical information?
-        5. Clarity: Is it written in clear, accessible language for a general audience with some tech background?
-        6. Technical Accuracy: Are key technical terms included when essential, without overuse of jargon?
-        7. Completeness: Does the summary provide a clear understanding of the most crucial aspect of the conversation?
-        8. Blog Inclusion: Is this ready to be included in a weekly blog post? Will a reader be hungry for more after reading this knowledge snack?
+        1. **Understand the Content:**
+        - Carefully read the entire Original Conversation Transcript to fully grasp the key information, topics, and context related to Rainsound.ai's focus areas: Information Seeking, Learning and Education, Coding Assistance, Content Creation, Brainstorming Ideas, and Task Automation.
 
-        Provide your evaluation in the following format from which you shall never deviate - do not add any additional formatting or decorations:
-        Score: [A single number between 0 and 1, where 1 is the best]
+        2. **Evaluate the Summary:**
+        - Assess how well the Summary to Evaluate aligns with the Summarization Agent's instructions based on the criteria outlined below.
+        - Do not use any external references or gold standard summaries for comparison. Base your evaluation solely on the Original Conversation Transcript and the Summary to Evaluate.
+
+        3. **Scoring Criteria:**
+
+        Evaluate the summary based on the following nine criteria. For each criterion, determine whether the summary meets the standard (Yes) or does not (No). Provide specific comments to justify your assessment.
+
+        1. **Format Adherence:**
+            - **Criteria:** 
+                - The summary uses **H1** headings for each relevant category (Information Seeking, Learning and Education, Coding Assistance, Content Creation, Brainstorming Ideas, Task Automation).
+                - The summary uses **H2** headings for each identified instance within a category.
+                - Bullet points contain concise, rich, and active summaries.
+            - **Assessment:** Does the summary strictly follow the specified Markdown formatting? Are the correct headings (H1 for categories, H2 for instances) used appropriately?
+            - **Comment:**
+
+        2. **Correct Categorization:**
+            - **Criteria:** 
+                - Each instance is correctly categorized into one of the six categories: Information Seeking, Learning and Education, Coding Assistance, Content Creation, Brainstorming Ideas, or Task Automation.
+            - **Assessment:** Are all instances accurately categorized based on the definitions provided in the summarization agent's prompt?
+            - **Comment:**
+
+        3. **Active Voice & Rich Detail:**
+            - **Criteria:** 
+                - Summaries are written in active voice.
+                - Each bullet point includes specific details, reasons, or explanations that provide a deeper understanding of the instance.
+            - **Assessment:** Are the summaries in active voice and sufficiently detailed to convey the essence of the conversation?
+            - **Comment:**
+
+        4. **Prioritization:**
+            - **Criteria:** 
+                - Relevant categories and instances are prioritized based on their relevance to Rainsound.ai’s needs.
+                - More critical or frequent interactions are highlighted appropriately within each category.
+            - **Assessment:** Does the summary prioritize the most relevant and important instances effectively?
+            - **Comment:**
+
+        5. **Conciseness:**
+            - **Criteria:** 
+                - Summaries are concise, focusing on essential information without unnecessary verbosity.
+            - **Assessment:** Are the summaries clear and to the point, avoiding extraneous information?
+            - **Comment:**
+
+        6. **Accuracy:**
+            - **Criteria:** 
+                - No information is included that is not present in the conversation.
+                - Summaries accurately reflect the content of the conversation without embellishment.
+            - **Assessment:** Is the summary free from inaccuracies and extraneous information?
+            - **Comment:**
+
+        7. **Completeness:**
+            - **Criteria:** 
+                - All relevant instances within each category present in the conversation are included in the summary.
+                - No critical information from the conversation is omitted.
+            - **Assessment:** Does the summary cover all necessary instances without omitting key information?
+            - **Comment:**
+
+        8. **Clarity:**
+            - **Criteria:** 
+                - The summary is written in clear, precise language suitable for an expert audience.
+                - Technical terms are used appropriately without overuse of jargon.
+            - **Assessment:** Is the summary clear and easy to understand for the intended audience?
+            - **Comment:**
+
+        9. **Educational Value:**
+            - **Criteria:** 
+                - The summary provides insights or knowledge that would be valuable to professionals in the AI and technology industry.
+                - It highlights new developments or important aspects relevant to Rainsound.ai.
+            - **Assessment:** Does the summary add educational value and promote further understanding or learning?
+            - **Comment:**
+
+        4. **Scoring Framework:**
+
+        - **Score Calculation:**
+            - Each criterion is worth up to 1 point.
+            - **Total Possible Score:** 9 points.
+            - **Final Score:** Sum of points awarded divided by 9, resulting in a score between 0 and 1.
+
+        - **Example Of How To Score:**
+            - If a summary meets 7 out of the 9 criteria, the score would be 7/9 ≈ 0.78.
+
+        5. **Provide Your Evaluation in the Following Format:**
+
+        ```
+        Score: [A single number between 0 and 1, rounded to two decimal places]
         Feedback: [Your detailed feedback here, including strengths and areas for improvement]
+        ```
+
+        **Example Evaluation:**
+
+        ```
+        Score: 0.89
+        Feedback: The summary adheres to the specified format with correct use of H1 and H2 headings. All instances are accurately categorized, and the summaries are written in active voice with rich details. Prioritization of relevant categories like Learning and Education is well-executed. The content is concise and free from inaccuracies, covering all critical information from the conversation. However, the Content Creation section could include more specific examples to enhance educational value. Additionally, the Task Automation section is slightly underdeveloped. Overall, the summary is clear, accurate, and highly informative.
+        ```
+
+        ---------------------
+
+        **Usage Example**
+
+        **Original Conversation Transcript:**
+        ```
+        User: Can you help me understand the basics of federated learning?
+        ChatGPT: Certainly! Federated learning is a machine learning approach where multiple devices collaboratively train a model without sharing their raw data. This enhances data privacy and reduces the need for centralized data storage. It's particularly useful in scenarios where data is distributed across various locations, such as mobile devices or edge servers.
+        User: How can we implement federated learning in our AI models?
+        ChatGPT: To implement federated learning, you can start by selecting a suitable framework like TensorFlow Federated or PySyft. Next, design your model to allow training on decentralized data sources. Ensure secure communication protocols are in place to protect data during transmission. Finally, aggregate the trained models centrally to update the global model without ever accessing the raw data.
+        ```
+
+        **Summary to Evaluate:**
+        ```
+        # Learning and Education
+        ## Fundamentals of Federated Learning
+            - Explained federated learning as a machine learning approach enabling multiple devices to collaboratively train a model without sharing raw data, enhancing privacy and reducing centralized storage needs.
+
+        # Coding Assistance
+        ## Implementing Federated Learning
+            - Provided steps to implement federated learning, including selecting frameworks like TensorFlow Federated or PySyft, designing decentralized models, ensuring secure communication, and aggregating trained models centrally.
+        ```
+
+        **Evaluation Output:**
+
+        ```
+        Score: 0.89
+        Feedback: The summary adheres to the specified format with correct use of H1 and H2 headings. All instances are accurately categorized under Learning and Education and Coding Assistance. The summaries are written in active voice with rich details, effectively conveying the essence of federated learning and its implementation steps. The content is concise and free from inaccuracies, covering all critical information from the conversation. However, the summary could benefit from additional categories if applicable, and the prioritization of key points within each category could be more evident. Overall, the summary is clear, accurate, and highly informative.
+        ```
+
+        ---------------------
+
+        **Important Instructions:**
+
+        - **Adherence to Summarization Instructions:** Ensure that the evaluation strictly follows the criteria based on the summarization agent's instructions without introducing external standards or references.
+
+        - **Constructive Feedback:** Provide balanced feedback that highlights both strengths and areas for improvement, offering clear guidance on how the summary can be enhanced.
+
+        - **Objectivity:** Maintain an objective stance, focusing on factual accuracy, completeness, clarity, and adherence to formatting and prioritization guidelines.
+
+        - **Consistency:** Apply the scoring criteria uniformly across all evaluations to maintain consistency in assessments.
+
+        - **No External Comparisons:** Do not reference or compare the summary to any external documents, standards, or previous summaries.
+        ```
         """
             
     else: 

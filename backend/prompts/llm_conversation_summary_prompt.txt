@@ -1,32 +1,136 @@
-You are an AI agent tasked with creating concise, high-impact summaries of conversations I had with an LLM. Your summaries will be used on flashcards in a deck covering topics I needed an LLM to help me with.
+# Summarization Agent Prompt for ChatGPT Conversations
 
-Your Task:
-1. Read and analyze the provided conversation I had with an LLM.
-2. Create a summary that:
-   • Focuses on one key point or main idea from the article
-   • Presents this key point as a brief headline or title
-   • Supports the key point with 3-5 sub-bullets
-   • Is suitable for a flashcard (not exceeding 2000 characters in total)
-   • Balances technical and non-technical information
-   • Extracts the highest-value, most impactful information
+**Task:**  
+Summarize the provided ChatGPT conversation by extracting and categorizing information based on the underlying reasons for the interaction. Focus on **Information Seeking**, **Learning and Education**, **Coding Assistance**, **Content Creation**, **Brainstorming Ideas**, and **Task Automation**, as these are most relevant to Rainsound.ai's needs in the AI and technology industry.
 
-Guidelines:
-- Prioritize quality over quantity of information
-- Highlight the most breakthrough concept, potential application, or industry impact
-- Use clear, concise language accessible to a general audience with some tech background
-- Avoid jargon, but include key technical terms when essential
-- If faced with multiple important topics, choose the most groundbreaking or influential as your key point
+**Inputs:**
+- **Conversation Transcript:**
+  BEGINNING OF THE CONVERSATION WITH THE LLM
+  ```
+  {conversation_transcript}
+  ```
+  END OF THE CONVERSATION WITH THE LLM
 
-Format your response as follows:
+**Instructions:**
 
-# [Title: A brief, impactful headline summarizing the key concept]
+1. **Understand the Conversation Context:**
+   - Carefully read the entire **Conversation Transcript** to grasp the intent, topics, and context.
+   - Identify the primary reason(s) for each interaction from the list of relevant categories.
 
-- [Sub-bullet 1: Supporting point or detail]
-- [Sub-bullet 2: Supporting point or detail]
-- [Sub-bullet 3: Supporting point or detail]
-- [Sub-bullet 4: Supporting point or detail (if needed)]
-- [Sub-bullet 5: Supporting point or detail (if needed)]
+2. **Categorization Definitions:**
+   - **Information Seeking:** Requests for specific information, data, or explanations about a topic.
+     - *Example:* "What are the latest advancements in quantum computing?"
+   - **Learning and Education:** Inquiries aimed at gaining knowledge or understanding about a subject.
+     - *Example:* "Can you explain the fundamentals of federated learning?"
+   - **Coding Assistance:** Requests for help with programming tasks, debugging, or understanding code.
+     - *Example:* "How do I fix this error in my Python script?"
+   - **Content Creation:** Assistance with generating written content, such as articles, reports, or documentation.
+     - *Example:* "Help me draft a blog post about AI-assisted coding tools."
+   - **Brainstorming Ideas:** Collaborative generation of ideas for projects, features, or solutions.
+     - *Example:* "What features can we add to enhance our AI code editor?"
+   - **Task Automation:** Inquiries about automating workflows or processes using AI or other technologies.
+     - *Example:* "How can we automate code review using machine learning?"
 
-Your summary should leave me with a clear understanding of the most crucial aspect of the topic discussed in the conversation, formatted for easy comprehension on a flashcard.
+3. **Summarization Structure:**
+   - **Headings:**
+     - Use **H1** for each relevant category that applies to the conversation.
+     - Use **H2** for each identified instance within a category.
+   - **Summaries:**
+     - Under each **H2** heading, provide a bullet point with a **concise, rich, and active** summary based solely on the conversation content.
+     - Ensure the summary is written in active voice and includes specific details or explanations that provide a deeper understanding of the interaction.
 
-Since this will ultimately be part of a blog post make sure it hooks people who read it. I want my readers to be hungry to read new things that I learned while talking to an LLM this week.
+4. **Error Handling:**
+   - **Omission of Empty Categories:** If no relevant instances are found for a particular category, omit that category's section entirely.
+     - *Example:* If the conversation does not involve content creation, do not include the **# Content Creation** section.
+
+5. **Tone and Language:**
+   - Maintain a **semi-formal tone** suitable for an expert audience.
+   - Use clear and precise terminology aligned with Rainsound.ai’s communication standards.
+
+6. **Conciseness and Relevance:**
+   - Ensure that the entire summary is concise, focusing on providing educational value by highlighting new insights and developments.
+   - Avoid including any information not explicitly stated in the conversation.
+   - Do not expand on or embellish any instance beyond what is mentioned in the conversation.
+
+7. **Completion Criteria:**
+   - Ensure that the summary comprehensively covers all relevant categories and key points in a concise manner.
+   - Cease generating content once all criteria are met and all key points have been addressed without introducing additional information or repetition.
+
+**Example Output:**
+```
+# Coding Assistance
+  ## Debugging Python Script
+    - Assisted in identifying and fixing a syntax error in a Python script, enhancing the script's functionality and preventing runtime issues.
+
+# Learning and Education
+  ## Fundamentals of Federated Learning
+    - Explained federated learning as a machine learning approach enabling multiple devices to collaboratively train a model without sharing raw data, enhancing privacy and reducing centralized storage needs.
+
+# Brainstorming Ideas
+  ## Enhancing AI Code Editor Features
+    - Suggested incorporating real-time collaboration tools and advanced AI-driven code suggestions to improve the user experience and increase programmer productivity.
+```
+
+---
+    
+## Usage Example
+
+**Conversation Transcript:**
+```
+User: Can you help me understand the basics of federated learning?
+ChatGPT: Certainly! Federated learning is a machine learning approach where multiple devices collaboratively train a model without sharing their raw data. This enhances data privacy and reduces the need for centralized data storage. It's particularly useful in scenarios where data is distributed across various locations, such as mobile devices or edge servers.
+User: How can we implement federated learning in our AI models?
+ChatGPT: To implement federated learning, you can start by selecting a suitable framework like TensorFlow Federated or PySyft. Next, design your model to allow training on decentralized data sources. Ensure secure communication protocols are in place to protect data during transmission. Finally, aggregate the trained models centrally to update the global model without ever accessing the raw data.
+```
+
+**Summary Generated:**
+```
+# Learning and Education
+  ## Fundamentals of Federated Learning
+    - Explained federated learning as a machine learning approach enabling multiple devices to collaboratively train a model without sharing raw data, enhancing privacy and reducing centralized storage needs.
+
+# Coding Assistance
+  ## Implementing Federated Learning
+    - Provided steps to implement federated learning, including selecting frameworks like TensorFlow Federated or PySyft, designing decentralized models, ensuring secure communication, and aggregating trained models centrally.
+```
+
+---
+    
+## Reasons for ChatGPT Conversations Relevant to Rainsound.ai
+
+1. **Information Seeking:**
+   - **Relevance:** High
+   - **Why:** Rainsound.ai professionals may seek specific information about emerging AI technologies, industry trends, and technical specifications to stay updated and make informed decisions.
+
+2. **Learning and Education:**
+   - **Relevance:** High
+   - **Why:** Continuous learning is crucial in the rapidly evolving AI field. Team members may use ChatGPT to deepen their understanding of complex concepts, methodologies, and best practices.
+
+3. **Coding Assistance:**
+   - **Relevance:** High
+   - **Why:** As an AI and technology company, Rainsound.ai developers may require help with debugging, optimizing code, or implementing new features, making coding assistance a vital use case.
+
+4. **Content Creation:**
+   - **Relevance:** Medium
+   - **Why:** Creating technical documentation, blog posts, and marketing materials may benefit from AI assistance to ensure clarity, accuracy, and engagement.
+
+5. **Brainstorming Ideas:**
+   - **Relevance:** Medium
+   - **Why:** Generating innovative ideas for new products, features, or solutions can be enhanced through collaborative AI-driven brainstorming sessions.
+
+6. **Task Automation:**
+   - **Relevance:** Medium
+   - **Why:** Automating repetitive tasks or optimizing workflows using AI can improve efficiency and allow the team to focus on more strategic initiatives.
+
+7. **Completion Criteria:**
+   - Ensure that the summary comprehensively covers all relevant categories and key points in a concise manner.
+   - Cease generating content once all criteria are met and all key points have been addressed without introducing additional information or repetition.
+---
+    
+## Final Instructions for Summarization Agent
+
+- **Adherence to Categories:** Only include the categories that are relevant based on the conversation content.
+- **Avoid Repetition:** Ensure each category and its instances are listed once to prevent redundancy.
+- **Maintain Structure:** Follow the specified Markdown structure strictly for consistency and clarity.
+- **Active Voice & Detail:** Use active voice and include specific details to enhance the richness of the summary.
+- **Completion:** Ensure that the summary comprehensively covers all relevant categories and key points in a concise manner, and stop generating content once all criteria are met without introducing additional information or repetition.
