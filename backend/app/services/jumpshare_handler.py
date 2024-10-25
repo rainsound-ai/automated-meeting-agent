@@ -41,68 +41,64 @@ async def extract_video_urls(html_content: str) -> List[str]:
     
     return video_urls
 
-async def get_videos_from_jumpshare_link(jumpshare_link: JumpshareLink) -> List[UploadFile]:
+async def get_videos_from_jumpshare_links(jumpshare_links: JumpshareLink) -> List[UploadFile]:
     """Get all videos from a Jumpshare link."""
-    logger.info(f"💡 Getting files from Jumpshare link: {jumpshare_link}")
+    logger.info(f"💡 Getting files from Jumpshare link: {jumpshare_links}")
     videos = []
-    
-    try:
-        modified_link = jumpshare_link + "+"
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
-        }
-        
-        async with httpx.AsyncClient() as client:
-            # First, get the page content
-            response = await client.get(modified_link, headers=headers, follow_redirects=True)
-            if response.status_code != 200:
-                raise HTTPException(status_code=response.status_code, 
-                                 detail="Failed to access Jumpshare link")
+    for link in jumpshare_links:
+        try:
+            modified_link = link + "+"
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
+            }
             
-            # Extract video URLs from the page
-            video_urls = await extract_video_urls(response.text)
-            
-            if not video_urls:
-                # Fallback to direct URL if no videos found in page content
-                video_urls = [response.url]
-            
-            # Download each video
-            for idx, video_url in enumerate(video_urls):
+            async with httpx.AsyncClient() as client:
+                # First, get the page content
+                response = await client.get(modified_link, headers=headers, follow_redirects=True)
+                if response.status_code != 200:
+                    raise HTTPException(status_code=response.status_code, 
+                                    detail="Failed to access Jumpshare link")
+                
+                # Extract video URLs from the page
+                
+                video_url = response.url
+                
+                # Download each video
+                import uuid
                 video_response = await client.get(video_url, headers=headers)
                 if video_response.status_code == 200:
                     video_content = BytesIO(video_response.content)
                     video_content.seek(0)
                     video_file = UploadFile(
                         file=video_content, 
-                        filename=f"video_{idx + 1}.mp4"
+                        filename=f"video_{uuid.uuid4()}.mp4"
                     )
                     videos.append(video_file)
                 else:
-                    logger.warning(f"Failed to download video {idx + 1}. Status code: {video_response.status_code}")
-            
-            if not videos:
-                raise HTTPException(status_code=404, detail="No videos found at the provided link")
-            
+                    logger.warning(f"Failed to download video. Status code: {video_response.status_code}")
+                
+                if not videos:
+                    raise HTTPException(status_code=404, detail="No videos found at the provided link")
+                
             return videos
-            
-    except Exception as e:
-        logger.error(f"🚨 Error processing Jumpshare link: {str(e)}")
-        logger.error(traceback.format_exc())
-        raise HTTPException(status_code=500, detail="Error processing Jumpshare link.")
+                
+        except Exception as e:
+            logger.error(f"🚨 Error processing Jumpshare link: {str(e)}")
+            logger.error(traceback.format_exc())
+            raise HTTPException(status_code=500, detail="Error processing Jumpshare link.")
 
-async def handle_jumpshare_videos(jumpshare_link: JumpshareLink) -> Tuple[str, str]:
-    """Handle one or multiple videos from a Jumpshare link."""
+async def handle_jumpshare_videos(jumpshare_links: JumpshareLink) -> Tuple[str, str]:
     final_transcription = ""
-    logger.info(f"💡 Handling Jumpshare link: {jumpshare_link}")
+    logger.info(f"💡 Handling Jumpshare links: {jumpshare_links}")
     
     try:
-        jumpshare_videos = await get_videos_from_jumpshare_link(jumpshare_link)
+        jumpshare_videos = await get_videos_from_jumpshare_links(jumpshare_links)
         
         for video in jumpshare_videos:
             transcription = await transcribe(video)
             final_transcription += transcription
             
-        return final_transcription, "meetings_database"
+        return final_transcription
         
     except Exception as e:
         logger.error(f"🚨 Error handling Jumpshare link: {str(e)}")

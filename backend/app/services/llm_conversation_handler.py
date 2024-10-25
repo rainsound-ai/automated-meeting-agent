@@ -24,4 +24,4 @@ async def handle_llm_conversation(item_to_process):
     except Exception as e:
         print(f"Error processing file content: {e}")
     
-    return transcription, llm_conversation_file_name, "link_database"
+    return transcription, llm_conversation_file_name

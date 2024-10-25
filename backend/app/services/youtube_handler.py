@@ -49,4 +49,4 @@ async def handle_youtube_videos(link_from_notion):
             logger.error(f"🚨 Error removing youtube audio file: {str(e)}")
             traceback.print_exc()
 
-    return transcription, "link_database"
+    return transcription

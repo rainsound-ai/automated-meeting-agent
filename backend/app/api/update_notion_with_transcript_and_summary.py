@@ -51,31 +51,42 @@ async def process_link(item_to_process):
             page_id: str = item_to_process['id']
             is_llm_conversation = False
             properties = item_to_process.get('properties', {})
-            link_from_notion = (
-                properties.get('Link', {}).get('url') or 
-                properties.get('Jumpshare Link', {}).get('url')
-            )
-            llm_conversation_file_name = None
-            is_llm_conversation = False
-            # is_jumpshare_link = False
             link_or_meeting_database = None
-            
+            is_jumpshare_link = False
+            if properties.get('Link', {}).get('url'):
+                # Case: Single link exists
+                print("🚨 Found a link from the link summary database")
+                links_from_notion = properties.get('Link', {}).get('url')
+                link_or_meeting_database = 'link_database'
+            elif properties.get('LLM Conversation', {}).get('files'):
+                # Case: LLM conversation exists
+                print("🚨 Found an LLM conversation")
+                links_from_notion = properties.get('LLM Conversation', {}).get('files', [])[0].get('file', '').get("url", "")
+                print("🚨links from notion", links_from_notion)
+                link_or_meeting_database = 'link_database'
+                is_llm_conversation = True
+            elif properties.get('Jumpshare Links', {}).get('files'):
+                # Case: Multiple Jumpshare links exist
+                print("🚨 Found a link or links from the meeting summary database")
+                links_from_notion = [f.get('name', '') for f in properties.get('Jumpshare Links', {}).get('files', [])]
+                link_or_meeting_database = 'meeting_database'
+                is_jumpshare_link = True
+            llm_conversation_file_name = None
 
-            if contains_the_string_youtube(link_from_notion):
+            if not is_llm_conversation and not is_jumpshare_link and contains_the_string_youtube(links_from_notion):  
             # handle youtube
-                transcription, link_or_meeting_database = await handle_youtube_videos(link_from_notion)
-            elif link_is_none_and_therefore_this_must_be_an_llm_conversation_html_file(link_from_notion):
+                transcription = await handle_youtube_videos(links_from_notion)
+            elif is_llm_conversation:
              # handle llm conversation  
                print("🚨 Found an LLM conversation")
-               transcription, llm_conversation_file_name, link_or_meeting_database = await handle_llm_conversation(item_to_process)
-               is_llm_conversation = True 
-            elif link_is_jumpshare_link(link_from_notion):
+               transcription, llm_conversation_file_name = await handle_llm_conversation(item_to_process)
+            elif link_is_jumpshare_link(links_from_notion[0]):
             # Handle jumpshare link
                 print("🚨 Found a Jumpshare link")
-                transcription, link_or_meeting_database = await handle_jumpshare_videos(link_from_notion)
-            else: 
+                transcription = await handle_jumpshare_videos(links_from_notion)
+            elif link_or_meeting_database == 'link_database' and not is_llm_conversation: 
             # Handle pdf, docx, or html
-                transcription, link_or_meeting_database = await handle_html_docx_or_pdf(link_from_notion)
+                transcription = await handle_html_docx_or_pdf(links_from_notion)
 
             # # Create toggle blocks once
             summary_toggle_id = await create_toggle_block(page_id, "Summary", "green")

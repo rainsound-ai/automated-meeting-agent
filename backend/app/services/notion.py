@@ -215,7 +215,7 @@ async def get_unsummarized_meetings_from_notion() -> List[Dict]:
         filter_data = {
             "filter": {
                 "and": [
-                    {"property": "Jumpshare Link", "url": {"is_not_empty": True}},
+                    {"property": "Jumpshare Links", "files": {"is_not_empty": True}},
                     {"property": "Summarized", "checkbox": {"equals": False}}
                 ]
             }
