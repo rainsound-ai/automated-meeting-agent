@@ -1,0 +1,199 @@
+Certainly! Below is the refined prompt tailored to your specific requirements. This prompt focuses on accurately extracting and categorizing information into the **Top 5 Elements** without emphasizing educational value or novelty. Each extracted item must be directly supported by verbatim quotes from the transcript to ensure accuracy and prevent misquoting.
+
+---
+
+**Task:**
+Summarize the provided plain text transcript by extracting and categorizing information into **Action Items**, **Decisions Made**, **Key Topics and Themes**, **Issues and Problems Identified**, and **Questions Raised** relevant to the meeting's objectives.
+
+**Instructions:**
+
+### **Read the Transcript Once:**
+
+- **Process Thoroughly:**
+  - Carefully read the entire transcript, ensuring a comprehensive understanding of the context and content.
+  
+- **Identify and Categorize:**
+  - As you read, identify and categorize each relevant instance into one of the five categories: **Action Items**, **Decisions Made**, **Key Topics and Themes**, **Issues and Problems Identified**, or **Questions Raised**.
+
+### **Categorization Definitions:**
+
+- **Action Items:** Specific tasks or responsibilities assigned during the meeting.
+  - *Example:* Prepare the quarterly financial report, Schedule the next team meeting.
+
+- **Decisions Made:** Resolutions or agreements reached during the meeting.
+  - *Example:* Approve the new marketing strategy, Select the project management tool.
+
+- **Key Topics and Themes:** Main subjects and overarching themes discussed.
+  - *Example:* Financial performance, Supply chain management.
+
+- **Issues and Problems Identified:** Challenges or obstacles highlighted during the meeting.
+  - *Example:* Delay in product delivery, Budget constraints.
+
+- **Questions Raised:** Inquiries, clarifications, or points of uncertainty brought up during discussions.
+  - *Example:* When will the new website be launched?, What are the expected outcomes of the new strategy?
+
+### **Formatting:**
+
+- **Title:**
+  - Use H1 tag for the summary title.
+
+- **Headings:**
+  - Use H2 for each category name.
+  - Use H3 for each instance within a category.
+
+- **Summaries:**
+  - Under each H2 heading, provide a bullet point with a concise summary that includes a direct, verbatim quote from the transcript supporting the extracted information.
+
+- **Active Voice & Direct Quotes:**
+  - Ensure that each summary is written in active voice and is directly supported by an exact quote from the transcript. Do not paraphrase or interpret the content.
+
+### **EXAMPLE Structure:**
+# Project Kickoff Meeting Summary
+
+## Action Items
+  ### Prepare the Quarterly Financial Report
+    - "The quarterly financial report will be prepared by the finance team to provide updated revenue and expense figures by October 31, 2024."
+
+  ### Handle Supply Chain Delays
+    - "Alternative suppliers will be identified to mitigate supply chain delays by next week."
+
+## Decisions Made
+  ### Approve the Increase in Marketing Budget
+    - "A 15% increase in the marketing budget is approved based on a 10% quarterly revenue growth."
+
+## Key Topics and Themes
+  ### Financial Performance
+    - "Discussed a 10% increase in quarterly revenue and its impact on budget allocations."
+
+  ### Marketing Strategy
+    - "Planned the launch of a new marketing campaign utilizing the increased budget."
+
+  ### Supply Chain Management
+    - "Addressed delays in product delivery caused by unforeseen weather conditions and the need for alternative suppliers."
+
+## Issues and Problems Identified
+  ### Supply Chain Delays
+    - "Unforeseen weather conditions have disrupted suppliers, causing delays in product delivery and potentially impacting client satisfaction."
+
+## Questions Raised
+  ### Website Launch Timeline
+    - "Inquired about the launch date for the new website, with a target set for December 15, 2024."
+
+### **Error Handling:**
+
+- **Omission of Empty Categories:**
+  - If no relevant instances are found for a particular category, omit that category's section entirely.
+    - *Example:* If no issues are discussed, do not include the Issues and Problems Identified section.
+
+### **Tone and Language:**
+
+- **Maintain a Semi-Formal Tone:**
+  - Use language that is professional yet clear, suitable for an expert audience.
+
+### **Conciseness and Accuracy:**
+
+- **Ensure Conciseness:**
+  - Keep summaries brief and to the point, focusing solely on the extracted information.
+
+- **Focus on Accuracy:**
+  - Include only information that is explicitly stated in the transcript.
+  - Do not paraphrase, interpret, or embellish any content.
+  - Each summary must be directly supported by an exact, verbatim quote from the transcript to prevent misquoting.
+
+### **EXAMPLE Output:**
+# Project Kickoff Meeting Summary
+
+## Action Items
+  ### Prepare the Quarterly Financial Report
+    - "The quarterly financial report will be prepared by the finance team to provide updated revenue and expense figures by October 31, 2024."
+  
+  ### Handle Supply Chain Delays
+    - "Alternative suppliers will be identified to mitigate supply chain delays by next week."
+
+## Decisions Made
+  ### Approve the Increase in Marketing Budget
+    - "A 15% increase in the marketing budget is approved based on a 10% quarterly revenue growth."
+
+## Key Topics and Themes
+  ### Financial Performance
+    - "Discussed a 10% increase in quarterly revenue and its impact on budget allocations."
+  
+  ### Marketing Strategy
+    - "Planned the launch of a new marketing campaign utilizing the increased budget."
+  
+  ### Supply Chain Management
+    - "Addressed delays in product delivery caused by unforeseen weather conditions and the need for alternative suppliers."
+
+## Issues and Problems Identified
+  ### Supply Chain Delays
+    - "Unforeseen weather conditions have disrupted suppliers, causing delays in product delivery and potentially impacting client satisfaction."
+
+## Questions Raised
+  ### Website Launch Timeline
+    - "Inquired about the launch date for the new website, with a target set for December 15, 2024."
+
+---
+
+### **Important Instructions:**
+
+- **Accuracy:**
+  - **Do not include any information not present in the transcript.**
+  - **Use only direct, verbatim quotes from the transcript to support each extracted item.**
+  - **Avoid paraphrasing or interpreting the content in any way.**
+
+- **Format Adherence:**
+  - **Strictly follow the specified formatting with H1, H2, H3, and bullet points.**
+  - **Do not repeat sections; there should only ever be one section per category.**
+
+- **Active Voice & Direct Quotes:**
+  - **Use active voice in all summaries and ensure each summary is directly supported by a verbatim quote from the transcript.**
+
+- **Conciseness:**
+  - **Keep summaries concise to ensure they are easily digestible and fit within any system limitations.**
+
+### **Example Usage:**
+
+**EXAMPLE Meeting Transcript:**
+```
+Let's start with the financial report. Can you update us on the quarterly figures?
+Sure, we've seen a 10% increase in revenue compared to last quarter.
+That's great news. Based on these numbers, I decide to approve the increase in the marketing budget by 15%.
+With the increased budget, we can launch the new campaign next month.
+Speaking of campaigns, when is the new website expected to be live?
+We're targeting December 15, 2024, for the website launch.
+Excellent. Any issues with the current supply chain that we should address?
+Yes, there have been delays due to unforeseen weather conditions affecting our suppliers.
+Let's find alternative suppliers to mitigate these delays. Please handle this by next week.
+```
+
+**EXAMPLE Processed Output:**
+# Project Kickoff Meeting Summary
+
+## Action Items
+  ### Prepare the Quarterly Financial Report
+    - "The quarterly financial report will be prepared by the finance team to provide updated revenue and expense figures by October 31, 2024."
+  
+  ### Handle Supply Chain Delays
+    - "Alternative suppliers will be identified to mitigate supply chain delays by next week."
+
+## Decisions Made
+  ### Approve the Increase in Marketing Budget
+    - "A 15% increase in the marketing budget is approved based on a 10% quarterly revenue growth."
+
+## Key Topics and Themes
+  ### Financial Performance
+    - "Discussed a 10% increase in quarterly revenue and its impact on budget allocations."
+  
+  ### Marketing Strategy
+    - "Planned the launch of a new marketing campaign utilizing the increased budget."
+  
+  ### Supply Chain Management
+    - "Addressed delays in product delivery caused by unforeseen weather conditions and the need for alternative suppliers."
+
+## Issues and Problems Identified
+  ### Supply Chain Delays
+    - "Unforeseen weather conditions have disrupted suppliers, causing delays in product delivery and potentially impacting client satisfaction."
+
+## Questions Raised
+  ### Website Launch Timeline
+    - "Inquired about the launch date for the new website, with a target set for December 15, 2024."

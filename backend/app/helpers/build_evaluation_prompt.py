@@ -33,7 +33,7 @@ def get_gold_standard_files() -> Optional[Tuple[str, str]]:
     except Exception as e:
         logger.error(f"🚨 Error loading gold standard data: {str(e)}")
         return None
-def build_evaluation_prompt(original_transcript: str, summary_to_evaluate: str, is_llm_conversation=False) -> str:
+def build_evaluation_prompt(original_transcript: str, summary_to_evaluate: str, is_llm_conversation,  is_jumpshare_link) -> str:
     if is_llm_conversation:
         return f"""
         ```markdown
@@ -204,6 +204,248 @@ def build_evaluation_prompt(original_transcript: str, summary_to_evaluate: str, 
         ```
         """
             
+    elif is_jumpshare_link:
+        return f"""
+
+        # Guardrails Agent Prompt for Evaluating Meeting Summaries
+
+        **Task:**  
+        Evaluate the following summary of a meeting transcript by assessing its adherence to the extraction and formatting guidelines based on the **Top 5 Elements**.
+
+        **Inputs:**
+        - **Original Transcript:**
+
+        ```
+        {original_transcript}
+        ```
+
+        - **Summary to Evaluate:**
+
+        ```
+        {summary_to_evaluate}
+        ```
+
+        **Instructions:**
+
+        ### 1. Understand the Content:
+        - **Thorough Review:**
+        - Carefully read the entire **Original Transcript** to fully grasp the key information, topics, and context related to the meeting.
+        
+        ### 2. Evaluate the Summary:
+        - **Alignment with Instructions:**
+        - Assess how well the **Summary to Evaluate** aligns with the **Summary Agent's** instructions based on the criteria outlined below.
+        - Do not use any external references or gold standard summaries for comparison. Base your evaluation solely on the **Original Transcript** and the **Summary to Evaluate**.
+
+        ### 3. Scoring Criteria:
+
+        Evaluate the summary based on the following **seven** criteria. For each criterion, determine whether the summary meets the standard (**Yes**) or does not (**No**). Provide specific comments to justify your assessment.
+
+        1. **Format Adherence:**
+            - **Criteria:** 
+                - The summary uses an H1 heading for the Title.
+                - The summary uses H2 headings for each category (**Action Items**, **Decisions Made**, **Key Topics and Themes**, **Issues and Problems Identified**, **Questions Raised**).
+                - The summary uses H3 subheadings for each instance within a category.
+                - Bullet points contain concise summaries supported by direct, verbatim quotes from the transcript.
+            - **Assessment:** Does the summary strictly follow the specified formatting? Is there only one section per category without duplication?
+            - **Comment:**
+
+        2. **Correct Categorization:**
+            - **Criteria:** 
+                - Each instance is correctly categorized as **Action Items**, **Decisions Made**, **Key Topics and Themes**, **Issues and Problems Identified**, or **Questions Raised** based on the definitions provided.
+            - **Assessment:** Are all instances accurately categorized?
+            - **Comment:**
+
+        3. **Active Voice & Direct Quotes:**
+            - **Criteria:** 
+                - Summaries are written in active voice.
+                - Each bullet point includes an exact, verbatim quote from the transcript supporting the extracted information.
+            - **Assessment:** Are the summaries in active voice and supported by direct quotes without paraphrasing?
+            - **Comment:**
+
+        4. **Conciseness:**
+            - **Criteria:** 
+                - Summaries are concise, focusing solely on essential information without unnecessary verbosity.
+            - **Assessment:** Are the summaries brief and to the point?
+            - **Comment:**
+
+        5. **Accuracy:**
+            - **Criteria:** 
+                - No information is included that is not present in the transcript.
+                - Summaries accurately reflect the content of the transcript without embellishment or interpretation.
+            - **Assessment:** Is the summary free from inaccuracies and extraneous information?
+            - **Comment:**
+
+        6. **Completeness:**
+            - **Criteria:** 
+                - All relevant instances within each category present in the transcript are included in the summary.
+                - No critical information from the transcript is omitted.
+            - **Assessment:** Does the summary cover all necessary instances without omitting key information?
+            - **Comment:**
+
+        7. **Clarity:**
+            - **Criteria:** 
+                - The summary is written in clear, precise language.
+                - Technical terms are used appropriately without overuse of jargon.
+            - **Assessment:** Is the summary clear and easy to understand?
+            - **Comment:**
+
+        ### 4. Scoring Framework:
+
+        - **Score Calculation:**
+            - Each criterion is worth up to **1 point**.
+            - **Total Possible Score:** 7 points.
+            - **Final Score:** Sum of points awarded divided by 7, resulting in a score between 0 and 1.
+
+        - **An Example Of How To Score:**
+            - If a summary meets 5 out of the 7 criteria, the score would be **5/7 ≈ 0.71**.
+
+        ### 5. Provide Your Evaluation in the Following Format:
+
+        ```
+        Score: [A single number between 0 and 1, rounded to two decimal places]
+        Feedback: [Your detailed feedback here, including strengths and areas for improvement]
+        ```
+
+        ---
+
+        ### **EXAMPLE EVALUATION:**
+
+        **EXAMPLE of an original Transcript:**
+        ```
+        Let's start with the financial report. Can you update us on the quarterly figures?
+        Sure, we've seen a 10% increase in revenue compared to last quarter.
+        That's great news. Based on these numbers, I decide to approve the increase in the marketing budget by 15%.
+        With the increased budget, we can launch the new campaign next month.
+        Speaking of campaigns, when is the new website expected to be live?
+        We're targeting December 15, 2024, for the website launch.
+        Excellent. Any issues with the current supply chain that we should address?
+        Yes, there have been delays due to unforeseen weather conditions affecting our suppliers.
+        Let's find alternative suppliers to mitigate these delays. Please handle this by next week.
+        ```
+
+        **EXAMPLE of a Summary to Evaluate:**
+        # Project Kickoff Meeting Summary
+
+        ## Action Items
+        ### Prepare the Quarterly Financial Report
+            - "The quarterly financial report will be prepared by the finance team to provide updated revenue and expense figures by October 31, 2024."
+        
+        ### Handle Supply Chain Delays
+            - "Alternative suppliers will be identified to mitigate supply chain delays by next week."
+
+        ## Decisions Made
+        ### Approve the Increase in Marketing Budget
+            - "A 15% increase in the marketing budget is approved based on a 10% quarterly revenue growth."
+
+        ## Key Topics and Themes
+        ### Financial Performance
+            - "Discussed a 10% increase in quarterly revenue and its impact on budget allocations."
+        
+        ### Marketing Strategy
+            - "Planned the launch of a new marketing campaign utilizing the increased budget."
+        
+        ### Supply Chain Management
+            - "Addressed delays in product delivery caused by unforeseen weather conditions and the need for alternative suppliers."
+
+        ## Issues and Problems Identified
+        ### Supply Chain Delays
+            - "Unforeseen weather conditions have disrupted suppliers, causing delays in product delivery and potentially impacting client satisfaction."
+
+        ## Questions Raised
+        ### Website Launch Timeline
+            - "Inquired about the launch date for the new website, with a target set for December 15, 2024."
+
+
+        **EXAMPLE Evaluation Output:**
+
+        ```
+        Score: 0.86
+        Feedback: The summary adheres to the specified format with correct use of H1, H2, and H3 headings. All instances are accurately categorized under the appropriate sections. Each summary point is written in active voice and is supported by direct, verbatim quotes from the transcript, ensuring accuracy. The content is concise and focuses solely on essential information without unnecessary verbosity. However, the summary slightly lacks completeness as it could include additional details from the transcript regarding the impact of the marketing campaign launch. Additionally, while clarity is generally maintained, some bullet points could be more precise to enhance readability. Overall, the summary is clear, accurate, and mostly complete.
+        ```
+
+        ---
+
+        ### **Important Instructions:**
+
+        - **Accuracy:**
+        - **Do not include any information not present in the transcript.**
+        - **Use only direct, verbatim quotes from the transcript to support each extracted item.**
+        - **Avoid paraphrasing or interpreting the content in any way.**
+
+        - **Format Adherence:**
+        - **Strictly follow the specified formatting with H1, H2, H3, and bullet points.**
+        - **Do not repeat sections; there should only ever be one section per category.**
+
+        - **Active Voice & Direct Quotes:**
+        - **Use active voice in all summaries and ensure each summary is directly supported by a verbatim quote from the transcript.**
+
+        - **Conciseness:**
+        - **Keep summaries concise to ensure they are easily digestible and fit within any system limitations.**
+
+        - **Completeness:**
+        - **Ensure all relevant instances from the transcript are included without omitting key information.**
+
+        - **Clarity:**
+        - **Ensure the summary is written in clear, precise language suitable for an expert audience.**
+        - **Use technical terms appropriately without overusing jargon.**
+
+        ---
+
+        ### **Usage Example:**
+
+        **EXAMPLE Original Transcript:**
+        ```
+        Let's start with the financial report. Can you update us on the quarterly figures?
+        Sure, we've seen a 10% increase in revenue compared to last quarter.
+        That's great news. Based on these numbers, I decide to approve the increase in the marketing budget by 15%.
+        With the increased budget, we can launch the new campaign next month.
+        Speaking of campaigns, when is the new website expected to be live?
+        We're targeting December 15, 2024, for the website launch.
+        Excellent. Any issues with the current supply chain that we should address?
+        Yes, there have been delays due to unforeseen weather conditions affecting our suppliers.
+        Let's find alternative suppliers to mitigate these delays. Please handle this by next week.
+        ```
+
+        **EXAMPLE Summary to Evaluate:**
+        ```markdown
+        # Project Kickoff Meeting Summary
+
+        ## Action Items
+        ### Prepare the Quarterly Financial Report
+            - "The quarterly financial report will be prepared by the finance team to provide updated revenue and expense figures by October 31, 2024."
+        
+        ### Handle Supply Chain Delays
+            - "Alternative suppliers will be identified to mitigate supply chain delays by next week."
+
+        ## Decisions Made
+        ### Approve the Increase in Marketing Budget
+            - "A 15% increase in the marketing budget is approved based on a 10% quarterly revenue growth."
+
+        ## Key Topics and Themes
+        ### Financial Performance
+            - "Discussed a 10% increase in quarterly revenue and its impact on budget allocations."
+        
+        ### Marketing Strategy
+            - "Planned the launch of a new marketing campaign utilizing the increased budget."
+        
+        ### Supply Chain Management
+            - "Addressed delays in product delivery caused by unforeseen weather conditions and the need for alternative suppliers."
+
+        ## Issues and Problems Identified
+        ### Supply Chain Delays
+            - "Unforeseen weather conditions have disrupted suppliers, causing delays in product delivery and potentially impacting client satisfaction."
+
+        ## Questions Raised
+        ### Website Launch Timeline
+            - "Inquired about the launch date for the new website, with a target set for December 15, 2024."
+        ```
+
+        **EXAMPLE Processed Output:**
+        ```
+        Score: 0.86
+        Feedback: The summary adheres to the specified format with correct use of H1, H2, and H3 headings. All instances are accurately categorized under the appropriate sections. Each summary point is written in active voice and is supported by direct, verbatim quotes from the transcript, ensuring accuracy. The content is concise and focuses solely on essential information without unnecessary verbosity. However, the summary slightly lacks completeness as it could include additional details from the transcript regarding the impact of the marketing campaign launch. Additionally, while clarity is generally maintained, some bullet points could be more precise to enhance readability. Overall, the summary is clear, accurate, and mostly complete.
+        ```
+        """
     else: 
         # gold_standard_transcript, gold_standard_summary = get_gold_standard_files()
 

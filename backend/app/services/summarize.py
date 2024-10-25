@@ -28,14 +28,29 @@ async def summarize_transcription(transcription: str, prompt: str) -> str:
         logger.error(f"🚨 Unexpected error during summarization: {str(e)}")
         raise HTTPException(status_code=500, detail="Unexpected error during summarization")
 
-async def decomposed_summarize_transcription_and_upload_to_notion(page_id, transcription: Transcription, toggle_id: str, link_or_meeting_database, is_llm_conversation=False, llm_conversation_file_name=None) -> None:
+async def decomposed_summarize_transcription_and_upload_to_notion(
+        page_id, 
+        transcription: Transcription, 
+        toggle_id: str, 
+        link_or_meeting_database, 
+        is_llm_conversation, 
+        is_jumpshare_link, 
+        llm_conversation_file_name=None
+    ) -> None:
+
     max_attempts = 5
     quality_threshold = 0.8
     best_summary = None
     best_score = 0
     feedback = ""
 
-    prompt_file = "llm_conversation_summary_prompt.txt" if is_llm_conversation else "summary_prompt.txt"
+    # prompt_file = "llm_conversation_summary_prompt.txt" if is_llm_conversation else "summary_prompt.txt"
+    prompt_file = (
+    "meeting_summary_prompt.txt" if is_jumpshare_link else
+    "llm_conversation_summary_prompt.txt" if is_llm_conversation else 
+    "summary_prompt.txt"
+    )
+    
     prompt_content = read_file(os.path.join(BASE_DIR, 'prompts', prompt_file))
 
     for attempt in range(max_attempts):
@@ -47,7 +62,7 @@ async def decomposed_summarize_transcription_and_upload_to_notion(page_id, trans
             current_summary = await summarize_transcription(transcription, full_prompt)
             
             # Get fresh evaluation
-            evaluation = await evaluate_section(transcription, current_summary, is_llm_conversation)
+            evaluation = await evaluate_section(transcription, current_summary, is_llm_conversation, is_jumpshare_link)
             current_score = evaluation['score']
             
             logger.info(f"💡 Score: {current_score}")

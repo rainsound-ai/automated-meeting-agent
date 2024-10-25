@@ -49,10 +49,15 @@ async def process_link(item_to_process):
     async with meeting_processing_context(item_to_process):
         try: 
             page_id: str = item_to_process['id']
-            is_llm_conversation = False
             properties = item_to_process.get('properties', {})
+
+            # Defaults 
+            is_llm_conversation = False
             link_or_meeting_database = None
+            llm_conversation_file_name = None
             is_jumpshare_link = False
+
+            # Build the link to summarize depending on media type
             if properties.get('Link', {}).get('url'):
                 # Case: Single link exists
                 print("🚨 Found a link from the link summary database")
@@ -66,13 +71,14 @@ async def process_link(item_to_process):
                 link_or_meeting_database = 'link_database'
                 is_llm_conversation = True
             elif properties.get('Jumpshare Links', {}).get('files'):
-                # Case: Multiple Jumpshare links exist
+                # Case: One or more Jumpshare links exist
                 print("🚨 Found a link or links from the meeting summary database")
                 links_from_notion = [f.get('name', '') for f in properties.get('Jumpshare Links', {}).get('files', [])]
                 link_or_meeting_database = 'meeting_database'
                 is_jumpshare_link = True
-            llm_conversation_file_name = None
 
+
+            # Handle the different types of links
             if not is_llm_conversation and not is_jumpshare_link and contains_the_string_youtube(links_from_notion):  
             # handle youtube
                 transcription = await handle_youtube_videos(links_from_notion)
@@ -91,9 +97,17 @@ async def process_link(item_to_process):
             # # Create toggle blocks once
             summary_toggle_id = await create_toggle_block(page_id, "Summary", "green")
             transcript_toggle_id = await create_toggle_block(page_id, "Transcript", "orange")
-            
+
             # # Pass the created toggle IDs to the respective functions
-            await decomposed_summarize_transcription_and_upload_to_notion(page_id, transcription, summary_toggle_id, link_or_meeting_database, is_llm_conversation, llm_conversation_file_name)
+            await decomposed_summarize_transcription_and_upload_to_notion(
+                page_id, 
+                transcription, 
+                summary_toggle_id, 
+                link_or_meeting_database, 
+                is_llm_conversation, 
+                is_jumpshare_link, 
+                llm_conversation_file_name
+            )
             await upload_transcript_to_notion(transcript_toggle_id, transcription)
         except Exception as e:
             logger.error(f"🚨 Error in process_link for meeting {item_to_process['id']}: {str(e)}")
