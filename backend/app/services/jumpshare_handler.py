@@ -45,8 +45,10 @@ async def get_videos_from_jumpshare_links(jumpshare_links: JumpshareLink) -> Lis
     """Get all videos from a Jumpshare link."""
     logger.info(f"💡 Getting files from Jumpshare link: {jumpshare_links}")
     videos = []
-    for link in jumpshare_links:
-        try:
+    
+    try:
+        for link in jumpshare_links:
+            print("🚨 about to download this link", link)
             modified_link = link + "+"
             headers = {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
@@ -60,7 +62,6 @@ async def get_videos_from_jumpshare_links(jumpshare_links: JumpshareLink) -> Lis
                                     detail="Failed to access Jumpshare link")
                 
                 # Extract video URLs from the page
-                
                 video_url = response.url
                 
                 # Download each video
@@ -76,16 +77,16 @@ async def get_videos_from_jumpshare_links(jumpshare_links: JumpshareLink) -> Lis
                     videos.append(video_file)
                 else:
                     logger.warning(f"Failed to download video. Status code: {video_response.status_code}")
+        
+        if not videos:
+            raise HTTPException(status_code=404, detail="No videos found at the provided link")
+        
+        return videos
                 
-                if not videos:
-                    raise HTTPException(status_code=404, detail="No videos found at the provided link")
-                
-            return videos
-                
-        except Exception as e:
-            logger.error(f"🚨 Error processing Jumpshare link: {str(e)}")
-            logger.error(traceback.format_exc())
-            raise HTTPException(status_code=500, detail="Error processing Jumpshare link.")
+    except Exception as e:
+        logger.error(f"🚨 Error processing Jumpshare link: {str(e)}")
+        logger.error(traceback.format_exc())
+        raise HTTPException(status_code=500, detail="Error processing Jumpshare link.")
 
 async def handle_jumpshare_videos(jumpshare_links: JumpshareLink) -> Tuple[str, str]:
     final_transcription = ""
@@ -93,11 +94,16 @@ async def handle_jumpshare_videos(jumpshare_links: JumpshareLink) -> Tuple[str, 
     
     try:
         jumpshare_videos = await get_videos_from_jumpshare_links(jumpshare_links)
+        print("🚨 jumpshare videos", jumpshare_videos)
         
         for video in jumpshare_videos:
+            print("🚨 about to transcribe video", video)
             transcription = await transcribe(video)
+            print("🚨 appending this transcription to final transcription", transcription)
             final_transcription += transcription
+            print("🚨 final transcription now looks like this:", final_transcription)
             
+        print("🚨 final transcription", final_transcription)
         return final_transcription
         
     except Exception as e:
