@@ -19,3 +19,6 @@ class ToggleBlock:
     object: str
     type: str
     toggle: Dict[str, List[Dict[str, str]]]
+
+class JumpshareLink(BaseModel):
+    url: str

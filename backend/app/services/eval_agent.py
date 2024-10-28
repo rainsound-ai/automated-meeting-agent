@@ -28,10 +28,10 @@ def parse_evaluation_response(response: str) -> Dict[str, any]:
     
     
 
-async def evaluate_section(original_article: str, summary_to_evaluate: str, is_llm_conversation=False) -> Dict[str, any]:
+async def evaluate_section(original_article: str, summary_to_evaluate: str, is_llm_conversation, is_jumpshare_link) -> Dict[str, any]:
     try:
         # Build prompt (your existing code)
-        prompt = build_evaluation_prompt(original_article, summary_to_evaluate, is_llm_conversation)
+        prompt = build_evaluation_prompt(original_article, summary_to_evaluate, is_llm_conversation, is_jumpshare_link)
         
         # Get OpenAI response
         response = await get_openai_chat_response(prompt)
