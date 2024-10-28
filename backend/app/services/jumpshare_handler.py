@@ -97,13 +97,9 @@ async def handle_jumpshare_videos(jumpshare_links: JumpshareLink) -> Tuple[str, 
         print("🚨 jumpshare videos", jumpshare_videos)
         
         for video in jumpshare_videos:
-            print("🚨 about to transcribe video", video)
             transcription = await transcribe(video)
-            print("🚨 appending this transcription to final transcription", transcription)
             final_transcription += transcription
-            print("🚨 final transcription now looks like this:", final_transcription)
             
-        print("🚨 final transcription", final_transcription)
         return final_transcription
         
     except Exception as e:

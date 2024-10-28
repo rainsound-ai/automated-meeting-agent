@@ -1,5 +1,6 @@
 from typing import List, Dict, Tuple
-import requests
+# import requests
+import aiohttp
 import json
 from fastapi import HTTPException
 from app.lib.Env import notion_api_key, rainsound_link_summary_database_id, rainsound_meeting_summary_database_id
@@ -13,7 +14,19 @@ from app.models import (
     NotionBlock, 
     ToggleBlock
 )
-# from tenacity import retry, stop_after_attempt, wait_exponential
+logger = logging.getLogger(__name__)
+
+def validate_notion_config():
+    if not notion_api_key:
+        raise ValueError("Notion API key is not set")
+    if not rainsound_link_summary_database_id:
+        raise ValueError("Link summary database ID is not set")
+    if not rainsound_meeting_summary_database_id:
+        raise ValueError("Meeting summary database ID is not set")
+    logger.info("Notion configuration validated")
+
+# Call validation during module import
+validate_notion_config()
 
 # Configuration Constants
 NOTION_VERSION = "2022-06-28"
@@ -23,7 +36,6 @@ HEADERS = {
     "Content-Type": "application/json"
 }
 
-logger = logging.getLogger(__name__)
 
 class NotionBlockTracker:
     def __init__(self):
@@ -40,45 +52,106 @@ class NotionBlockTracker:
 
 block_tracker = NotionBlockTracker()
 
-def get_headers() -> Dict[str, str]:
-
-    return {
+async def get_headers() -> Dict[str, str]:
+    headers = {
         "Authorization": f"Bearer {notion_api_key}",
         **HEADERS
     }
+    logger.debug(f"Generated headers: {headers}")  # Mask the actual token value in logs
+    return headers
 
 # @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def append_blocks_to_notion(toggle_id: str, blocks: List[NotionBlock]) -> Dict:
     blocks_url = f"{NOTION_API_BASE_URL}/blocks/{toggle_id}/children"
-    headers = get_headers()
+    headers = await get_headers()
     data = {"children": blocks}
-    response = requests.patch(blocks_url, headers=headers, json=data)
-    response.raise_for_status()
-    return response.json()
+    
+    async with aiohttp.ClientSession() as session:
+        async with session.patch(blocks_url, headers=headers, json=data) as response:
+            text = await response.text()
+            
+            if response.status != 200:
+                logger.error(f"Notion API Error: {response.status}")
+                logger.error(f"Response body: {text}")
+                raise aiohttp.ClientResponseError(
+                    response.request_info,
+                    response.history,
+                    status=response.status,
+                    message=text
+                )
+                
+            return json.loads(text)
 
 async def rollback_blocks():
-    for block_id in block_tracker.get_blocks():
+    block_ids = block_tracker.get_blocks()
+    for block_id in block_ids:
         await delete_block(block_id)
     block_tracker.clear()
 
 # @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def delete_block(block_id: str):
     url = f"{NOTION_API_BASE_URL}/blocks/{block_id}"
-    headers = get_headers()
-    response = requests.delete(url, headers=headers)
-    if response.status_code != 200:
-        logger.error(f"🚨 Failed to delete block {block_id}: {response.text}")
+    headers = await get_headers()
+    
+    try:
+        # First try to unarchive the block
+        async with aiohttp.ClientSession() as session:
+            unarchive_data = {"archived": False}
+            async with session.patch(url, headers=headers, json=unarchive_data) as response:
+                if response.status != 200:
+                    text = await response.text()
+                    logger.error(f"🚨 Failed to unarchive block {block_id}: {text}")
+                    return  # Skip deletion if unarchive fails
+            
+            # Then delete the block
+            async with session.delete(url, headers=headers) as response:
+                if response.status != 200:
+                    text = await response.text()
+                    logger.error(f"🚨 Failed to delete block {block_id}: {text}")
+    except Exception as e:
+        logger.error(f"🚨 Error during block deletion/unarchiving for {block_id}: {str(e)}")
+        # We don't re-raise here since this is cleanup code and we want it to continue
+        # even if one block fails to delete
 
 async def safe_append_blocks_to_notion(toggle_id: str, blocks: List[NotionBlock]) -> Tuple[Dict, List[str]]:
+    all_responses = []
+    all_block_ids = []
+    
     try:
-        response = await append_blocks_to_notion(toggle_id, blocks)
-        block_ids = [block['id'] for block in response['results']]
-        for block_id in block_ids:
-            block_tracker.add_block(block_id)
-        return response, block_ids
+        # Process blocks in chunks of 100
+        for i in range(0, len(blocks), 100):
+            chunk = blocks[i:i + 100]
+            
+            try:
+                response = await append_blocks_to_notion(toggle_id, chunk)
+                all_responses.append(response)
+                
+                block_ids = [block['id'] for block in response['results']]
+                all_block_ids.extend(block_ids)
+                
+                for block_id in block_ids:
+                    block_tracker.add_block(block_id)
+                    
+            except Exception as chunk_error:
+                logger.error(f"🚨 Error processing chunk {i//100 + 1}: {str(chunk_error)}")
+                # Roll back successful chunks before re-raising
+                for block_id in all_block_ids:
+                    await delete_block(block_id)
+                raise
+                
+        # Return the combined results
+        final_response = {
+            "results": [block for resp in all_responses for block in resp.get('results', [])]
+        }
+        return final_response, all_block_ids
+        
     except Exception as e:
         logger.error(f"🚨 Error appending blocks to Notion: {str(e)}")
+        # Ensure cleanup happens even on unexpected errors
+        for block_id in all_block_ids:
+            await delete_block(block_id)
         raise
+
 
 async def append_summary_to_notion(toggle_id: str, section_content: str) -> None:
     blocks: List[NotionBlock] = convert_content_to_blocks(section_content)
@@ -86,7 +159,12 @@ async def append_summary_to_notion(toggle_id: str, section_content: str) -> None
         await safe_append_blocks_to_notion(toggle_id, blocks)
     except Exception as e:
         logger.error(f"🚨 Failed to append summary to Notion: {str(e)}")
-        raise HTTPException(status_code=500, detail="Failed to append summary to Notion")
+        logger.error(f"Toggle ID: {toggle_id}")
+        logger.error(f"Blocks count: {len(blocks)}")
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Failed to append summary to Notion: {str(e)}"
+        ) from e
 
 async def upload_transcript_to_notion(toggle_id: str, transcription: str) -> None:
     transcription_chunks: List[str] = chunk_text_with_2000_char_limit_for_notion(transcription)
@@ -108,8 +186,13 @@ async def upload_transcript_to_notion(toggle_id: str, transcription: str) -> Non
 
 # @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def set_summarized_checkbox_on_notion_page_to_true(page_id: str) -> None:
+    logger.debug(f"Setting checkbox for page {page_id}")
+    if not page_id:
+        logger.error("Received None or empty page_id")
+        return
+        
     update_url = f"{NOTION_API_BASE_URL}/pages/{page_id}"
-    headers = get_headers()
+    headers = await get_headers()
     data = {
         "properties": {
             "Summarized": {
@@ -117,8 +200,26 @@ async def set_summarized_checkbox_on_notion_page_to_true(page_id: str) -> None:
             }
         }
     }
-    response = requests.patch(update_url, headers=headers, json=data)
-    response.raise_for_status()
+    try:
+        async with aiohttp.ClientSession() as session:
+            logger.debug(f"Sending PATCH request to {update_url}")
+            async with session.patch(update_url, headers=headers, json=data) as response:
+                if response is None:
+                    logger.error("Received None response from Notion API")
+                    return
+                    
+                text = await response.text()
+                if response.status != 200:
+                    logger.error(f"Notion API Error: {response.status}")
+                    logger.error(f"Response body: {text}")
+                    return
+                    
+                # No need to raise_for_status if we already checked status
+                logger.debug("Successfully updated checkbox")
+    except Exception as e:
+        logger.error(f"Error in checkbox update: {str(e)}")
+        logger.error(f"Full details - URL: {update_url}, Page ID: {page_id}")
+        # Don't raise here since the operation might have actually succeeded
 
 async def create_toggle_block(page_id: str, title: str, color: str = "blue") -> str:
     toggle_block: ToggleBlock = {
@@ -147,9 +248,7 @@ async def create_toggle_block(page_id: str, title: str, color: str = "blue") -> 
 # @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 async def get_unsummarized_links_from_notion() -> List[Dict]:
     try:
-        headers = get_headers()
-        
-        # Corrected filter syntax according to Notion API
+        headers = await get_headers()
         filter_data = {
             "filter": {
                 "and": [
@@ -164,13 +263,13 @@ async def get_unsummarized_links_from_notion() -> List[Dict]:
                             {
                                 "property": "Link",
                                 "url": {
-                                    "is_not_empty": True  # Changed from is_empty: False
+                                    "is_not_empty": True
                                 }
                             },
                             {
                                 "property": "LLM Conversation",
                                 "files": {
-                                    "is_not_empty": True  # Changed from is_empty: False
+                                    "is_not_empty": True
                                 }
                             }
                         ]
@@ -179,39 +278,36 @@ async def get_unsummarized_links_from_notion() -> List[Dict]:
             }
         }
 
-        # Add debugging to see what we're sending
         logger.debug(f"Sending filter to Notion: {json.dumps(filter_data, indent=2)}")
+        
+        rainsound_link_summary_database_url = f"{NOTION_API_BASE_URL}/databases/{rainsound_link_summary_database_id}/query"
+        
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                rainsound_link_summary_database_url, 
+                headers=headers, 
+                json=filter_data
+            ) as response:
+                if response.status != 200:
+                    text = await response.text()
+                    logger.error(f"Notion API Error: {response.status}")
+                    logger.error(f"Response body: {text}")
+                    await response.raise_for_status()
+                
+                notion_data = await response.json()
+                logger.debug(f"Retrieved {len(notion_data.get('results', []))} links from Notion")
+                return notion_data.get('results', [])
 
-        rainsound_link_summary_database_url = f"https://api.notion.com/v1/databases/{rainsound_link_summary_database_id}/query"
-        
-        response = requests.post(
-            rainsound_link_summary_database_url, 
-            headers=headers, 
-            json=filter_data
-        )
-        
-        # Add debugging for the response
-        if response.status_code != 200:
-            logger.error(f"Notion API Error: {response.status_code}")
-            logger.error(f"Response body: {response.text}")
-            
-        response.raise_for_status()
-        notion_data = response.json()
-        
-        logger.debug(f"Retrieved {len(notion_data.get('results', []))} links from Notion")
-        
-        return notion_data.get('results', [])
-        
-    except requests.exceptions.RequestException as e:
+    except Exception as e:
         logger.error(f"🚨 Failed to fetch links from Notion: {str(e)}")
-        # Add more detailed error information
-        if hasattr(e, 'response') and e.response is not None:
-            logger.error(f"Response body: {e.response.text}")
+        if hasattr(e, 'response'):
+            text = await e.response.text()
+            logger.error(f"Response body: {text}")
         raise HTTPException(status_code=500, detail="Failed to fetch links from Notion")
 
 async def get_unsummarized_meetings_from_notion() -> List[Dict]:
     try:
-        headers = get_headers()
+        headers = await get_headers()
         filter_data = {
             "filter": {
                 "and": [
@@ -220,19 +316,33 @@ async def get_unsummarized_meetings_from_notion() -> List[Dict]:
                 ]
             }
         }
-        rainsound_meetings_database_url = f"https://api.notion.com/v1/databases/{rainsound_meeting_summary_database_id}/query"
-        response = requests.post(rainsound_meetings_database_url, headers=headers, json=filter_data)
-        response.raise_for_status()
-        notion_data = response.json()
-        return notion_data.get('results', [])
-    except requests.exceptions.RequestException as e:
+        rainsound_meetings_database_url = f"{NOTION_API_BASE_URL}/databases/{rainsound_meeting_summary_database_id}/query"
+        
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                rainsound_meetings_database_url, 
+                headers=headers, 
+                json=filter_data
+            ) as response:
+                if response.status != 200:
+                    text = await response.text()
+                    logger.error(f"Notion API Error: {response.status}")
+                    logger.error(f"Response body: {text}")
+                    await response.raise_for_status()
+                
+                notion_data = await response.json()
+                return notion_data.get('results', [])
+                
+    except Exception as e:
         logger.error(f"🚨 Failed to fetch meetings from Notion: {str(e)}")
+        if hasattr(e, 'response'):
+            text = await e.response.text()
+            logger.error(f"Response body: {text}")
         raise HTTPException(status_code=500, detail="Failed to fetch meetings from Notion")
 
 async def update_notion_title_for_summarized_item(page_id, llm_conversation_file_name):
-    # update the title of the Notion page with the LLM conversation file name
     update_url = f"{NOTION_API_BASE_URL}/pages/{page_id}"
-    headers = get_headers()
+    headers = await get_headers()
     data = {
         "properties": {
             "Title": {
@@ -246,5 +356,10 @@ async def update_notion_title_for_summarized_item(page_id, llm_conversation_file
             }
         }
     }
-    response = requests.patch(update_url, headers=headers, json=data)
-    response.raise_for_status()
+    async with aiohttp.ClientSession() as session:
+        async with session.patch(update_url, headers=headers, json=data) as response:
+            if response.status != 200:
+                text = await response.text()
+                logger.error(f"Notion API Error: {response.status}")
+                logger.error(f"Response body: {text}")
+            await response.raise_for_status()
