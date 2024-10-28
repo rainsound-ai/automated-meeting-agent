@@ -362,4 +362,4 @@ async def update_notion_title_for_summarized_item(page_id, llm_conversation_file
                 text = await response.text()
                 logger.error(f"Notion API Error: {response.status}")
                 logger.error(f"Response body: {text}")
-            await response.raise_for_status()
+            # await response.raise_for_status()

@@ -421,68 +421,69 @@ def build_evaluation_prompt(original_transcript: str, summary_to_evaluate: str, 
 
         Evaluate the summary based on the following nine criteria. For each criterion, determine whether the summary meets the standard (Yes) or does not (No). Provide specific comments to justify your assessment.
 
-        1. Format Adherence:
-            - Criteria: 
-                - The summary uses an H1 heading for the Title. 
-                - The summary uses H2 headings for each category (Tools, Technologies, Concepts, People, Events).
-                - The summary uses H3 subheadings for each instance within a category.
-                - Bullet points contain concise, rich, and active summaries.
-            - Assessment: Does the summary strictly follow the specified formatting? Is there only 1 Tools section, 1 Technologies section, 1 Concepts section, 1 People section, and 1 Events section. 
-            - Comment:
+            1. Format Adherence:
+                - Criteria: 
+                    - The summary uses an H1 heading for the Title. 
+                    - The summary uses H2 headings for each category (Tools, Technologies, Concepts, People, Events).
+                        - Note: It's possible there isn't one of each cateogry if a category was omitted because there was no relevant info for that category.
+                    - The summary uses H3 subheadings for each instance within a category.
+                    - Bullet points contain concise, rich, and active summaries.
+                - Assessment: Does the summary strictly follow the specified formatting? Is there no more than 1 Tools section, no more than 1 Technologies section, no more than 1 Concepts section, no more than 1 People section, and no more than 1 Events section. 
+                - Comment:
 
-        2. Correct Categorization:
-            - Criteria: 
-                - Each instance is correctly categorized as a Tool, Technology, Concept, Person, or Event based on the definitions provided.
-            - Assessment: Are all instances accurately categorized?
-            - Comment:
+            2. Correct Categorization:
+                - Criteria: 
+                    - Each instance is correctly categorized as a Tool, Technology, Concept, Person, or Event based on the definitions provided.
+                - Assessment: Are all instances accurately categorized?
+                - Comment:
 
-        3. Active Voice & Rich Detail:
-            - Criteria: 
-                - Summaries are written in active voice.
-                - Each bullet point includes specific details, reasons, or explanations that provide a deeper understanding of the instance.
-            - Assessment: Are the summaries in active voice and sufficiently detailed?
-            - Comment:
+            3. Active Voice & Rich Detail:
+                - Criteria: 
+                    - Summaries are written in active voice.
+                    - Each bullet point includes specific details, reasons, or explanations that provide a deeper understanding of the instance.
+                - Assessment: Are the summaries in active voice and sufficiently detailed?
+                - Comment:
 
-        4. Prioritization:
-            - Criteria: 
-                - Newer or emerging topics are prioritized over established ones.
-                - Within each category, the most critical or novel instances are listed first.
-            - Assessment: Does the summary prioritize novel and critical instances appropriately?
-            - Comment:
+            4. Prioritization:
+                - Criteria: 
+                    - Newer or emerging topics are prioritized over established ones.
+                    - Within each category, the most critical or novel instances are listed first.
+                - Assessment: Does the summary prioritize novel and critical instances appropriately?
+                - Comment:
 
-        5. Conciseness:
-            - Criteria: 
-                - Summaries are concise, focusing on essential information without unnecessary verbosity.
-            - Assessment: Are the summaries concise and to the point?
-            - Comment:
+            5. Conciseness:
+                - Criteria: 
+                    - Summaries are concise, focusing on essential information without unnecessary verbosity.
+                - Assessment: Are the summaries concise and to the point?
+                - Comment:
 
-        6. Accuracy:
-            - Criteria: 
-                - No information is included that is not present in the transcript.
-                - Summaries accurately reflect the content of the transcript without embellishment.
-            - Assessment: Is the summary free from inaccuracies and extraneous information?
-            - Comment:
+            6. Accuracy:
+                - Criteria: 
+                    - No information is included that is not present in the transcript.
+                    - Summaries accurately reflect the content of the transcript without embellishment.
+                - Assessment: Is the summary free from inaccuracies and extraneous information?
+                - Comment:
 
-        7. Completeness:
-            - Criteria: 
-                - All relevant instances within each category present in the transcript are included in the summary.
-                - No critical information from the transcript is omitted.
-            - Assessment: Does the summary cover all necessary instances without omitting key information?
-            - Comment:
+            7. Completeness:
+                - Criteria: 
+                    - All relevant instances within each category present in the transcript are included in the summary.
+                    - No critical information from the transcript is omitted.
+                - Assessment: Does the summary cover all necessary instances without omitting key information?
+                - Comment:
 
-        8. Clarity:
-            - Criteria: 
-                - The summary is written in clear, precise language suitable for an expert audience.
-                - Technical terms are used appropriately without overuse of jargon.
-            - Assessment: Is the summary clear and easy to understand for the intended audience?
-            - Comment:
+            8. Clarity:
+                - Criteria: 
+                    - The summary is written in clear, precise language suitable for an expert audience.
+                    - Technical terms are used appropriately without overuse of jargon.
+                - Assessment: Is the summary clear and easy to understand for the intended audience?
+                - Comment:
 
-        9. Educational Value:
-            - Criteria: 
-                - The summary provides new insights or knowledge that would be valuable to intermediate to expert AI engineers.
-                - It encourages further learning or exploration.
-            - Assessment: Does the summary add educational value and promote further learning?
-            - Comment:
+            9. Educational Value:
+                - Criteria: 
+                    - The summary provides new insights or knowledge that would be valuable to intermediate to expert AI engineers.
+                    - It encourages further learning or exploration.
+                - Assessment: Does the summary add educational value and promote further learning?
+                - Comment:
 
         4. Scoring Framework:
 
