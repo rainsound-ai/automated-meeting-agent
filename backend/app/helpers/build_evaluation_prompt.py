@@ -33,175 +33,157 @@ def get_gold_standard_files() -> Optional[Tuple[str, str]]:
     except Exception as e:
         logger.error(f"🚨 Error loading gold standard data: {str(e)}")
         return None
+
 def build_evaluation_prompt(original_transcript: str, summary_to_evaluate: str, is_llm_conversation,  is_jumpshare_link) -> str:
     if is_llm_conversation:
         return f"""
-        ```markdown
-        BEGINNING OF PROMPT TO EVAL AGENT FOR NEW SUMMARY AGENT
+        # Evaluation Agent Instructions
 
-        # Evaluation Agent Prompt for ChatGPT Conversation Summaries
+        ## Input Format
+        You will receive two pieces of content to compare:
 
-        **Task:**  
-        Evaluate the following summary of a ChatGPT conversation, ensuring it accurately and effectively summarizes the interaction based on the specified categories relevant to Rainsound.ai.
-
-        **Inputs:**
-        - **Original Conversation Transcript:**
-
-        BEGINNING OF ORIGINAL CONVERSATION WITH LLM 
+        1. Original Conversation:
         ```
+        BEGINNING OF ORIGINAL CONVERSATION WITH LLM
         {original_transcript}
+        END OF ORIGINAL CONVERSATION WITH LLM
         ```
-        END OF ORIGINAL CONVERSATION WITH LLM 
 
-        - **Summary to Evaluate:**
-
+        2. Summary to Evaluate:
         ```
+        BEGINNING OF SUMMARY TO EVALUATE
         {summary_to_evaluate}
+        END OF SUMMARY TO EVALUATE
         ```
 
-        **Instructions:**
+        ## Critical Scoring Criteria
 
-        1. **Understand the Content:**
-        - Carefully read the entire Original Conversation Transcript to fully grasp the key information, topics, and context related to Rainsound.ai's focus areas: Information Seeking, Learning and Education, Coding Assistance, Content Creation, Brainstorming Ideas, and Task Automation.
+        ### 1. Role and Format Adherence (CRITICAL - 40% of score)
+        Automatic failure criteria - if ANY of these occur, maximum possible score is 0.40:
+        - Uses conversational language ("Let's...", "We should...", "I think...")
+        - Includes introductions or conclusions
+        - Offers help or invites questions
+        - Uses first person pronouns (I, we, our)
+        - Directly addresses the reader
+        - Attempts to teach or explain rather than summarize
+        - Generates new content not in original conversation
 
-        2. **Evaluate the Summary:**
-        - Assess how well the Summary to Evaluate aligns with the Summarization Agent's instructions based on the criteria outlined below.
-        - Do not use any external references or gold standard summaries for comparison. Base your evaluation solely on the Original Conversation Transcript and the Summary to Evaluate.
+        ### 2. Standard Criteria (60% of score)
+        Each worth 10% of total score:
 
-        3. **Scoring Criteria:**
+        a. Category Accuracy
+        - Uses only specified categories (Information Seeking, Learning and Education, etc.)
+        - Correctly categorizes content within appropriate categories
+        - Skips categories not present in conversation
 
-        Evaluate the summary based on the following nine criteria. For each criterion, determine whether the summary meets the standard (Yes) or does not (No). Provide specific comments to justify your assessment.
+        b. Format Compliance
+        - Uses H1 (#) only for main categories
+        - Uses H2 (##) for instances within categories
+        - Uses single-level bullet points correctly
 
-        1. **Format Adherence:**
-            - **Criteria:** 
-                - The summary uses **H1** headings for each relevant category (Information Seeking, Learning and Education, Coding Assistance, Content Creation, Brainstorming Ideas, Task Automation).
-                - The summary uses **H2** headings for each identified instance within a category.
-                - Bullet points contain concise, rich, and active summaries.
-            - **Assessment:** Does the summary strictly follow the specified Markdown formatting? Are the correct headings (H1 for categories, H2 for instances) used appropriately?
-            - **Comment:**
+        c. Bullet Point Quality
+        - Starts with action verbs in past tense
+        - Presents specific, concrete information
+        - Maintains conciseness (max 2 lines per point)
 
-        2. **Correct Categorization:**
-            - **Criteria:** 
-                - Each instance is correctly categorized into one of the six categories: Information Seeking, Learning and Education, Coding Assistance, Content Creation, Brainstorming Ideas, or Task Automation.
-            - **Assessment:** Are all instances accurately categorized based on the definitions provided in the summarization agent's prompt?
-            - **Comment:**
+        d. Technical Accuracy
+        - Accurately reflects technical content from conversation
+        - Includes relevant technical details
+        - No information fabrication
 
-        3. **Active Voice & Rich Detail:**
-            - **Criteria:** 
-                - Summaries are written in active voice.
-                - Each bullet point includes specific details, reasons, or explanations that provide a deeper understanding of the instance.
-            - **Assessment:** Are the summaries in active voice and sufficiently detailed to convey the essence of the conversation?
-            - **Comment:**
+        e. Completeness
+        - Captures all major points from conversation
+        - No critical information omitted
+        - Appropriate level of detail
 
-        4. **Prioritization:**
-            - **Criteria:** 
-                - Relevant categories and instances are prioritized based on their relevance to Rainsound.ai’s needs.
-                - More critical or frequent interactions are highlighted appropriately within each category.
-            - **Assessment:** Does the summary prioritize the most relevant and important instances effectively?
-            - **Comment:**
+        f. Organization
+        - Logical grouping of related information
+        - Clear instance headers
+        - Proper information hierarchy
 
-        5. **Conciseness:**
-            - **Criteria:** 
-                - Summaries are concise, focusing on essential information without unnecessary verbosity.
-            - **Assessment:** Are the summaries clear and to the point, avoiding extraneous information?
-            - **Comment:**
-
-        6. **Accuracy:**
-            - **Criteria:** 
-                - No information is included that is not present in the conversation.
-                - Summaries accurately reflect the content of the conversation without embellishment.
-            - **Assessment:** Is the summary free from inaccuracies and extraneous information?
-            - **Comment:**
-
-        7. **Completeness:**
-            - **Criteria:** 
-                - All relevant instances within each category present in the conversation are included in the summary.
-                - No critical information from the conversation is omitted.
-            - **Assessment:** Does the summary cover all necessary instances without omitting key information?
-            - **Comment:**
-
-        8. **Clarity:**
-            - **Criteria:** 
-                - The summary is written in clear, precise language suitable for an expert audience.
-                - Technical terms are used appropriately without overuse of jargon.
-            - **Assessment:** Is the summary clear and easy to understand for the intended audience?
-            - **Comment:**
-
-        9. **Educational Value:**
-            - **Criteria:** 
-                - The summary provides insights or knowledge that would be valuable to professionals in the AI and technology industry.
-                - It highlights new developments or important aspects relevant to Rainsound.ai.
-            - **Assessment:** Does the summary add educational value and promote further understanding or learning?
-            - **Comment:**
-
-        4. **Scoring Framework:**
-
-        - **Score Calculation:**
-            - Each criterion is worth up to 1 point.
-            - **Total Possible Score:** 9 points.
-            - **Final Score:** Sum of points awarded divided by 9, resulting in a score between 0 and 1.
-
-        - **Example Of How To Score:**
-            - If a summary meets 7 out of the 9 criteria, the score would be 7/9 ≈ 0.78.
-
-        5. **Provide Your Evaluation in the Following Format:**
-
+        ## CRITICAL OUTPUT REQUIREMENT
+        You MUST ALWAYS provide output in this exact format, no exceptions:
         ```
-        Score: [A single number between 0 and 1, rounded to two decimal places]
-        Feedback: [Your detailed feedback here, including strengths and areas for improvement]
+        Score: [number between 0 and 1, rounded to 2 decimal places]
+        Feedback: [Detailed feedback explaining the score]
         ```
 
-        **Example Evaluation:**
+        ### Score Rules
+        - A score MUST ALWAYS be provided
+        - Score MUST be between 0 and 1
+        - Score MUST be rounded to 2 decimal places
+        - No score can be skipped or omitted
+        - No score can be null or undefined
+        - No other format is acceptable
 
+        ### If Unable to Calculate Score
+        If you encounter any issues calculating the score:
+        - Default to 0.10 for severe issues
+        - Default to 0.40 for critical role failures
+        - Default to 0.50 for unclear cases
+        - NEVER skip providing a score
+
+        ### Example Valid Outputs:
         ```
-        Score: 0.89
-        Feedback: The summary adheres to the specified format with correct use of H1 and H2 headings. All instances are accurately categorized, and the summaries are written in active voice with rich details. Prioritization of relevant categories like Learning and Education is well-executed. The content is concise and free from inaccuracies, covering all critical information from the conversation. However, the Content Creation section could include more specific examples to enhance educational value. Additionally, the Task Automation section is slightly underdeveloped. Overall, the summary is clear, accurate, and highly informative.
+        Score: 0.35
+        Feedback: [explanation...]
         ```
-
-        ---------------------
-
-        **Usage Example**
-
-        **Original Conversation Transcript:**
         ```
-        User: Can you help me understand the basics of federated learning?
-        ChatGPT: Certainly! Federated learning is a machine learning approach where multiple devices collaboratively train a model without sharing their raw data. This enhances data privacy and reduces the need for centralized data storage. It's particularly useful in scenarios where data is distributed across various locations, such as mobile devices or edge servers.
-        User: How can we implement federated learning in our AI models?
-        ChatGPT: To implement federated learning, you can start by selecting a suitable framework like TensorFlow Federated or PySyft. Next, design your model to allow training on decentralized data sources. Ensure secure communication protocols are in place to protect data during transmission. Finally, aggregate the trained models centrally to update the global model without ever accessing the raw data.
+        Score: 0.90
+        Feedback: [explanation...]
         ```
-
-        **Summary to Evaluate:**
         ```
-        # Learning and Education
-        ## Fundamentals of Federated Learning
-            - Explained federated learning as a machine learning approach enabling multiple devices to collaboratively train a model without sharing raw data, enhancing privacy and reducing centralized storage needs.
-
-        # Coding Assistance
-        ## Implementing Federated Learning
-            - Provided steps to implement federated learning, including selecting frameworks like TensorFlow Federated or PySyft, designing decentralized models, ensuring secure communication, and aggregating trained models centrally.
-        ```
-
-        **Evaluation Output:**
-
-        ```
-        Score: 0.89
-        Feedback: The summary adheres to the specified format with correct use of H1 and H2 headings. All instances are accurately categorized under Learning and Education and Coding Assistance. The summaries are written in active voice with rich details, effectively conveying the essence of federated learning and its implementation steps. The content is concise and free from inaccuracies, covering all critical information from the conversation. However, the summary could benefit from additional categories if applicable, and the prioritization of key points within each category could be more evident. Overall, the summary is clear, accurate, and highly informative.
+        Score: 0.50
+        Feedback: Unable to fully evaluate due to [reason], defaulting to median score.
         ```
 
-        ---------------------
-
-        **Important Instructions:**
-
-        - **Adherence to Summarization Instructions:** Ensure that the evaluation strictly follows the criteria based on the summarization agent's instructions without introducing external standards or references.
-
-        - **Constructive Feedback:** Provide balanced feedback that highlights both strengths and areas for improvement, offering clear guidance on how the summary can be enhanced.
-
-        - **Objectivity:** Maintain an objective stance, focusing on factual accuracy, completeness, clarity, and adherence to formatting and prioritization guidelines.
-
-        - **Consistency:** Apply the scoring criteria uniformly across all evaluations to maintain consistency in assessments.
-
-        - **No External Comparisons:** Do not reference or compare the summary to any external documents, standards, or previous summaries.
+        ### Example Invalid Outputs (NEVER DO THESE):
         ```
+        Feedback: [explanation without score]
+        ```
+        ```
+        Score: Pending
+        Feedback: [explanation...]
+        ```
+        ```
+        Score: N/A
+        Feedback: [explanation...]
+        ```
+
+        ## Scoring Calculation
+        1. First check Role and Format Adherence:
+        - If ANY critical failures found, maximum score = 0.40
+        - If no critical failures, this section = 0.40 points
+
+        2. Then evaluate Standard Criteria:
+        - Each of 6 criteria worth 0.10 points
+        - Can be partially awarded (0.00, 0.05, or 0.10)
+        - Sum all points for total score
+
+        ## Example Evaluations
+
+        ### Example 1 - Critical Failure:
+        ```
+        Score: 0.35
+        Feedback: The summary critically fails by attempting to engage in conversation, starting with "Let's explore" and ending with "Feel free to ask questions." Despite good technical content and organization, this conversational approach violates the core role of the Summary Agent. Additionally, the summary attempts to teach concepts rather than simply summarizing what was discussed. To improve: remove all conversational language, eliminate teaching elements, and maintain strict focus on summarizing the actual conversation content using the required format.
+        ```
+
+        ### Example 2 - Strong Summary:
+        ```
+        Score: 0.95
+        Feedback: The summary excellently maintains its analytical role with no conversational elements. Categories are correctly used, all points start with action verbs, and technical details are accurately captured. Minor improvement needed in bullet point conciseness - some points exceed two lines. Consider condensing: "Analyzed system architecture requirements and performance constraints, identifying key scalability challenges" into "Analyzed system architecture requirements for scalability and performance."
+        ```
+
+        ## Important Reminders
+        - Always evaluate based on the original conversation content
+        - Provide specific examples in feedback
+        - Focus first on critical role adherence
+        - Be precise about formatting issues
+        - Include both problems and strengths in feedback
+        - Suggest concrete improvements
+        - ALWAYS include a score between 0 and 1
+
+        Your evaluation must always end with a Score and Feedback using the exact format shown above.
         """
             
     elif is_jumpshare_link:
