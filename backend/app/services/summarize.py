@@ -55,7 +55,7 @@ async def decomposed_summarize_transcription_and_upload_to_notion(
 
     for attempt in range(max_attempts):
         try:
-            print("🚨 the prompt file being used is: ", prompt_file)
+            logger.info("💡 the prompt file being used is: ", prompt_file)
             full_prompt = prompt_content + f"\n\nPrevious feedback:\n{feedback}"
             logger.info(f"💡 Attempt {attempt + 1}")
             
